@@ -10,6 +10,16 @@
 | [`project-init`](./project-init) | 全局项目初始化：检查并执行 `codegraph init`，并把经验沉淀工作流接入项目级 `AGENTS.md`。 |
 | [`experience-capture`](./experience-capture) | 全局经验教训沉淀：经过用户确认后，把已验证、可复用的问题解决方案创建为当前项目的 Skill。 |
 
+## WorkBuddy 专家包
+
+`workbuddy-experts/` 存放可上传到 WorkBuddy 平台审核的专家压缩包（`.zip`），解压后为标准专家插件目录结构（`.codebuddy-plugin/plugin.json` + `agents/` + `skills/`）。
+
+| 专家 | 说明 |
+| --- | --- |
+| [`html-ppt-studio`](./workbuddy-experts/html-ppt-studio.zip) | 幻灯匠 · HTML PPT 制作专家。把资料拆成大纲、逐页分镜与可放映的 HTML 演示页，四步审核、判断有据、风格可换。 |
+
+上传方式：WorkBuddy 专家中心 → 配置专家 → 上传压缩包（仅支持 `.zip`，≤ 20MB）。
+
 ## 安装方式
 
 把技能目录整体复制到本机 Agent Skills 目录即可：
