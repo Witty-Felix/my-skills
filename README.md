@@ -6,9 +6,9 @@
 
 | 技能 | 说明 |
 | --- | --- |
-| [`meeting-minutes-professional`](./meeting-minutes-professional) | 会议纪要专业总结。把会议转写稿、原始记录或聊天导出整理为事实忠实、可追溯、可执行的正式中文会议纪要，并按规范导出 Word 文档。含专有词校对、相对时间处理、导出后回读校验与降级处理规则。 |
-| [`project-init`](./project-init) | 全局项目初始化：检查并执行 `codegraph init`，并把经验沉淀工作流接入项目级 `AGENTS.md`。 |
-| [`experience-capture`](./experience-capture) | 全局经验教训沉淀：经过用户确认后，把已验证、可复用的问题解决方案创建为当前项目的 Skill。 |
+| [`meeting-minutes-professional`](./skills/meeting-minutes-professional) | 会议纪要专业总结。把会议转写稿、原始记录或聊天导出整理为事实忠实、可追溯、可执行的正式中文会议纪要，并按规范导出 Word 文档。含专有词校对、相对时间处理、导出后回读校验与降级处理规则。 |
+| [`project-init`](./skills/project-init) | 全局项目初始化：检查并执行 `codegraph init`，并把经验沉淀工作流接入项目级 `AGENTS.md`。 |
+| [`experience-capture`](./skills/experience-capture) | 全局经验教训沉淀：经过用户确认后，把已验证、可复用的问题解决方案创建为当前项目的 Skill。 |
 
 ## WorkBuddy 专家包
 
@@ -80,14 +80,19 @@ python scripts/package_expert.py workbuddy-experts/html-ppt-studio
 
 ```
 my-skills/
-└── meeting-minutes-professional/
-    ├── SKILL.md                    # 技能主文件
-    └── references/
-        ├── minutes-standard.md     # 会议结构、提炼规则、文档模板
-        ├── glossary-workflow.md    # 专有词收集与受控校对
-        ├── word-delivery.md        # Word 交付、排版与验收
-        ├── docx-generation.md      # python-docx 实现与导出校验
-        └── degradation.md          # 输入缺失与失败降级
+├── skills/                          # 技能目录
+│   ├── meeting-minutes-professional/
+│   │   ├── SKILL.md                # 技能主文件
+│   │   └── references/
+│   │       ├── minutes-standard.md     # 会议结构、提炼规则、文档模板
+│   │       ├── glossary-workflow.md    # 专有词收集与受控校对
+│   │       ├── word-delivery.md        # Word 交付、排版与验收
+│   │       ├── docx-generation.md      # python-docx 实现与导出校验
+│   │       └── degradation.md          # 输入缺失与失败降级
+│   ├── project-init/
+│   └── experience-capture/
+└── workbuddy-experts/              # WorkBuddy 专家源码
+    └── html-ppt-studio/
 ```
 
 ## 许可
