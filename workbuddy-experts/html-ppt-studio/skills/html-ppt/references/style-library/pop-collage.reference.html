@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>星禾AI 项目汇报 · 波普版</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#0b0b0c}
+img{max-width:100%;height:auto;border:0}
+:root{
+  --sans:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei","Hiragino Sans GB","Segoe UI",system-ui,sans-serif;
+  --serif:"Songti SC","Source Han Serif SC","Noto Serif CJK SC","SimSun",serif;
+  --mono:"Cascadia Code","JetBrains Mono",Consolas,"SFMono-Regular",monospace;
+  --cream:#FFF2E0;--orange:#FF4D2E;--cobalt:#1B1AC9;--yellow:#FFC93C;--ink:#111111;--paper:#FFFFFF;
+  --hud-fg:#111;--hud-accent:#FF4D2E;
+}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center;transform:translate(-50%,-50%)}
+.slide{position:absolute;inset:0;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .42s ease;
+  background:var(--cream);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.slide.is-active{opacity:1;visibility:visible;z-index:2}
+.r{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.3,1)}
+.slide.is-active .r{opacity:1;transform:none}
+.slide.is-active .r:nth-child(1){transition-delay:.04s}
+.slide.is-active .r:nth-child(2){transition-delay:.10s}
+.slide.is-active .r:nth-child(3){transition-delay:.16s}
+.slide.is-active .r:nth-child(4){transition-delay:.22s}
+.slide.is-active .r:nth-child(5){transition-delay:.28s}
+.slide.is-active .r:nth-child(6){transition-delay:.34s}
+.rf{opacity:0;transition:opacity .5s ease}
+.slide.is-active .rf{opacity:1}
+
+.dots{position:absolute;pointer-events:none;background-image:radial-gradient(#111 1.4px,transparent 1.5px);background-size:10px 10px;opacity:.10}
+.hd{position:absolute;left:72px;top:44px;right:72px;z-index:3}
+.kick{display:inline-block;margin:0;padding:7px 13px 6px;background:var(--ink);color:var(--cream);
+  font:700 11.5px/1 var(--mono);letter-spacing:.18em;transform:rotate(-3deg)}
+.ttl{margin:15px 0 0;font:900 40px/1.06 var(--sans);letter-spacing:-.03em;transform:rotate(-1.7deg);transform-origin:0 60%}
+.ttl--s{font-size:34px}
+.ttl--xs{font-size:29px;letter-spacing:-.02em}
+.note{position:absolute;left:72px;right:120px;bottom:54px;margin:0;padding-left:13px;border-left:4px solid var(--orange);
+  font:400 13.5px/1.62 var(--sans);color:#333}
+.note b{margin-right:7px;font:700 10.5px/1 var(--mono);letter-spacing:.12em;color:var(--orange)}
+.stk{display:inline-block;padding:7px 13px 8px;background:var(--yellow);border:3px solid var(--ink);
+  box-shadow:4px 4px 0 var(--ink);font:900 13px/1 var(--sans);transform:rotate(-4deg)}
+
+/* ============ 01 封面 ============ */
+.cv__dots{left:0;top:0;width:660px;height:720px;opacity:.12}
+.cv__art{position:absolute;right:44px;top:150px;width:612px;height:416px;padding:12px;background:var(--paper);
+  border:3px solid var(--ink);box-shadow:14px 14px 0 var(--ink);transform:rotate(2.1deg);z-index:2}
+.cv__art img{display:block;width:100%;height:100%;object-fit:cover}
+.cv__stk{position:absolute;left:-30px;top:-26px;padding:9px 20px 10px;background:var(--yellow);
+  border:3px solid var(--ink);border-radius:999px;box-shadow:5px 5px 0 var(--ink);
+  font:900 20px/1 var(--sans);transform:rotate(-7deg)}
+.cv__main{position:absolute;left:72px;top:64px;width:560px;z-index:3}
+.cv__kick{display:inline-block;margin:0;padding:8px 14px;background:var(--paper);border:3px solid var(--ink);
+  box-shadow:4px 4px 0 var(--ink);font:700 11.5px/1 var(--mono);letter-spacing:.16em;transform:rotate(-2.5deg)}
+.cv__title{margin:26px 0 0;font:900 60px/1 var(--sans);letter-spacing:-.035em;transform:rotate(-2deg);transform-origin:0 50%}
+.cv__title span{display:inline-block;padding:2px 10px 8px;background:var(--yellow);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.cv__title strong{display:block;margin-top:16px;font:900 88px/1 var(--sans);letter-spacing:-.04em}
+.cv__sub{margin:24px 0 0;font:700 24px/1.3 var(--sans);letter-spacing:-.01em}
+.cv__note{margin:20px 0 0;width:430px;padding:12px 15px;background:var(--paper);border:3px solid var(--ink);
+  box-shadow:6px 6px 0 var(--ink);font:400 15.5px/1.55 var(--sans)}
+.cv__spk{margin:32px 0 0;padding-top:11px;width:420px;border-top:3px solid var(--ink);font:400 13px/1.4 var(--mono);color:#222}
+.cv__foot{position:absolute;left:72px;bottom:48px;font:700 10.5px/1 var(--mono);letter-spacing:.22em;color:#6a6a6a}
+
+/* ============ 02 目录 ============ */
+.toc{position:absolute;left:72px;top:186px;width:1136px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.toc__c{padding:20px 24px 22px;border:3px solid var(--ink);box-shadow:9px 9px 0 var(--ink);background:var(--paper)}
+.toc__c--a{margin-top:16px}
+.toc__c--b{background:var(--cobalt);color:var(--cream);transform:translateY(-10px)}
+.toc__k{display:inline-block;padding:6px 11px;background:var(--ink);color:var(--cream);font:700 11px/1 var(--mono);
+  letter-spacing:.16em;transform:rotate(-3deg)}
+.toc__c--b .toc__k{background:var(--cream);color:var(--ink)}
+.toc__h{margin:16px 0 0;font:900 27px/1.15 var(--sans);letter-spacing:-.025em}
+.toc__d{margin:6px 0 0;font:400 13px/1.4 var(--mono);opacity:.72}
+.toc__l{margin:16px 0 0;padding:0;list-style:none}
+.toc__l li{position:relative;padding:9px 0 9px 24px;font:700 16px/1.4 var(--sans);border-top:2px solid rgba(17,17,17,.14)}
+.toc__c--b .toc__l li{border-top-color:rgba(255,242,224,.22);color:var(--cream)}
+.toc__l li::before{content:"";position:absolute;left:2px;top:17px;width:9px;height:9px;background:var(--orange);border:2px solid var(--ink)}
+.toc__c--b .toc__l li::before{background:var(--yellow);border-color:var(--cream)}
+.toc__l li i{font-style:normal;font-family:var(--mono);font-size:11px;opacity:.62;margin-right:8px}
+.toc__note{position:absolute;left:72px;bottom:56px;margin:0;font:700 14px/1.5 var(--sans);color:#3a3a3a}
+.toc__strip{position:absolute;left:72px;top:508px;width:1136px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.toc__sc{padding:12px 16px 14px;background:var(--cream);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.toc__sc:nth-child(2){background:var(--paper)}
+.toc__sc:nth-child(3){background:var(--yellow)}
+.toc__sc b{display:block;font:900 34px/1 var(--sans);letter-spacing:-.04em}
+.toc__sc span{display:block;margin-top:8px;font:700 11.5px/1 var(--mono);letter-spacing:.1em;color:#4a4a4a}
+
+/* ============ 章节页 ============ */
+.part{background:var(--cobalt)}
+.part--ink{background:var(--ink)}
+.part__dots{left:0;top:0;width:1280px;height:720px;background-image:radial-gradient(#FFF2E0 1.4px,transparent 1.5px);opacity:.11}
+.part__num{position:absolute;left:46px;bottom:-56px;font:900 240px/1 var(--mono);letter-spacing:-.06em;
+  color:transparent;-webkit-text-stroke:2px rgba(255,242,224,.24);z-index:1}
+.part__main{position:absolute;left:96px;top:168px;width:560px;z-index:3;padding-bottom:20px}
+.part__kick{display:inline-block;margin:0;padding:7px 13px 6px;background:transparent;border:3px solid var(--cream);
+  color:var(--cream);font:700 11.5px/1 var(--mono);letter-spacing:.22em;transform:rotate(-3deg)}
+.part__h{margin:22px 0 0;font:900 72px/1 var(--sans);letter-spacing:-.04em;color:var(--cream);transform:rotate(-1.6deg);transform-origin:0 55%}
+.part--ink .part__h{color:var(--yellow)}
+.part--ink .part__num{-webkit-text-stroke:2px rgba(255,201,60,.24)}
+.part__d{margin:20px 0 0;font:700 14px/1.4 var(--mono);letter-spacing:.08em;color:#E7E2FF}
+.part--ink .part__d{color:#FFC93C}
+.part__art{position:absolute;right:70px;top:132px;width:494px;height:404px;padding:11px;background:var(--paper);
+  border:3px solid var(--ink);box-shadow:14px 14px 0 var(--ink);transform:rotate(-2.6deg);z-index:2}
+.part__art img{display:block;width:100%;height:100%;object-fit:cover}
+.part__q{position:absolute;left:96px;top:382px;width:470px;margin:0;font:900 19px/1.5 var(--sans);color:#EDE9FF;z-index:3}
+.part__q span{background:var(--yellow);color:var(--ink);padding:3px 9px 5px;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);display:inline-block;transform:rotate(-1.2deg)}
+
+/* ============ KPI 数字页 ============ */
+.kpi{position:absolute;left:72px;top:206px;width:1136px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.kpi__c{padding:20px 22px 22px;border:3px solid var(--ink);box-shadow:9px 9px 0 var(--ink);background:var(--paper);height:212px}
+.kpi__c--o{background:var(--orange);margin-top:0}
+.kpi__c--c{background:var(--cobalt);color:var(--cream);margin-top:22px}
+.kpi__c--y{background:var(--yellow);margin-top:44px}
+.kpi__k{display:inline-block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;opacity:.78}
+.kpi__n{margin:16px 0 0;font:900 88px/1 var(--sans);letter-spacing:-.05em}
+.kpi__n em{font-style:normal;font-size:20px;letter-spacing:0;margin-left:6px}
+.kpi__t{margin:12px 0 0;font:700 15px/1.35 var(--sans);opacity:.86}
+.kpi__l{position:absolute;left:72px;top:520px;margin:0;padding:0;list-style:none;width:1136px}
+.kpi__l li{position:relative;padding-left:20px;font:400 16px/1.6 var(--sans);color:#2a2a2a;margin-bottom:4px}
+.kpi__l li::before{content:"";position:absolute;left:2px;top:11px;width:8px;height:8px;background:var(--ink)}
+.kpi__l b{font-weight:900}
+.kpi--b .kpi__c--c{background:var(--cobalt);transform:scale(1.06);margin-top:10px;box-shadow:11px 11px 0 var(--ink)}
+
+/* ============ 03 过程（时间轴） ============ */
+.tl{position:absolute;left:72px;top:198px;width:1136px;height:74px}
+.tl__bar{position:absolute;left:0;top:32px;width:500px;height:6px;background:var(--orange);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.tl__i{position:absolute;top:14px;width:96px;text-align:center;padding:7px 0 8px;background:var(--paper);
+  border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font:700 12.5px/1 var(--mono)}
+.tl__cap{position:absolute;left:0;top:62px;font:700 12px/1 var(--mono);letter-spacing:.06em;color:#4a4a4a}
+.tl__ar{position:absolute;left:534px;top:16px;font:900 40px/1 var(--sans);color:var(--ink)}
+.tl__n{position:absolute;left:596px;top:8px;padding:10px 16px 11px;background:var(--cobalt);color:var(--cream);
+  border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);transform:rotate(-2deg)}
+.tl__n b{display:block;font:900 15px/1 var(--sans);letter-spacing:.02em}
+.tl__n i{display:block;margin-top:5px;font:400 11.5px/1.35 var(--sans);font-style:normal;color:#DFDBFF}
+.mt{position:absolute;left:72px;top:378px;width:1136px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.mt__c{padding:18px 20px 20px;background:var(--paper);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);height:168px}
+.mt__c:nth-child(2){background:var(--cream);transform:translateY(-12px)}
+.mt__k{display:inline-block;padding:5px 9px;background:var(--ink);color:var(--cream);font:700 10px/1 var(--mono);letter-spacing:.16em;transform:rotate(-3deg)}
+.mt__n{margin:16px 0 0;font:900 32px/1 var(--sans);letter-spacing:-.03em}
+.mt__r{margin:9px 0 0;font:700 15px/1.35 var(--sans);color:#2b2b2b}
+.mt__c:nth-child(1) .mt__n{color:var(--orange)}
+.mt__c:nth-child(2) .mt__n{color:var(--cobalt)}
+.mt__c:nth-child(3) .mt__n{color:#111}
+
+/* ============ 04 / 05 作品清单 ============ */
+.wk__side{position:absolute;right:56px;top:172px;width:296px;height:382px;padding:10px;background:var(--paper);
+  border:3px solid var(--ink);box-shadow:11px 11px 0 var(--ink);transform:rotate(2.4deg);z-index:2}
+.wk__side img{display:block;width:100%;height:100%;object-fit:cover}
+.wk__side figcaption{position:absolute;left:10px;right:10px;bottom:10px;padding:6px 9px;background:var(--yellow);
+  border:3px solid var(--ink);font:900 12px/1.2 var(--sans);text-align:center}
+.grid2{position:absolute;left:72px;top:180px;width:800px;display:grid;grid-template-columns:1fr 1fr;gap:9px 20px}
+.grid2--wide{width:1136px;gap:8px 40px;top:186px}
+.grid2--wide .wk__i{padding:15px 2px}
+.wk__i{display:flex;align-items:baseline;gap:8px;padding:16px 2px;border-bottom:2px solid rgba(17,17,17,.13)}
+.wk__n{flex:0 0 auto;font:700 10.5px/1 var(--mono);color:var(--orange);letter-spacing:.04em}
+.wk__h{font:900 14.5px/1.3 var(--sans);letter-spacing:-.01em}
+.wk__a{margin-left:auto;flex:0 0 auto;font:400 10.5px/1.3 var(--sans);color:#7b7466;text-align:right;max-width:46%}
+.wk__con{position:absolute;left:72px;top:566px;width:1136px;padding:14px 18px 15px;background:var(--yellow);
+  border:3px solid var(--ink);box-shadow:7px 7px 0 var(--ink);margin:0;font:700 14px/1.5 var(--sans)}
+.wk__con b{font-weight:900}
+.grid2 .note{}
+
+/* ============ 07 过程（三行） ============ */
+.rows{position:absolute;left:72px;top:196px;width:1136px}
+.row{display:grid;grid-template-columns:196px 1fr;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);margin-bottom:24px;background:var(--paper)}
+.row:nth-child(2){background:var(--cream)}
+.row__d{display:grid;place-items:center;background:var(--ink);color:var(--yellow);font:700 24px/1.32 var(--mono);
+  letter-spacing:-.01em;padding:18px 8px;text-align:center}
+.row__b{padding:19px 22px 20px}
+.row__h{margin:0;font:900 18px/1.3 var(--sans);letter-spacing:-.01em}
+.row__t{margin:6px 0 0;font:400 13.5px/1.55 var(--sans);color:#333}
+.day{display:inline-block;margin-right:4px;padding:3px 8px 4px;background:var(--yellow);border:2px solid var(--ink);
+  font:700 11px/1 var(--mono);letter-spacing:.04em}
+.arw{font:900 14px/1 var(--sans);color:var(--orange);margin:0 6px}
+
+/* ============ 08 PK ============ */
+.pk__date{position:absolute;left:72px;top:200px;width:400px}
+.pk__big{margin:0;font:900 104px/1 var(--mono);letter-spacing:-.06em;display:inline-block;padding:6px 16px 12px;
+  background:var(--yellow);border:3px solid var(--ink);box-shadow:9px 9px 0 var(--ink);transform:rotate(-2deg)}
+.pk__sub{margin:22px 0 0;font:900 22px/1.3 var(--sans);letter-spacing:-.02em}
+.pk__sub2{margin:10px 0 0;font:400 14px/1.6 var(--sans);color:#333}
+.pk__tiles{position:absolute;left:520px;top:200px;width:688px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.pk__t{padding:20px 20px 18px;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);background:var(--paper);height:172px}
+.pk__t:nth-child(2){background:var(--cream)}
+.pk__t:nth-child(3){background:var(--cream)}
+.pk__t:nth-child(4){background:var(--cobalt);color:var(--cream)}
+.pk__n{font:900 12px/1 var(--mono);letter-spacing:.18em;opacity:.6}
+.pk__h{margin:14px 0 0;font:900 21px/1.25 var(--sans);letter-spacing:-.02em}
+.pk__x{margin:8px 0 0;font:400 12.5px/1.4 var(--sans);opacity:.78}
+.pk .note{}
+
+/* ============ 09 小结 ============ */
+.sum{position:absolute;left:72px;top:190px;width:1136px}
+.sum__r{display:grid;grid-template-columns:236px 1fr;align-items:center;background:var(--paper);border:3px solid var(--ink);
+  box-shadow:8px 8px 0 var(--ink);margin-bottom:18px;height:92px}
+.sum__r:nth-child(2){background:var(--cream);margin-left:34px}
+.sum__k{display:grid;place-items:center;height:100%;background:var(--orange);font:900 17px/1.2 var(--sans);text-align:center;padding:0 10px}
+.sum__r:nth-child(2) .sum__k{background:var(--cobalt);color:var(--cream)}
+.sum__v{display:flex;align-items:center;gap:12px;padding:0 22px;font:900 25px/1 var(--sans);letter-spacing:-.02em}
+.sum__v i{font-style:normal;color:var(--orange);font-size:22px}
+.sum__v em{font-style:normal;font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:#5c5c5c}
+.sum__f{position:absolute;left:72px;top:452px;width:1136px;display:flex;align-items:center;gap:14px}
+.sum__b{flex:1;text-align:center;padding:20px 10px 22px;background:var(--yellow);border:3px solid var(--ink);
+  box-shadow:7px 7px 0 var(--ink);font:900 27px/1 var(--sans);letter-spacing:-.01em}
+.sum__b--2{background:var(--cream)}
+.sum__b--3{background:var(--cobalt);color:var(--cream)}
+.sum__ga{font:900 34px/1 var(--sans);color:var(--ink)}
+
+/* ============ 10 / 11 规划条目 ============ */
+.pn{position:absolute;left:72px;top:186px;width:1136px}
+.pn__i{display:grid;grid-template-columns:104px 1fr;gap:0 22px;background:var(--paper);border:3px solid var(--ink);
+  box-shadow:8px 8px 0 var(--ink);padding:20px 24px 22px;margin-bottom:20px}
+.pn__i:nth-child(2){background:var(--cream)}
+.pn__n{font:900 56px/1 var(--mono);letter-spacing:-.05em;color:var(--orange);align-self:start}
+.pn__i:nth-child(2) .pn__n{color:var(--cobalt)}
+.pn__h{margin:2px 0 0;font:900 24px/1.25 var(--sans);letter-spacing:-.025em}
+.pn__t{margin:9px 0 0;font:400 14.5px/1.65 var(--sans);color:#2e2e2e}
+.pn__t b{font-weight:900}
+.pn--tight{top:180px}
+.pn--tight .pn__i{padding:24px 26px 26px;margin-bottom:26px}
+.pn--tight .pn__n{font-size:52px}
+.pn--tight .pn__h{font-size:25px}
+.pn--tight .pn__t{font-size:15px;margin-top:10px}
+.pull{position:absolute;left:72px;top:500px;width:1136px;margin:0;padding:20px 24px 22px;background:var(--yellow);
+  border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);font:900 27px/1.2 var(--sans);
+  letter-spacing:-.02em;text-align:center}
+.pn--half{width:604px}
+.pn--half .pn__i{grid-template-columns:76px 1fr;gap:0 14px;padding:16px 18px 18px}
+.pn--half .pn__n{font-size:40px}
+.pn--half .pn__h{font-size:19px}
+.pn--half .pn__t{font-size:13px;line-height:1.6}
+
+/* ============ 11 奖励 ============ */
+.aw__art{position:absolute;right:52px;top:150px;width:376px;height:330px;padding:10px;background:var(--paper);
+  border:3px solid var(--ink);box-shadow:12px 12px 0 var(--ink);transform:rotate(-2.4deg);z-index:2}
+.aw__art img{display:block;width:100%;height:100%;object-fit:cover}
+.aw{position:absolute;left:72px;top:498px;width:1136px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.aw__c{padding:14px 16px 16px;background:var(--paper);border:3px solid var(--ink);box-shadow:7px 7px 0 var(--ink);height:118px}
+.aw__c--1{background:var(--yellow);transform:translateY(-12px)}
+.aw__e{display:block;font:800 10.5px/1 var(--mono);letter-spacing:.12em;color:#6a5316}
+.aw__v{margin:12px 0 0;font:900 26px/1 var(--sans);letter-spacing:-.03em}
+.aw__u{margin:8px 0 0;font:400 11.5px/1.3 var(--sans);color:#4a4a4a}
+
+/* ============ 12 阶梯 ============ */
+.lad{position:absolute;right:56px;top:196px;width:430px;height:346px}
+.lad__s{position:absolute;border:3px solid var(--ink);box-shadow:9px 9px 0 var(--ink);padding:14px 16px}
+.lad__s--1{left:0;bottom:0;width:196px;height:158px;background:var(--cream)}
+.lad__s--1 .lad__n{font-size:32px}
+.lad__s--2{right:0;bottom:0;width:214px;height:292px;background:var(--cobalt);color:var(--cream)}
+.lad__k{font:700 11px/1 var(--mono);letter-spacing:.14em;opacity:.75}
+.lad__n{margin:9px 0 0;font:900 40px/1 var(--mono);letter-spacing:-.04em}
+.lad__h{margin:10px 0 0;font:900 16px/1.3 var(--sans)}
+.lad__p{margin:6px 0 0;font:400 11.5px/1.4 var(--sans);opacity:.82}
+
+/* ============ 13 系统图 ============ */
+.sys{position:absolute;right:56px;top:306px;width:530px;height:310px}
+.sys__c{position:absolute;left:150px;top:95px;width:230px;height:120px;display:grid;place-items:center;
+  background:var(--yellow);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);font:900 26px/1.2 var(--sans);text-align:center;z-index:4}
+.sys__s{position:absolute;width:150px;padding:12px 10px;background:var(--paper);border:3px solid var(--ink);
+  box-shadow:5px 5px 0 var(--ink);font:900 15px/1.3 var(--sans);text-align:center;z-index:4}
+.sys__s--1{left:0;top:0}
+.sys__s--2{right:0;top:28px;background:var(--cream)}
+.sys__s--3{left:34px;bottom:0;background:var(--cream)}
+.sys__l{position:absolute;left:265px;top:153px;height:3px;background:var(--ink);transform-origin:0 50%;z-index:2}
+.sys__l--1{width:238px;transform:rotate(216.6deg)}
+.sys__l--2{width:224px;transform:rotate(-31.4deg)}
+.sys__l--3{width:210px;transform:rotate(136.2deg)}
+
+/* ============ 14 金字塔 ============ */
+.pyr{position:absolute;left:72px;top:186px;width:560px;height:470px}
+.pyr__t{position:absolute;left:50%;transform:translateX(-50%);border:3px solid var(--ink);box-shadow:7px 7px 0 var(--ink);
+  display:flex;align-items:center;justify-content:center;gap:10px;font:900 17px/1.2 var(--sans);text-align:center;padding:8px 14px}
+.pyr__t--1{top:0;width:268px;height:82px;background:var(--cobalt);color:var(--cream)}
+.pyr__t--2{top:106px;width:376px;height:88px;background:var(--orange)}
+.pyr__t--3{top:218px;width:486px;height:94px;background:var(--yellow)}
+.pyr__t--4{top:336px;width:560px;height:92px;background:var(--paper)}
+.pyr__t b{display:block;font-size:18px}
+.pyr__t i{display:block;font-style:normal;font-weight:400;font-size:11.5px;opacity:.78;margin-top:4px}
+.pyr__ar{position:absolute;left:50%;transform:translateX(-50%);font:900 22px/1 var(--sans);color:var(--ink);z-index:2}
+.pyr__ar--1{top:86px}
+.pyr__ar--2{top:198px}
+.pyr__ar--3{top:316px}
+.pyr-side{position:absolute;right:72px;top:196px;width:520px}
+.pyr-side .pn__i{padding:16px 20px 18px;margin-bottom:18px}
+.pyr-side .pn__n{font-size:38px}
+.pyr-side .pn__h{font-size:20px}
+.pyr-side .pn__t{font-size:13px;line-height:1.6}
+.pyr .note,.pyr-side .note{top:auto}
+
+/* ============ 15 结尾 ============ */
+.end{background:var(--cobalt)}
+.end__dots{left:0;top:0;width:1280px;height:720px;background-image:radial-gradient(#FFF2E0 1.4px,transparent 1.5px);opacity:.11}
+.end__art{position:absolute;right:48px;top:96px;width:568px;height:474px;padding:11px;background:var(--paper);
+  border:3px solid var(--ink);box-shadow:14px 14px 0 var(--ink);transform:rotate(2deg);z-index:2}
+.end__art img{display:block;width:100%;height:100%;object-fit:cover}
+.end__main{position:absolute;left:76px;top:96px;width:580px;z-index:3}
+.end__kick{display:inline-block;margin:0;padding:7px 13px 6px;border:3px solid var(--cream);color:var(--cream);
+  font:700 11.5px/1 var(--mono);letter-spacing:.2em;transform:rotate(-3deg)}
+.end__q{margin:30px 0 0;font:900 44px/1.34 var(--sans);letter-spacing:-.035em;color:var(--cream)}
+.end__q em{font-style:normal;color:var(--yellow)}
+.end__p{margin:30px 0 0;font:700 12.5px/1.4 var(--mono);letter-spacing:.06em;color:#D9D5FF}
+.end__steps{margin:16px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.end__st{padding:7px 12px 8px;background:transparent;border:2px solid var(--cream);color:var(--cream);font:700 12.5px/1 var(--sans)}
+.end__st--last{background:var(--yellow);border:3px solid var(--ink);color:var(--ink);box-shadow:4px 4px 0 var(--ink);transform:rotate(-2deg)}
+.end__ty{margin:36px 0 0;font:900 44px/1 var(--sans);color:var(--cream);letter-spacing:.12em}
+.end__ty span{display:inline-block;padding:4px 16px 12px;background:var(--yellow);color:var(--ink);border:3px solid var(--ink);box-shadow:7px 7px 0 var(--ink);transform:rotate(-2deg)}
+
+/* ============ HUD ============ */
+.hud{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;align-items:center;gap:14px;padding:10px 18px 12px;
+  font:500 11px/1 var(--mono);letter-spacing:.12em;color:var(--hud-fg);pointer-events:none;user-select:none}
+.hud__bar{flex:1;height:2px;background:rgba(128,128,128,.22);overflow:hidden}
+.hud__bar>i{display:block;width:0;height:100%;background:var(--hud-accent);transition:width .35s ease}
+.hud__count{min-width:62px;text-align:right}
+.hud__hint{opacity:.5}
+.hud__nav{pointer-events:auto;display:flex;gap:6px}
+.hud__nav button{all:unset;cursor:pointer;padding:4px 8px;border:1px solid rgba(128,128,128,.3);border-radius:3px;font:inherit;color:inherit}
+.hud__nav button:hover{border-color:var(--hud-accent);color:var(--hud-accent)}
+
+/* ============ 讲稿抽屉 ============ */
+.notes{position:fixed;left:0;right:0;bottom:0;z-index:70;background:#111;color:#FFF2E0;padding:16px 22px 18px;
+  transform:translateY(120%);transition:transform .3s ease;max-height:46vh;overflow:auto}
+body.show-notes .notes{transform:none}
+.notes b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#FFC93C;margin-bottom:8px}
+.notes p{margin:0;font:400 14.5px/1.7 var(--sans);padding-right:80px}
+.notes__x{position:absolute;right:18px;top:14px;font:700 10.5px/1 var(--mono);letter-spacing:.14em;color:#FFC93C;border:1px solid #FFC93C;padding:5px 8px}
+
+@media print{
+  @page{size:1280px 720px;margin:0}
+  html,body{overflow:visible;background:#fff;height:auto}
+  #stage{position:static;transform:none!important;width:1280px;height:auto}
+  .slide{position:relative!important;width:1280px;height:720px;opacity:1!important;visibility:visible!important;display:block;
+    break-after:page;page-break-after:always}
+  .slide:last-child{break-after:auto}
+  .r{opacity:1!important;transform:none!important}
+  .hud,.notes{display:none!important}
+}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 01 封面 -->
+<section class="slide s-cover" data-note="开场只讲一件事：这一个月，我们把学习变成了作品。别急着报数字。">
+  <div class="dots cv__dots"></div>
+  <div class="cv__art"><span class="cv__stk">17 页</span><img src="https://workbuddy-space-static.codebuddy.work/image/IG8MDDrnnFxqn5s3yxt1QT.png" alt="波普拼贴主视觉" width="1100" height="733"></div>
+  <div class="cv__main">
+    <p class="cv__kick">团队项目汇报 · 2026.09.20 — 10.18</p>
+    <h1 class="cv__title"><span>星禾AI</span><strong>项目汇报</strong></h1>
+    <p class="cv__sub">把「学 AI」变成「做 AI」</p>
+    <p class="cv__note">这一个月，我们把学习变成了作品 —— 113 人开跑，23 个能打开的作品。</p>
+    <p class="cv__spk">汇报人 · 榛佑 ／ 集团技术部 · 2026.10.18</p>
+  </div>
+  <p class="cv__foot">XINGHE AI · MONTHLY REVIEW</p>
+</section>
+
+<!-- 02 目录 -->
+<section class="slide s-toc" data-note="一句话交代结构：先讲这一个月做了什么，再讲接下来往哪走。">
+  <header class="hd r">
+    <p class="kick">目录 · 约 25 min</p>
+    <h2 class="ttl">两条打卡线，三块后续规划</h2>
+  </header>
+  <div class="toc">
+    <div class="toc__c toc__c--a r">
+      <span class="toc__k">一 · 期间汇报</span>
+      <h3 class="toc__h">过去一个月</h3>
+      <p class="toc__d">9.20 — 10.18</p>
+      <ul class="toc__l">
+        <li><i>A</i>Vibe Coding 打卡</li>
+        <li><i>B</i>教学部知识库打卡</li>
+      </ul>
+    </div>
+    <div class="toc__c toc__c--b rf">
+      <span class="toc__k">二 · 后续规划</span>
+      <h3 class="toc__h">接下来往哪走</h3>
+      <p class="toc__d">NEXT 90 DAYS</p>
+      <ul class="toc__l">
+        <li><i>A</i>教学部知识库方向</li>
+        <li><i>B</i>Vibe Coding 方向</li>
+        <li><i>C</i>星禾AI 社区规划</li>
+      </ul>
+    </div>
+  </div>
+  <div class="toc__strip">
+    <div class="toc__sc r"><b>28 天</b><span>打卡周期</span></div>
+    <div class="toc__sc r"><b>113 人</b><span>参与开跑</span></div>
+    <div class="toc__sc r"><b>23 个</b><span>学员作品</span></div>
+    <div class="toc__sc r"><b>14 位</b><span>进 PK 赛</span></div>
+  </div>
+  <p class="toc__note">左边是「已经发生的」，右边是「准备发生的」—— 中间隔着的就是这一小时。</p>
+</section>
+
+<!-- 03 PART 01 -->
+<section class="slide s-part part" data-note="第一部分用 12 分钟。两条打卡线是同一个机制：把人筛出来，给了工具，再把标准拉起来。">
+  <div class="dots part__dots"></div>
+  <div class="part__num">01</div>
+  <div class="part__main">
+    <p class="part__kick">PART 01</p>
+    <h2 class="part__h">期间汇报</h2>
+    <p class="part__d">2026.09.20 — 10.18 · 28 天</p>
+  </div>
+  <div class="part__art"><img src="https://workbuddy-space-static.codebuddy.work/image/9mOOkKYcefFKUwgwbAVWce.png" alt="一层层往上走的台阶" width="760" height="760" loading="lazy"></div>
+  <p class="part__q">两条打卡线，<span>同一个机制</span></p>
+</section>
+
+<!-- 04 总览 A -->
+<section class="slide s-kpi" data-note="只报绝对值。不展开留存率、不做完成率对比 —— 数据口径不完整，容易被追问。">
+  <header class="hd r">
+    <p class="kick">期间汇报 · A · 总览</p>
+    <h2 class="ttl">113 人开跑，37 人走完全程</h2>
+  </header>
+  <div class="kpi">
+    <div class="kpi__c kpi__c--o r"><span class="kpi__k">PARTICIPANTS</span><p class="kpi__n">113<em>人</em></p><p class="kpi__t">参与打卡学习</p></div>
+    <div class="kpi__c kpi__c--c r"><span class="kpi__k">FINISHERS</span><p class="kpi__n">37<em>人</em></p><p class="kpi__t">完整走完全程</p></div>
+    <div class="kpi__c kpi__c--y r"><span class="kpi__k">DURATION</span><p class="kpi__n">28<em>天</em></p><p class="kpi__t">连续打卡周期</p></div>
+  </div>
+  <ul class="kpi__l">
+    <li>起点：<b>9 月 20 日</b>启动，全社区校区同步开跑</li>
+    <li>形式：28 天连续打卡，边学边做出自己的项目</li>
+  </ul>
+  <p class="note r"><b>注</b>口径提醒：113 / 37 是本次 Vibe Coding 打卡数据，不与其他批次混用。</p>
+</section>
+
+<!-- 05 过程 A -->
+<section class="slide s-proc" data-note="强调「不是讲完课就散」：五天连轴过进度，再配导师一对一接，这是打卡能出成果的原因。">
+  <header class="hd r">
+    <p class="kick">期间汇报 · A · 过程</p>
+    <h2 class="ttl">五天连开汇报会，三个导师分头带</h2>
+  </header>
+  <div class="tl r">
+    <span class="tl__bar"></span>
+    <span class="tl__i" style="left:0">9.22</span>
+    <span class="tl__i" style="left:96px">9.23</span>
+    <span class="tl__i" style="left:192px">9.24</span>
+    <span class="tl__i" style="left:288px">9.25</span>
+    <span class="tl__i" style="left:384px">9.26</span>
+    <span class="tl__cap">连续五天「项目进度汇报会」· 逐组过进度</span>
+    <span class="tl__ar">→</span>
+    <span class="tl__n"><b>9.30 后端培训</b><i>进入第三阶段 · 补齐工程侧能力</i></span>
+  </div>
+  <div class="mt">
+    <div class="mt__c r"><span class="mt__k">MENTOR 01</span><p class="mt__n">翁锐</p><p class="mt__r">APP · 闯关系统</p></div>
+    <div class="mt__c rf"><span class="mt__k">MENTOR 02</span><p class="mt__n">光义</p><p class="mt__r">智能体</p></div>
+    <div class="mt__c r"><span class="mt__k">MENTOR 03</span><p class="mt__n">鹏飞</p><p class="mt__r">AIGC · UI</p></div>
+  </div>
+  <p class="note r"><b>注</b>导师是分头接的：谁卡在哪一类，就由谁去接。</p>
+</section>
+
+<!-- 06 成果 1/2 -->
+<section class="slide s-works" data-note="不要逐个念。挑两个有画面的点一下：「逃课哨兵」「Offer 教练」—— 从真实痛点长出来的名字。">
+  <header class="hd r">
+    <p class="kick">期间汇报 · A · 成果 1/2</p>
+    <h2 class="ttl">23 个作品，全是学员自己做出来的（1–12）</h2>
+  </header>
+  <div class="grid2">
+    <div class="wk__i r"><span class="wk__n">01</span><span class="wk__h">记账工具</span><span class="wk__a">王小艺 · 王煜</span></div>
+    <div class="wk__i r"><span class="wk__n">02</span><span class="wk__h">每日健康记录</span><span class="wk__a">潘静</span></div>
+    <div class="wk__i r"><span class="wk__n">03</span><span class="wk__h">Agent</span><span class="wk__a">林世杰</span></div>
+    <div class="wk__i r"><span class="wk__n">04</span><span class="wk__h">电子设备使用指南</span><span class="wk__a">黄祖斌</span></div>
+    <div class="wk__i r"><span class="wk__n">05</span><span class="wk__h">Offer 教练</span><span class="wk__a">陈佳音</span></div>
+    <div class="wk__i r"><span class="wk__n">06</span><span class="wk__h">逃课哨兵</span><span class="wk__a">林婉婷</span></div>
+    <div class="wk__i r"><span class="wk__n">07</span><span class="wk__h">学分规划网站</span><span class="wk__a">施巨铭</span></div>
+    <div class="wk__i r"><span class="wk__n">08</span><span class="wk__h">美食文化介绍</span><span class="wk__a">方晓庆</span></div>
+    <div class="wk__i r"><span class="wk__n">09</span><span class="wk__h">长征故事讲解</span><span class="wk__a">郭准</span></div>
+    <div class="wk__i r"><span class="wk__n">10</span><span class="wk__h">AI 漫剧</span><span class="wk__a">崔亦然</span></div>
+    <div class="wk__i r"><span class="wk__n">11</span><span class="wk__h">大型游戏</span><span class="wk__a">沈俊涛 · 杜晨浩 · 杨峰 · 王明阳</span></div>
+    <div class="wk__i r"><span class="wk__n">12</span><span class="wk__h">锚点（习惯养成 / 每日计划）</span><span class="wk__a">李冉 · 赵博雯 · 李庆伟</span></div>
+  </div>
+  <figure class="wk__side r"><img src="https://workbuddy-space-static.codebuddy.work/image/ngSDg2i3XRgEz35rfjaxAJ.png" alt="学员作品拼贴" width="1100" height="733" loading="lazy"><figcaption>23 个作品 = 23 个真实需求</figcaption></figure>
+</section>
+
+<!-- 07 成果 2/2 -->
+<section class="slide s-works" data-note="收在一句判断上：23 个作品意味着 23 个真实需求，这就是我们后面所有项目的池子。">
+  <header class="hd r">
+    <p class="kick">期间汇报 · A · 成果 2/2</p>
+    <h2 class="ttl">23 个作品，全是学员自己做出来的（13–23）</h2>
+  </header>
+  <div class="grid2 grid2--wide">
+    <div class="wk__i r"><span class="wk__n">13</span><span class="wk__h">星禾助手</span><span class="wk__a">张锦源</span></div>
+    <div class="wk__i r"><span class="wk__n">14</span><span class="wk__h">热门时事辨伪网站</span><span class="wk__a">王伟健</span></div>
+    <div class="wk__i r"><span class="wk__n">15</span><span class="wk__h">家教网站</span><span class="wk__a">周康兴翔</span></div>
+    <div class="wk__i r"><span class="wk__n">16</span><span class="wk__h">普法网站</span><span class="wk__a">任麒洁</span></div>
+    <div class="wk__i r"><span class="wk__n">17</span><span class="wk__h">口语对话实战器</span><span class="wk__a">陈筱洁 · 白凡征 · 申浩哲</span></div>
+    <div class="wk__i r"><span class="wk__n">18</span><span class="wk__h">随手笔记（日精进）</span><span class="wk__a">陈柏瀚</span></div>
+    <div class="wk__i r"><span class="wk__n">19</span><span class="wk__h">出行助手</span><span class="wk__a">刘诗萌</span></div>
+    <div class="wk__i r"><span class="wk__n">20</span><span class="wk__h">每日 AI 概念</span><span class="wk__a">曾令旺</span></div>
+    <div class="wk__i r"><span class="wk__n">21</span><span class="wk__h">诗词搜索</span><span class="wk__a">陈林彬</span></div>
+    <div class="wk__i r"><span class="wk__n">22</span><span class="wk__h">心灵治愈网站</span><span class="wk__a">陈子妍</span></div>
+    <div class="wk__i r"><span class="wk__n">23</span><span class="wk__h">日程助手（课程表）</span><span class="wk__a">李国旭 · 周国伟 · 刘远建 · 李展荣</span></div>
+  </div>
+  <p class="wk__con r">覆盖方向：<b>学习 / 生活 / 文化 / 工具 / 游戏</b>　｜　结论：打卡不是目的，<b>跑出可展示、可复用的作品</b>才是。</p>
+</section>
+
+<!-- 08 总览 B -->
+<section class="slide s-kpi kpi--b" data-note="完成率高是「守住了基本盘」，但真正的收获是筛出愿意继续走的 14 个人。">
+  <header class="hd r">
+    <p class="kick">期间汇报 · B · 总览</p>
+    <h2 class="ttl ttl--s">63 位老师参与，59 人走完，14 人进 PK 赛</h2>
+  </header>
+  <div class="kpi">
+    <div class="kpi__c kpi__c--o r"><span class="kpi__k">TEACHERS</span><p class="kpi__n">63<em>位</em></p><p class="kpi__t">老师参与打卡</p></div>
+    <div class="kpi__c kpi__c--c r"><span class="kpi__k">COMPLETION</span><p class="kpi__n">93.7<em>%</em></p><p class="kpi__t">59 人完成全程</p></div>
+    <div class="kpi__c kpi__c--y r"><span class="kpi__k">ADVANCED</span><p class="kpi__n">14<em>位</em></p><p class="kpi__t">进阶进入 PK 赛</p></div>
+  </div>
+  <ul class="kpi__l">
+    <li>周期：<b>9 月 23 日启动 → 10 月 7 日结束</b>，12 天体系</li>
+    <li>对象：教学部老师，帮每人搭起自己的知识库</li>
+  </ul>
+  <p class="note r"><b>注</b>不要把 93.7% 讲成成果 —— 它是门槛，14 才是成果。</p>
+</section>
+
+<!-- 09 过程 B -->
+<section class="slide s-rows" data-note="提一句复盘：直播本身也被当产品迭代了 —— 控时长、拆角色、专人看评论。">
+  <header class="hd r">
+    <p class="kick">期间汇报 · B · 过程</p>
+    <h2 class="ttl ttl--s">一场培训打底，三场直播给工具</h2>
+  </header>
+  <div class="rows">
+    <div class="row r">
+      <div class="row__d">9.26</div>
+      <div class="row__b"><p class="row__h">教学部个人知识库培训</p><p class="row__t">ima 实操 + 三类知识库区别 + 教师知识库框架（工作专项 / 专业领域 / 日常工作 + 辅助板块）</p></div>
+    </div>
+    <div class="row r">
+      <div class="row__d">10.8<br>—10.10</div>
+      <div class="row__b"><p class="row__h">三场 WorkBuddy 直播</p><p class="row__t"><span class="day">Day1</span>定位与配置<span class="arw">→</span><span class="day">Day2</span>工作流六块积木<span class="arw">→</span><span class="day">Day3</span>AI 工作台与小程序</p></div>
+    </div>
+    <div class="row r">
+      <div class="row__d">10.8</div>
+      <div class="row__b"><p class="row__h">直播复盘</p><p class="row__t">单场控到 1 小时内 · 改多人协作讲解 · 辅讲专职看评论区</p></div>
+    </div>
+  </div>
+  <p class="note r"><b>注</b>直播不是「讲完就算」，复盘之后它自己也被当成了一个产品在迭代。</p>
+</section>
+
+<!-- 10 PK -->
+<section class="slide s-pk" data-note="讲清 PK 赛的性质：不是比赛，是筛人。比出谁愿意走、谁能走，后面重点服务这批人。">
+  <header class="hd r">
+    <p class="kick">期间汇报 · B · 收官</p>
+    <h2 class="ttl ttl--s">10 月 19 日中午，14 位老师现场 PK</h2>
+  </header>
+  <div class="pk__date">
+    <p class="pk__big">10.19</p>
+    <p class="pk__sub">周一 · 中午</p>
+    <p class="pk__sub2">14 位老师，从 63 位打卡老师中进阶而来。<br>四个维度现场展示，评委当场给判断。</p>
+  </div>
+  <div class="pk__tiles">
+    <div class="pk__t r"><span class="pk__n">DIM 01</span><p class="pk__h">知识库框架搭建</p><p class="pk__x">结构是否立得住</p></div>
+    <div class="pk__t r"><span class="pk__n">DIM 02</span><p class="pk__h">AI 工具应用</p><p class="pk__x">Skill 化使用，不是即问即走</p></div>
+    <div class="pk__t r"><span class="pk__n">DIM 03</span><p class="pk__h">工作流闭环</p><p class="pk__x">从取料到回存跑通</p></div>
+    <div class="pk__t r"><span class="pk__n">DIM 04</span><p class="pk__h">工作台规划</p><p class="pk__x">下一步要长成什么</p></div>
+  </div>
+  <p class="note r"><b>注</b>不是比赛，是筛人 —— 比出谁愿意走、谁能走，后面重点服务这批人。</p>
+</section>
+
+<!-- 11 小结 -->
+<section class="slide s-sum" data-note="这是第一部分的落点：两条线方法不同，底层机制是同一套。讲完停两秒再翻页。">
+  <header class="hd r">
+    <p class="kick">期间汇报 · 小结</p>
+    <h2 class="ttl">打卡筛人，直播给工具，PK 赛拉标准</h2>
+  </header>
+  <div class="sum">
+    <div class="sum__r r">
+      <div class="sum__k">Vibe Coding</div>
+      <div class="sum__v"><em>参与</em>113<i>→</i><em>走完</em>37<i>→</i><em>作品</em>23</div>
+    </div>
+    <div class="sum__r r">
+      <div class="sum__k">教学部知识库</div>
+      <div class="sum__v"><em>参与</em>63<i>→</i><em>走完</em>59<i>→</i><em>进 PK</em>14</div>
+    </div>
+  </div>
+  <div class="sum__f">
+    <div class="sum__b sum__b--1 r">筛人</div>
+    <span class="sum__ga">→</span>
+    <div class="sum__b sum__b--2 r">给工具</div>
+    <span class="sum__ga">→</span>
+    <div class="sum__b sum__b--3 r">拉标准</div>
+  </div>
+  <p class="note r"><b>注</b>两条线走法不同，底层是同一套机制；社区从「听课的人」变成「动手的人」。</p>
+</section>
+
+<!-- 12 PART 02 -->
+<section class="slide s-part part part--ink" data-note="第二部分 10 分钟。三块：教学部、Vibe Coding、社区。核心是「从工具走向入口」。">
+  <div class="dots part__dots"></div>
+  <div class="part__num">02</div>
+  <div class="part__main">
+    <p class="part__kick">PART 02</p>
+    <h2 class="part__h">后续规划</h2>
+    <p class="part__d">NEXT · 三个方向</p>
+  </div>
+  <div class="part__art"><img src="https://workbuddy-space-static.codebuddy.work/image/BzgbomHlckdEmYF5W01KF8.png" alt="火箭从蓝图起飞" width="760" height="760" loading="lazy"></div>
+  <p class="part__q">三块规划，<span>一条主线</span></p>
+</section>
+
+<!-- 13 后续 A 上 -->
+<section class="slide s-pn" data-note="关键是讲出「为什么变」：打卡能拉齐下限，但拉不高上限，后面要换成对有需求的人深度服务。">
+  <header class="hd r">
+    <p class="kick">后续规划 · A · 教学部（上）</p>
+    <h2 class="ttl ttl--s">PK 赛收官之后，从强制打卡转成按需辅导</h2>
+  </header>
+  <div class="pn pn--tight">
+    <div class="pn__i r">
+      <div class="pn__n">01</div>
+      <div><h3 class="pn__h">以 PK 赛为节点，兑现进阶名额</h3>
+      <p class="pn__t">14 位老师四维度展示。比赛本身不是目的，<b>是筛出下一批重点服务对象</b>。</p></div>
+    </div>
+    <div class="pn__i r">
+      <div class="pn__n">02</div>
+      <div><h3 class="pn__h">培训形式转型</h3>
+      <p class="pn__t">不再要求每日打卡，转为 <b>不定期直播 + 一对一沟通 + 线下辅导</b>。</p></div>
+    </div>
+  </div>
+  <p class="pull r">打卡能拉齐下限，但拉不高上限 —— 所以要换打法。</p>
+</section>
+
+<!-- 14 后续 A 下 -->
+<section class="slide s-award" data-note="说清奖励的用意：发的是「用得起顶级模型」的资格，比发实物更能让人真的动手试。">
+  <header class="hd r">
+    <p class="kick">后续规划 · A · 教学部（下）</p>
+    <h2 class="ttl ttl--xs">从知识库推到工作台，再用奖励把意愿拉起来</h2>
+  </header>
+  <div class="pn pn--half">
+    <div class="pn__i r">
+      <div class="pn__n">03</div>
+      <div><h3 class="pn__h">赋能官落地，从知识库推到工作台</h3>
+      <p class="pn__t">学员管理、考勤、成绩、沟通记录、待办。<br>路径：单智能体 → 多智能体 → 部门级 AI 系统</p></div>
+    </div>
+    <div class="pn__i r">
+      <div class="pn__n">04</div>
+      <div><h3 class="pn__h">奖励机制</h3>
+      <p class="pn__t">用顶级模型账号做激励 —— 发的是「用得起」的资格。</p></div>
+    </div>
+  </div>
+  <figure class="aw__art r"><img src="https://workbuddy-space-static.codebuddy.work/image/BSBujnBTl0ZyD0kWmFpVNc.png" alt="奖杯与奖牌" width="760" height="760" loading="lazy"></figure>
+  <div class="aw">
+    <div class="aw__c aw__c--1 rf"><span class="aw__e">一等奖</span><p class="aw__v">100 美刀</p><p class="aw__u">GPT 账号</p></div>
+    <div class="aw__c r"><span class="aw__e">二等奖</span><p class="aw__v">50 美刀</p><p class="aw__u">GPT 账号</p></div>
+    <div class="aw__c r"><span class="aw__e">三等奖</span><p class="aw__v">50 美刀</p><p class="aw__u">GPT 账号</p></div>
+    <div class="aw__c r"><span class="aw__e">优秀奖 × 3</span><p class="aw__v">20 美刀</p><p class="aw__u">GPT 账号</p></div>
+  </div>
+  <p class="note r"><b>注</b>发的是「用得起顶级模型」的资格 —— 比发实物更能让人真的动手试。</p>
+</section>
+
+<!-- 15 后续 B -->
+<section class="slide s-ladder" data-note="这页是全场最有卖点的一页，讲透那句：两个经验叠在一起，课程才立得住。">
+  <header class="hd r">
+    <p class="kick">后续规划 · B · Vibe Coding</p>
+    <h2 class="ttl ttl--xs">翁锐直播引出 Vibe Engineering：从 0 到 1，到 1 到 N</h2>
+  </header>
+  <div class="pn pn--half">
+    <div class="pn__i r">
+      <div class="pn__n">01</div>
+      <div><h3 class="pn__h">翁锐大佬专场直播</h3>
+      <p class="pn__t">面向社区成员开一场直播，作为课程升级的引子。</p></div>
+    </div>
+    <div class="pn__i r">
+      <div class="pn__n">02</div>
+      <div><h3 class="pn__h">推出 Vibe Engineering 课程</h3>
+      <p class="pn__t">双重经验叠加：翁锐本人多个真实项目的工程经验 + 近期接触国外最顶尖的大模型、并用它们实际做了大量项目。</p></div>
+    </div>
+    <div class="pn__i r">
+      <div class="pn__n">03</div>
+      <div><h3 class="pn__h">能力阶梯</h3>
+      <p class="pn__t">Vibe Coding ＝ 0→1，把想法变成能打开的东西；Vibe Engineering ＝ 1→N，把东西做成能长期运行的工程。</p></div>
+    </div>
+  </div>
+  <div class="lad r">
+    <div class="lad__s lad__s--1"><span class="lad__k">0 → 1</span><p class="lad__n">01</p><p class="lad__h">Vibe Coding</p><p class="lad__p">想法 → 能打开的东西</p></div>
+    <div class="lad__s lad__s--2"><span class="lad__k">1 → N</span><p class="lad__n">N</p><p class="lad__h">Vibe Engineering</p><p class="lad__p">做成能长期运行的工程</p></div>
+  </div>
+</section>
+
+<!-- 16 后续 C 上 -->
+<section class="slide s-sys-slide" data-note="别陷进「功能罗列」。只说一句：我们要做的不是工具，是入口。">
+  <header class="hd r">
+    <p class="kick">后续规划 · C · 星禾AI 社区（上）</p>
+    <h2 class="ttl ttl--s">做简约的自有 AI 系统，抢的是入口</h2>
+  </header>
+  <div class="pn pn--half" style="width:566px">
+    <div class="pn__i r">
+      <div class="pn__n">01</div>
+      <div><h3 class="pn__h">品牌与世界观</h3>
+      <p class="pn__t">统一调性与视觉，走简约克制风格（参考苹果、Claude Code 一类），配套世界观与 IP 设计。</p></div>
+    </div>
+    <div class="pn__i r">
+      <div class="pn__n">02</div>
+      <div><h3 class="pn__h">搭建专属 AI 系统</h3>
+      <p class="pn__t">不做又一个工具集合，而是多板块可联动的自有系统：<b>以工作台为入口</b>，把知识库、工作流、智能体串起来。</p></div>
+    </div>
+  </div>
+  <div class="sys r">
+    <div class="sys__c">工作台<br>WORKBENCH</div>
+    <div class="sys__s sys__s--1">知识库</div>
+    <div class="sys__s sys__s--2">工作流</div>
+    <div class="sys__s sys__s--3">智能体</div>
+    <span class="sys__l sys__l--1"></span>
+    <span class="sys__l sys__l--2"></span>
+    <span class="sys__l sys__l--3"></span>
+  </div>
+  <p class="note r"><b>注</b>入口本身就是战略资产 —— 我们要做的不是工具，是入口。</p>
+</section>
+
+<!-- 17 后续 C 下 -->
+<section class="slide s-pyramid" data-note="收尾落在「人」上：系统由一线长出来，才有人真的用。这句是整场的价值观。">
+  <header class="hd r">
+    <p class="kick">后续规划 · C · 星禾AI 社区（下）</p>
+    <h2 class="ttl ttl--s">三层演进：个人工具 → 部门系统 → 集团入口</h2>
+  </header>
+  <div class="pyr">
+    <div class="pyr__t pyr__t--1 rf"><div><b>集团 AI 入口</b><i>全员必用</i></div></div>
+    <div class="pyr__t pyr__t--2 rf"><div><b>部门系统</b><i>教学部 / 私域部共用</i></div></div>
+    <div class="pyr__t pyr__t--3 rf"><div><b>个人工具</b><i>老师自己的知识库与工作台</i></div></div>
+    <div class="pyr__t pyr__t--4 rf"><div><b>一线老师参与搭建</b><i>不是自上而下推</i></div></div>
+  </div>
+  <div class="pyr-side">
+    <div class="pn__i r">
+      <div class="pn__n">04</div>
+      <div><h3 class="pn__h">组织形态向 AI 原生演进</h3>
+      <p class="pn__t">方向是 AI 主导、人辅助；系统必须由一线老师参与搭建。</p></div>
+    </div>
+    <div class="pn__i r">
+      <div class="pn__n">05</div>
+      <div><h3 class="pn__h">校区 AI 团队建设</h3>
+      <p class="pn__t">重点推进 <b>西安、武汉、郑州</b> 三个校区先建起来，后续陆续开展更多校区 AI 社区。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 18 结尾 -->
+<section class="slide s-end end" data-note="不要再报数据。用一句判断结束，然后停住，等提问。">
+  <div class="dots end__dots"></div>
+  <div class="end__main">
+    <p class="end__kick">收尾</p>
+    <blockquote class="end__q">这个月我们证明了一件事 ——<br>普通人用 AI 也能<em>做出真东西</em>。</blockquote>
+    <p class="end__p">NEXT · 依次发生</p>
+    <div class="end__steps">
+      <span class="end__st">PK 赛收官</span>
+      <span class="end__st">翁锐直播</span>
+      <span class="end__st">Vibe Engineering</span>
+      <span class="end__st end__st--last">校区 AI 社区</span>
+    </div>
+    <p class="end__ty"><span>谢谢</span></p>
+  </div>
+  <figure class="end__art"><img src="https://workbuddy-space-static.codebuddy.work/image/2FjOMLnqkv8jPuV39IE0Hs.png" alt="灯亮起来的日出" width="1200" height="800" loading="lazy"></figure>
+</section>
+
+</div>
+
+<div class="hud">
+  <div class="hud__bar"><i></i></div>
+  <div class="hud__count"></div>
+  <div class="hud__hint">← → 翻页 · N 讲稿 · F 全屏</div>
+  <div class="hud__nav"><button type="button" data-go="prev">PREV</button><button type="button" data-go="next">NEXT</button></div>
+</div>
+<div class="notes"><span class="notes__x">N 关闭</span><b>讲稿</b><p id="notesText"></p></div>
+
+<script>
+(function(){
+  'use strict';
+  var stage=document.getElementById('stage');
+  var slides=Array.prototype.slice.call(document.querySelectorAll('#stage > .slide'));
+  var bar=document.querySelector('.hud__bar > i');
+  var counter=document.querySelector('.hud__count');
+  var notesEl=document.getElementById('notesText');
+  var total=slides.length, index=0;
+  if(!stage||!total){return;}
+  function pad(n){return (n<10?'0':'')+n;}
+  function fit(){
+    var s=Math.min(window.innerWidth/1280,window.innerHeight/720);
+    stage.style.transform='translate(-50%,-50%) scale('+s+')';
+  }
+  function render(){
+    slides.forEach(function(el,i){
+      el.classList.toggle('is-active',i===index);
+      el.setAttribute('aria-hidden',i===index?'false':'true');
+    });
+    if(bar){bar.style.width=((index+1)/total*100)+'%';}
+    if(counter){counter.textContent=pad(index+1)+' / '+pad(total);}
+    if(notesEl){notesEl.textContent=slides[index].getAttribute('data-note')||'（本页无讲稿）';}
+    document.documentElement.setAttribute('data-slide',String(index+1));
+  }
+  function go(n,opts){
+    n=Math.max(0,Math.min(total-1,n));
+    if(n===index&&slides[index].classList.contains('is-active')){return;}
+    index=n;render();
+    if(!opts||!opts.silent){try{history.replaceState(null,'','#'+(index+1));}catch(e){}}
+  }
+  function next(){go(index+1);}
+  function prev(){go(index-1);}
+  document.addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey){return;}
+    switch(e.key){
+      case 'ArrowRight':case 'ArrowDown':case 'PageDown':case ' ':case 'Enter':
+        next();e.preventDefault();break;
+      case 'ArrowLeft':case 'ArrowUp':case 'PageUp':case 'Backspace':
+        prev();e.preventDefault();break;
+      case 'Home':go(0);e.preventDefault();break;
+      case 'End':go(total-1);e.preventDefault();break;
+      case 'f':case 'F':
+        if(document.fullscreenElement){document.exitFullscreen();}
+        else if(document.documentElement.requestFullscreen){document.documentElement.requestFullscreen();}
+        break;
+      case 'n':case 'N':
+        document.body.classList.toggle('show-notes');break;
+      default:break;
+    }
+  });
+  var tx=0,ty=0;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+  document.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){ if(dx<0){next();}else{prev();} }
+  },{passive:true});
+  var lock=false;
+  document.addEventListener('wheel',function(e){
+    if(lock){return;}
+    if(Math.abs(e.deltaY)<24){return;}
+    lock=true;
+    if(e.deltaY>0){next();}else{prev();}
+    setTimeout(function(){lock=false;},520);
+  },{passive:true});
+  document.addEventListener('click',function(e){
+    var t=e.target.closest?e.target.closest('[data-go]'):null;
+    if(!t){return;}
+    var v=t.getAttribute('data-go');
+    if(v==='next'){next();}else if(v==='prev'){prev();}else{go(parseInt(v,10)-1);}
+  });
+  window.addEventListener('resize',fit);
+  window.addEventListener('load',fit);
+  fit();
+  var start=parseInt((location.hash||'').replace('#',''),10);
+  index=(start>=1&&start<=total)?start-1:0;
+  render();
+})();
+</script>
+</body>
+</html>

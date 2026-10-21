@@ -12,13 +12,25 @@
 
 ## WorkBuddy 专家包
 
-`workbuddy-experts/` 存放可上传到 WorkBuddy 平台审核的专家压缩包（`.zip`），解压后为标准专家插件目录结构（`.codebuddy-plugin/plugin.json` + `agents/` + `skills/`）。
+`workbuddy-experts/` 存放 WorkBuddy 平台的专家源码。每个专家一个独立目录，结构符合专家插件规范（`.codebuddy-plugin/plugin.json` + `agents/` + `skills/`），可直接在本地安装，也可打包成 zip 上传平台审核。
 
 | 专家 | 说明 |
 | --- | --- |
-| [`html-ppt-studio`](./workbuddy-experts/html-ppt-studio.zip) | 幻灯匠 · HTML PPT 制作专家。把资料拆成大纲、逐页分镜与可放映的 HTML 演示页，四步审核、判断有据、风格可换。 |
+| [`html-ppt-studio`](./workbuddy-experts/html-ppt-studio) | 幻灯匠 · HTML PPT 制作专家。把资料拆成大纲、逐页分镜与可放映的 HTML 演示页，四步审核、判断有据、风格可换。 |
 
-上传方式：WorkBuddy 专家中心 → 配置专家 → 上传压缩包（仅支持 `.zip`，≤ 20MB）。
+本地安装（复制整个专家目录到插件目录）：
+
+```bash
+cp -r workbuddy-experts/html-ppt-studio ~/.workbuddy/plugins/marketplaces/my-experts/plugins/
+```
+
+打包上传（仅支持 `.zip`，≤ 20MB）：
+
+```bash
+python scripts/package_expert.py workbuddy-experts/html-ppt-studio
+```
+
+或用 WorkBuddy 内置的 expert-manager 技能：专家中心 → 配置专家 → 上传压缩包。
 
 ## 安装方式
 
