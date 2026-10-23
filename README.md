@@ -16,18 +16,18 @@
 
 | 专家 | 说明 |
 | --- | --- |
-| [`html-ppt-studio`](./workbuddy-experts/html-ppt-studio) | 幻灯匠 · HTML PPT 制作专家。把资料拆成大纲、逐页分镜与可放映的 HTML 演示页，四步审核、判断有据、风格可换。 |
+| [`slide-smith`](./workbuddy-experts/slide-smith) | 幻灯匠 · 汇报演示制作专家。把资料拆成大纲、逐页分镜与成片演示，HTML 放映页 / 可编辑 PPTX / 逐页生图 PPTX 三选一，四步审核、判断有据、风格可换。 |
 
 本地安装（复制整个专家目录到插件目录）：
 
 ```bash
-cp -r workbuddy-experts/html-ppt-studio ~/.workbuddy/plugins/marketplaces/my-experts/plugins/
+cp -r workbuddy-experts/slide-smith ~/.workbuddy/plugins/marketplaces/my-experts/plugins/
 ```
 
 打包上传（仅支持 `.zip`，≤ 20MB）：
 
 ```bash
-python scripts/package_expert.py workbuddy-experts/html-ppt-studio
+python scripts/package_expert.py workbuddy-experts/slide-smith
 ```
 
 或用 WorkBuddy 内置的 expert-manager 技能：专家中心 → 配置专家 → 上传压缩包。
@@ -92,7 +92,7 @@ my-skills/
 │   ├── project-init/
 │   └── experience-capture/
 └── workbuddy-experts/              # WorkBuddy 专家源码
-    └── html-ppt-studio/
+    └── slide-smith/
 ```
 
 ## 许可

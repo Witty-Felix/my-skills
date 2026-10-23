@@ -1,0 +1,63 @@
+{
+  "name": "slide-smith",
+  "version": "3.2.0",
+  "description": "Turns raw material into a reviewed outline, a page-by-page slide spec, and a finished deck — as a runnable HTML presentation, an editable PPTX, or a PPTX with page-by-page generated visuals. Four gated steps, a stored preference library, 19 visual styles, and 14 argument methods, chosen independently.",
+  "author": {
+    "name": "榛佑"
+  },
+  "agents": [
+    "./agents/slide-smith.md"
+  ],
+  "skills": [
+    "./skills/deck-flow"
+  ],
+  "expertType": "agent",
+  "agentName": "slide-smith",
+  "displayName": {
+    "en": "Slide Smith",
+    "zh": "幻灯匠"
+  },
+  "profession": {
+    "en": "Presentation Deck Specialist",
+    "zh": "汇报演示制作专家"
+  },
+  "displayDescription": {
+    "en": "Turns your material into an outline, a page-by-page slide spec, and a finished deck — HTML 放映页, 可编辑 PPTX, or 逐页生图 PPTX, your call. Four gated reviews, recorded judgments, 19 visual skins and 14 argument methods picked separately.",
+    "zh": "资料拆成大纲、逐页分镜与成片演示，HTML、PPTX、生图 PPTX 三选一，四步审核，风格可换。"
+  },
+  "avatar": "avatars/expert.png",
+  "categoryId": "06-ContentCreative",
+  "defaultInitPrompt": {
+    "zh": "我有一份资料，想做成一份汇报 PPT",
+    "en": "I have material and want it turned into a presentation deck"
+  },
+  "plugin": "slide-smith",
+  "tags": [
+    {
+      "en": "Presentation Deck",
+      "zh": "汇报演示"
+    },
+    {
+      "en": "PPTX Slides",
+      "zh": "PPTX 幻灯片"
+    },
+    {
+      "en": "Narrative Storyboard",
+      "zh": "叙事分镜"
+    }
+  ],
+  "quickPrompts": [
+    {
+      "zh": "我有一份资料，想做成一份汇报 PPT",
+      "en": "I have material and want it turned into a presentation deck"
+    },
+    {
+      "zh": "先按偏好库出大纲，我审完再动逐页内容",
+      "en": "Draft the outline using my preference library, and wait for my review"
+    },
+    {
+      "zh": "用 POP 风格把这批内容做成可编辑的 PPTX",
+      "en": "Build this content into an editable PPTX in the POP style"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+# Step 4.4 · 构建 HTML 放映页
+
+> 本文件只管 **HTML 放映页** 这一条分支（SKILL.md 4.4）。
+> 可编辑 PPTX 走 4.5、逐页生图 PPTX 走 4.6，两者都转内置 `ppt-master` 引擎。
+
+前置：`<项目名>-逐页内容.html` 已通过审核，**视觉皮已在 4.1 问定**，**三页样张已在 4.2 确认满意**。
+
+## 1. 起手
+
+```bash
+mkdir -p "<workspace>/ppt/<中文项目名>"
+cp "<SKILL_DIR>/references/visual-library/<style>.reference.html" \
+   "<workspace>/ppt/<中文项目名>/<中文项目名>-放映页.html"
+```
+
+**从参考实现改，不从零写。** 引擎、HUD、讲稿抽屉、`@page` 全都在里面，重写只会引入 bug。
+
+> 目录名、文件名全用中文（J-27）。上例里的 `<style>` 是视觉皮 id，那是库内标识，保持英文。
+
+> 只有 `pop-collage` 自带 `.reference.html`（在 `visual-library/`）。选其余 18 种 catalog 皮时没有可复制的参考稿：按该皮在 `ppt-master/references/visual-styles/<id>.md` 的形状语言与留白纪律，自己搭一份 1280×720 固定舞台的骨架（键盘翻页 + `data-note` + `fit()` 缩放照本节规范），之后仍可复用。
+
+## 2. 清空内容，保留骨架
+
+删掉所有 `<section class="slide">`，只留：
+
+- `<style>` 全部（组件样式）
+- `<div id="stage">`
+- `<div class="hud">` 与 `<div class="notes">`
+- `<script>` 全部
+
+然后按 `<项目名>-逐页内容.html` 一页一页加 `<section>`（从里面 `section.page` 逐个取 `h3.at` 与三个 `<dt>` 的内容，不自己重写）。
+
+## 3. 每个 section 的结构
+
+```html
+<section class="slide s-<原型>" data-note="<讲稿原文>">
+  <header class="hd r">
+    <p class="kick">PART 01 · 小节名</p>
+    <h2 class="ttl">结论式页标题</h2>
+  </header>
+
+  <div class="<组件> r">
+    ...
+  </div>
+
+  <p class="note r"><b>注</b>补充说明</p>
+</section>
+```
+
+三条硬规则：
+
+1. **`data-note` 必须有**，没讲稿就写空字符串——HUD 会显示「本页无讲稿」，那是提示不是错误。
+2. **需要动效的元素加 `.r`（带位移）或 `.rf`（只透明度）**。靠 `transform` 定位的块只能用 `.rf`。
+3. **页序即《逐页内容》的顺序**，不重排。
+
+## 4. 原型选择
+
+先看《逐页内容》里该页的「版式」一行，对照 `visual-library/pop-collage.md` 的「页面原型」表选最接近的那个（其余 18 种皮没有原型表，按该皮的构图几何自行组织）。
+没有完全匹配的：
+
+- 优先**换成最接近的原型**，别发明新组件。
+- 实在不行才新增，新增的样式追加到 `<style>` 末尾，类名加前缀防撞。
+
+## 5. 配图
+
+- 默认**不配图**。用户要求配才配。
+- 生成图（ImageGen）→ 四边**等量**裁 8% 去水印 → 缩到 760–1100 宽。
+  ⚠️ 只裁右下会让构图偏心。
+- 图片存 `ppt/<中文项目名>/assets/`，HTML 用相对路径引用。
+- **不要引第三方图床域名。**
+- 图框比例必须等于图片比例，否则 `object-fit:cover` 会裁掉两侧。
+
+## 6. 自检
+
+### 6.1 结构自检（不开浏览器）
+
+```bash
+# section 数量
+grep -c '<section class="slide' "<中文项目名>-放映页.html"
+# 每页是否都有 data-note
+grep -c 'data-note=' "<中文项目名>-放映页.html"
+# 是否残留第三方域名
+grep -Eoi '<img[^>]+>' "<中文项目名>-放映页.html" | grep -Eoi '(https?:)?//[^/"'"'"' ]+' | grep -Eiv 'codebuddy|workbuddy'
+```
+
+三项数字对不上就回去改。
+
+### 6.2 视觉自检（必做）
+
+无头 Edge 逐页截图，**一次 4–6 张**，别批量超时：
+
+```bash
+"C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless=new --disable-gpu \
+  --hide-scrollbars --window-size=1280,720 --virtual-time-budget=3500 \
+  --screenshot="shot-01.png" "file:///<urlencoded-html>#1"
+```
+
+每张图看三件事：
+
+| 看什么 | 不合格的样子 |
+|---|---|
+| 溢出 | 文字出框、卡片被切、底部压到 HUD |
+| 错位 | 该居中的偏左、该对齐的参差、层级颠倒 |
+| 呼吸 | 字挤成一团、块贴边、留白被占满 |
+
+**没看过截图不算做完。** 至少看：首屏、末屏、每个章节页、最密的那一页。
+
+### 6.3 翻页自检
+
+键盘 ← → 走一遍，确认：无跳页、无重复、`N` 能开讲稿、`F` 能全屏。
+
+## 7. 可选：上线
+
+只有用户明确说「发出去」才做。资料库脚本的安装位置因机器而异，**不要写死路径**，先自己找：
+
+```bash
+# 在本机搜索导入脚本，找不到就如实说明，不要猜路径
+find "$HOME/.workbuddy" "/c/Program Files" -name "import_html.py" -path "*library*" 2>/dev/null | head -3
+```
+
+找到后：
+
+```bash
+LIB="<上一步查到的 library 目录>"
+
+# 质量门禁（固定 1280×720 舞台的告警属固有，可 ack）
+python "$LIB/page/lint_page_quality.py" --html "<中文项目名>-放映页.html" \
+  --ack "固定 1280x720 舞台等比缩放，多列栅格位于舞台内部"
+
+# 导入 / 覆盖更新
+python "$LIB/page/import_html.py" "<中文项目名>-放映页.html"
+```
+
+导入后 `data-page-node-id` 会被重写，评论锚点跨版本失效——**改版前先记下当前 nodeId**。
+
+## 8. 交付
+
+```
+✅ <中文项目名>-放映页.html
+📄 　 页 · 风格 <style>
+⌨️  ← → 翻页 · N 讲稿 · F 全屏
+📁 <绝对路径>
+```
+
+再加一句结构说明，一句话。
