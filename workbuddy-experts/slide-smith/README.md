@@ -11,7 +11,7 @@ Agent 型（单个 AI 专家）
 - **四步门禁**：收料 → 大纲（等审）→ 逐页内容（等审）→ 出页面。不通过不动下一步。
 - **偏好库**：把每次取舍沉淀成条目（如「抓大放小」「大纲不写配色」「数据不混批次」），出大纲/分镜前按条目跟用户确认，只问这次碰得到的，最多 6 条。
 - **两层记忆**：公共层随包分发；个人层放在本机 `~/.workbuddy/ppt-private/judgments.local.md`，可以写具体项目与真实数据，不会进包、不外发。
-- **两套风格库，分开选、也分时问**：**视觉皮** 19 种（本包自带 `pop-collage` 波普拼贴，自带 18 屏参考实现 + 全部 14 种页面原型；另含 `ppt-master` catalog 的 18 种：`dark-tech`、`swiss-minimal`、`glassmorphism`、`blueprint`、`data-journalism` …）；**表达方法** 14 种（MBB 咨询、投资人路演、经营回顾、产品发布…）。皮决定长什么样，方法决定怎么论证，两者可任意组合。**表达方法在 Step 1 问（定页序），视觉皮在 Step 4 制作前问（定长相）**——审稿阶段不写颜色，皮早问没有落点。
+- **两套风格库，分开选、也分时问**：**视觉皮** 22 种（本包自带 4 种：`pop-collage` 波普拼贴〔18 屏参考实现 + 14 种页面原型〕、`award-gold` 鎏金颁奖、`cartoon-mascot` 卡通形象、`soft-sticker` 贴纸插画；另含 `ppt-master` catalog 的 18 种：`dark-tech`、`swiss-minimal`、`glassmorphism`、`blueprint`、`data-journalism` …）；**表达方法** 14 种（MBB 咨询、投资人路演、经营回顾、产品发布…）。皮决定长什么样，方法决定怎么论证，两者可任意组合。**表达方法在 Step 1 问（定页序），视觉皮在 Step 4 制作前问（定长相）**——审稿阶段不写颜色，皮早问没有落点。
 - **三种产出形态**：HTML 放映页（默认，1280×720 固定舞台，等比缩放，键盘/滚轮/触摸翻页，`N` 看讲稿，`F` 全屏）/ 可编辑 PPTX（PowerPoint 里能继续改）/ 逐页生图 PPTX（每页先用宿主内置生图铺视觉再合成，文字保持原生）。**内容只有一份，出处永远是《逐页内容》。用户说「PPT」就绝不给 HTML。**
 - **审稿交 HTML，不交 md**：大纲与逐页内容都产出带排版的 HTML，浏览器打开即终稿形态；**所有产出文件中文命名**（`需求简报.md` / `<项目名>-大纲.html` / `<项目名>-逐页内容.html` / `<项目名>-放映页.html`），一眼看得出是什么。
 
@@ -25,8 +25,8 @@ skills/
     references/
       judgment-library.md          ★ 偏好库（越用越准，公共层）
       step4-build.md               构建与自检规范
-      visual-library/              视觉风格库（19 种：管长什么样）
-        README.md                  视觉索引（本包 1 种 + catalog 18 种）+ 选型 + 生图 prompt 四要素
+      visual-library/              视觉风格库（22 种：管长什么样）
+        README.md                  视觉索引（本包 4 种 + catalog 18 种）+ 选型 + 生图 prompt 四要素
         pop-collage.md             POP 风格规范（色板/字号阶/组件/页面原型）
         pop-collage.reference.html POP 示例稿（18 屏，脱敏+虚构内容，本地配图）
         assets/                    示例稿用的本地插图

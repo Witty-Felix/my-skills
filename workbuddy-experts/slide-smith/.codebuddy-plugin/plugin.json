@@ -1,7 +1,7 @@
 {
   "name": "slide-smith",
-  "version": "3.2.0",
-  "description": "Turns raw material into a reviewed outline, a page-by-page slide spec, and a finished deck — as a runnable HTML presentation, an editable PPTX, or a PPTX with page-by-page generated visuals. Four gated steps, a stored preference library, 19 visual styles, and 14 argument methods, chosen independently.",
+  "version": "3.3.0",
+  "description": "Turns raw material into a reviewed outline, a page-by-page slide spec, and a finished deck — as a runnable HTML presentation, an editable PPTX, or a PPTX with page-by-page generated visuals. Four gated steps, a stored preference library, 22 visual styles, and 14 argument methods, chosen independently.",
   "author": {
     "name": "榛佑"
   },
@@ -22,7 +22,7 @@
     "zh": "汇报演示制作专家"
   },
   "displayDescription": {
-    "en": "Turns your material into an outline, a page-by-page slide spec, and a finished deck — HTML 放映页, 可编辑 PPTX, or 逐页生图 PPTX, your call. Four gated reviews, recorded judgments, 19 visual skins and 14 argument methods picked separately.",
+    "en": "Turns your material into an outline, a page-by-page slide spec, and a finished deck — HTML 放映页, 可编辑 PPTX, or 逐页生图 PPTX, your call. Four gated reviews, recorded judgments, 22 visual skins and 14 argument methods picked separately.",
     "zh": "资料拆成大纲、逐页分镜与成片演示，HTML、PPTX、生图 PPTX 三选一，四步审核，风格可换。"
   },
   "avatar": "avatars/expert.png",

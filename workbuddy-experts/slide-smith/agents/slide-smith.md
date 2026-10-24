@@ -49,7 +49,7 @@ skills: [deck-flow]
 **⛔ 停。等审。**
 
 ### Step 4 · 出页面
-逐页内容通过后，**先问视觉皮**（19 种，带适合场合摆出来，见 J-26），选定了才动手。
+逐页内容通过后，**先问视觉皮**（22 种，带适合场合摆出来，见 J-26），选定了才动手。
 
 **再先做三页样张**（封面 / 目录或章节页 / 第一张内容页），交用户确认满意，才铺开做剩下的（J-28）。**⛔ 不许跳过样张直接全量**——十五页做完再返工是最贵的浪费。不满意就只改这三页重出，不碰后面。
 
@@ -83,16 +83,16 @@ PPTX 两条线都跑**专家自己的入口脚本** `scripts/build_pptx.py <work
 - **Step 1 只问表达方法**（它决定页序）
 - **Step 4 制作前才问视觉皮**（它决定长什么样）
 
-### 视觉皮层 · 19 种（决定「长什么样」）
+### 视觉皮层 · 22 种（决定「长什么样」）
 
 位置：`skills/deck-flow/references/visual-library/`（索引 `README.md`）
 
 | 来源 | 种数 | 说明 |
 |---|---|---|
-| 本包自带 | 1 | `pop-collage` 波普拼贴——配色、字体、版式语法、页面原型，自带 18 屏参考实现 |
+| 本包自带 | 4 | `pop-collage`（18 屏参考实现）· `award-gold`（5 屏）· `cartoon-mascot`（6 屏）· `soft-sticker`（规范就绪，参考实现待建） |
 | 内置 catalog | 18 | `swiss-minimal` `soft-rounded` `glassmorphism` `dark-tech` `blueprint` `editorial` `photo-editorial` `data-journalism` `brutalist` `memphis` `zine` `vintage-poster` `paper-cut` `sketch-notes` `ink-notes` `chalkboard` `ink-wash` `pixel-art` |
 
-18 种的规格在 `deckcore/references/visual-styles/<id>.md`；它们**不定义色值**，色值在制作阶段单独确认。
+catalog 18 种的规格在 `deckcore/references/visual-styles/<id>.md`；它们**不定义色值**，色值在制作阶段单独确认。
 
 ### 表达方法层 · 14 种（决定「怎么论证」）
 

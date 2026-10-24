@@ -5,7 +5,7 @@ description: >
   brief → outline → page-by-page slide spec → HTML deck, editable PPTX, or a
   PPTX with page-by-page generated visuals. Ships a preference library (what the
   user has decided to include or exclude), a **visual style library**
-  (19 skins: 18 catalog styles + pop-collage), and an **expression method
+  (22 skins: 18 catalog styles + 4 bundled), and an **expression method
   library** (14 argument skeletons). Use whenever the user wants a 汇报 PPT,
   演示页, 汇报页, 放映页, a PPTX deck, or asks to restructure / revise an
   existing deck.
@@ -41,7 +41,7 @@ description: >
 1. 读 `references/judgment-library.md`（偏好库，公共层）。
 2. 检查 `~/.workbuddy/ppt-private/judgments.local.md`——存在就一并读，冲突以私有层为准。
 3. 读**表达方法**索引：`references/style-library/README.md`（14 种，管怎么论证）。
-   视觉皮索引（`references/visual-library/README.md`，19 种，管长什么样）**留到 Step 4 再读再问**——皮是「长什么样」，等到真要画的时候选才不浪费（J-26）。
+   视觉皮索引（`references/visual-library/README.md`，22 种，管长什么样）**留到 Step 4 再读再问**——皮是「长什么样」，等到真要画的时候选才不浪费（J-26）。
 4. 判断这次是**新建**还是**改已有稿**：
    - 新建 → 从 Step 1 走。
    - 改已有稿 → 先读它现有的 `<项目名>-大纲.html` / `<项目名>-逐页内容.html`，判断改动落在哪一层，**回到那一层重做**，不要直接改成品页。
@@ -161,16 +161,18 @@ description: >
 
 ### 4.1 先问视觉皮（制作前唯一要问的问题）
 
-**这一步必须问用户，不许自己定。** 打开 `references/visual-library/README.md`，把 19 种按「适合什么场合」摆出来让他挑（J-26）——只报 id 不合格，要带场合。
+**这一步必须问用户，不许自己定。** 打开 `references/visual-library/README.md`，把 22 种按「适合什么场合」摆出来让他挑（J-26）——只报 id 不合格，要带场合。
 
 为什么不放在 Step 1 问：Step 2、Step 3 都不写颜色、不写字体（J-01），皮在审稿阶段没有落点。挪到这儿，用户是在「已经认可结构、马上要变成页面」的语境下选皮，选得准。
 
 - 用户说「你定」→ 按场合挑最贴的，默认回落到 `pop-collage`
-- 用户要的皮不在库里 → 明说「目前只有这 19 种，要么选一种，要么你先给我一个参考（截图 / 网站 / 现有 HTML）」，**不要现编一套皮**
+- 用户要的皮不在库里 → 明说「目前只有这 22 种，要么选一种，要么你先给我一个参考（截图 / 网站 / 现有 HTML）」，**不要现编一套皮**
 
 选定后读它的规范 +（若自带）参考实现：
 - `pop-collage`：读 `pop-collage.md` + `pop-collage.reference.html`（18 屏可直接改内容复用）
-- 其余 18 种：读 `../../../deckcore/references/visual-styles/<id>.md`，色值在制作阶段单独确认
+- `award-gold` / `cartoon-mascot`：读同名 `.md` + `.reference.html`（5 屏 / 6 屏）
+- `soft-sticker`：读 `soft-sticker.md`（规范齐全，参考实现待建，按 10 类原型现场搭）
+- 其余 18 种 catalog：读 `../../../deckcore/references/visual-styles/<id>.md`，色值在制作阶段单独确认
 
 ### 4.2 先做三页样张，等确认（门禁）
 

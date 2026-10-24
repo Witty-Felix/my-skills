@@ -7,19 +7,28 @@
 
 ---
 
-## 一、共 19 种
+## 一、共 22 种
 
 18 种来自转换内核（`deckcore`，源自 ppt-master）的视觉风格 catalog（`../../../../deckcore/references/visual-styles/`），
-1 种（`pop-collage`）是本包自带、带完整页面原型与参考实现的原创皮。
+1 种（`pop-collage`）是本包自带、带完整页面原型与参考实现的原创皮，
+1 种（`award-gold`）是按 Style Contract 落地的首发契约皮，
+1 种（`cartoon-mascot`）是按 Style Contract 落地的契约皮（2026-10-24，源自 cartoon-mascot 风格规则草案 v0.8），
+1 种（`soft-sticker`）是按 Style Contract 落地的契约皮（2026-10-24，从 11 页贴纸插画样张提取，导入 cartoon-mascot 的六条结构纪律）。
 
-### 1.1 本包自带（有完整规范 + 18 屏参考实现）
+### 1.1 本包自带（有完整规范 + 参考实现）
+
+> ⚠️ **机制约定**：所有皮必须遵守 `_style-contract.md`（三层 token / 类名前缀 / 每皮独立 assets+fonts 目录）。
+> 新皮按契约落地；`pop-collage` 为存量皮，迁移待办。
 
 | id | 名称 | 适合什么场合 | 一句话内核 | 规格 |
 |---|---|---|---|---|
 | `pop-collage` | 波普拼贴 | 汇报、复盘、对内宣讲，要有记忆点的场合 | 奶油纸底 + 硬投影 + 贴纸感，强对比、有点吵 | `pop-collage.md` |
+| `award-gold` | 鎏金颁奖 | 颁奖典礼、表彰大会、庆功场合 | 深色鎏金氛围 + 金标题/白英文注/黄人名三层节奏，图贴边、文分区 | `award-gold.md` |
+| `cartoon-mascot` | 卡通形象风 | 课程/讲座/活动介绍、内轻汇报，需要亲和的场合 | 卡通角色当演员 + 白卡承载信息 + 色板从角色吸附，动作由文案推导 | `cartoon-mascot.md` |
+| `soft-sticker` | 贴纸插画风 | 对外宣讲、培训、攻略型内容，要亲和又要成体系 | 蓝紫单色调 + 深色块压信息 + 角色贴纸破框出血 | `soft-sticker.md` |
 
-- 参考实现：`pop-collage.reference.html`（18 屏，可直接改内容复用）
-- 配图素材：`assets/`（award / cv / rocket / stairs / sunrise / works）
+- 参考实现：`pop-collage.reference.html`（18 屏，可直接改内容复用）；`award-gold.reference.html`（5 屏，虚构内容）；`cartoon-mascot.reference.html`（6 屏，虚构内容）；`soft-sticker` 参考实现待建（规范与 10 类原型已就绪）
+- 配图素材：`assets/`（**共享区已冻结，仅供 pop-collage**；award-gold 素材在 `award-gold/assets/`；cartoon-mascot 素材在 `cartoon-mascot/assets/`）
 
 ### 1.2 内置 catalog（18 种）
 
@@ -47,7 +56,7 @@
 | | `ink-wash` | 宣纸留白、笔触、印章点睛 |
 | 特殊 | `pixel-art` | 严格像素栅格、块状造型、有限色板 |
 
-> 18 种里，**只有 `pop-collage` 带现成的页面原型与参考 HTML**；其余 18 种是「视觉语法 + 性格」的规范，页面按规范现场生成。
+> 本包自带的四张皮（`pop-collage` / `award-gold` / `cartoon-mascot` / `soft-sticker`）都带页面原型表；前三张另有参考 HTML，`soft-sticker` 参考实现待建。18 种 catalog 皮只有「视觉语法 + 性格」规范，页面按规范现场生成。
 
 ---
 

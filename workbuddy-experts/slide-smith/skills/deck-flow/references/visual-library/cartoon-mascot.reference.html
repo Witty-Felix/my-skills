@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>cartoon-mascot · 卡通形象风 · 参考实现（6 屏，内容虚构）</title>
+<style>
+/* ═══ cartoon-mascot 参考实现 · 遵守 _style-contract.md ═══
+   E 层=引擎契约（--e-*） / S 层=风格色板（--cm-*） / F 层=字体栈（--cm-font-*）
+   结构类（.slide/.hd/.kick/.ttl/.note/.r/.rf/#stage/.hud/.notes）布局语义归引擎，皮只改外观 */
+
+:root{
+  /* ── E 层 · 引擎契约 ── */
+  --e-stage-w:1280px;
+  --e-stage-h:720px;
+  --e-font-ui:"Noto Sans SC","PingFang SC",sans-serif;
+  --e-hud-fg:#eee;
+  --e-hud-accent:#D8A24E;
+  --e-stage-bg:#0B1B3A;
+  --e-notes-bg:#111;
+
+  /* ── S 层 · 风格色板（自角色吸附：鱼尾少女；换角色即重吸，变量名不变） ── */
+  --cm-sea:#0E4EB2;
+  --cm-mid:#3F77CE;
+  --cm-fin:#62B3F4;
+  --cm-cream:#FFF2E0;
+  --cm-gold:#D8A24E;
+  --cm-ink:#0B1B3A;
+  --cm-paper:#FFFFFF;
+  --cm-wall-base:#9aa6b8;   /* 画格墙格内灰阶底（无图时的占位灰） */
+
+  /* ── F 层 · 字体栈（<id>- 前缀；本皮无专属字体，性格靠字重） ── */
+  --cm-font-display:"Noto Sans SC","PingFang SC",sans-serif;
+  --cm-font-body:"Noto Sans SC","PingFang SC",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{background:var(--e-stage-bg);}
+body{font-family:var(--e-font-ui);}
+
+/* ================= 引擎结构层（公共契约，只改外观） ================= */
+#stage{position:fixed;left:50%;top:50%;width:var(--e-stage-w);height:var(--e-stage-h);
+  transform:translate(-50%,-50%) scale(var(--e-scale,1));transform-origin:center}
+.slide{position:absolute;inset:0;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .45s ease}
+.slide.is-active{opacity:1;visibility:visible}
+.hd{position:absolute;left:0;right:0;top:0;height:120px;z-index:5}
+.note{position:absolute;left:0;right:0;bottom:34px;text-align:center;margin:0}
+.r{opacity:0;transform:translateY(18px)}
+.rf{opacity:0;transform:translateY(14px)}
+.is-active .r{animation:cmUp .7s ease .15s forwards}
+.is-active .rf{animation:cmUp .7s ease .35s forwards}
+@keyframes cmUp{to{opacity:1;transform:none}}
+.hud{position:fixed;right:18px;bottom:14px;z-index:80;display:flex;align-items:center;gap:12px;
+  font:400 11px/1 var(--e-font-ui);letter-spacing:.12em;color:var(--e-hud-fg);opacity:.85}
+.hud__count{min-width:62px;text-align:right}
+.hud__hint{opacity:.5}
+.hud__nav{pointer-events:auto;display:flex;gap:6px}
+.hud__nav button{all:unset;cursor:pointer;padding:4px 8px;border:1px solid rgba(255,255,255,.24);font:inherit;color:inherit}
+.hud__nav button:hover{border-color:var(--e-hud-accent);color:var(--e-hud-accent)}
+.notes{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--e-notes-bg);color:var(--e-hud-fg);padding:16px 22px 18px;
+  transform:translateY(100%);transition:transform .3s ease}
+body.show-notes .notes{transform:none}
+.notes b{display:block;font:700 10.5px/1 var(--e-font-ui);letter-spacing:.2em;color:var(--e-hud-accent);margin-bottom:8px}
+.notes p{margin:0;font:400 14.5px/1.7 var(--e-font-ui);padding-right:80px}
+.notes__x{position:absolute;right:18px;top:14px;font:700 10.5px/1 var(--e-font-ui);letter-spacing:.14em;color:var(--e-hud-accent);border:1px solid var(--e-hud-accent);padding:5px 8px}
+
+/* ================= cartoon-mascot 皮层（全部 --cm-*） ================= */
+
+/* —— 手势纪律：墨边 + 实心无模糊影 + 微旋转（跨角色通用） —— */
+.cm-card{background:var(--cm-paper);border:3px solid var(--cm-ink);border-radius:4px;
+  box-shadow:6px 6px 0 var(--cm-ink);}
+.cm-card--tilt{transform:rotate(-1.4deg)}
+.cm-card--tilt2{transform:rotate(1.8deg)}
+.cm-tag{display:inline-block;background:var(--cm-gold);border:3px solid var(--cm-ink);
+  box-shadow:4px 4px 0 var(--cm-ink);padding:6px 14px;
+  font:800 18px/1 var(--cm-font-body);color:var(--cm-ink);transform:rotate(-1deg)}
+.cm-tag--fin{background:var(--cm-fin)}
+
+/* —— 原型 P1 · 封面：浅底满版画格墙（底色浅→可全局背景）+ 左深色块 + 主角相框 —— */
+.cm-wall{position:absolute;inset:0;background:var(--cm-cream);
+  display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:6px;
+  padding:6px;overflow:hidden}
+.cm-wall i{display:block;background:var(--cm-wall-base);overflow:hidden;position:relative}
+.cm-wall i img{width:100%;height:150%;object-fit:cover;object-position:top;
+  filter:grayscale(42%) brightness(.98) saturate(45%);opacity:.62}
+.cm-wall i:nth-child(2n) img{object-position:bottom}
+.cm-cover-block{position:absolute;left:0;top:0;bottom:0;width:46%;background:var(--cm-sea);z-index:2;
+  padding:0 56px 0 64px;color:var(--cm-paper);display:flex;flex-direction:column;justify-content:center}
+.cm-cover-title{font:900 52px/1.28 var(--cm-font-display);letter-spacing:2px;margin-top:20px}
+.cm-cover-sub{font:400 21px/1.8 var(--cm-font-body);margin-top:22px;opacity:.92}
+.cm-hero-frame{position:absolute;right:36px;bottom:30px;width:224px;height:300px;z-index:3;
+  background:var(--cm-paper);border:3px solid var(--cm-ink);box-shadow:11px 11px 0 var(--cm-ink);
+  transform:rotate(2deg);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.cm-hero-frame img{width:88%;object-fit:contain;object-position:bottom}
+.cm-star{position:absolute;right:250px;bottom:300px;z-index:3;font:900 44px/1 var(--cm-font-display);
+  color:var(--cm-gold);text-shadow:2px 2px 0 var(--cm-ink);transform:rotate(-10deg)}
+
+/* —— 原型 P2 · 目录/清单：横条分格 —— */
+.cm-strip-row{position:absolute;left:72px;right:300px;height:88px;display:flex;align-items:center;gap:24px;
+  padding:0 28px}
+.cm-num{font:900 40px/1 var(--cm-font-display);color:var(--cm-paper)}
+.cm-strip-row h3{font:800 26px/1 var(--cm-font-body);color:var(--cm-paper)}
+.cm-strip-row p{font:400 15px/1.4 var(--cm-font-body);color:var(--cm-paper);opacity:.85;margin-left:auto}
+
+/* —— 原型 P3 · 要点：网格纸 + 白卡 —— */
+.cm-gridpaper{position:absolute;inset:0;background:var(--cm-cream);
+  background-image:linear-gradient(var(--cm-ink) 1px,transparent 1px),linear-gradient(90deg,var(--cm-ink) 1px,transparent 1px);
+  background-size:80px 80px;opacity:1}
+.cm-gridpaper::after{content:"";position:absolute;inset:0;background:var(--cm-cream);opacity:.93}
+.cm-gridpaper>*{position:relative;z-index:1}
+.cm-card h4{font:800 21px/1.3 var(--cm-font-body);color:var(--cm-ink);margin-bottom:10px}
+.cm-card p{font:400 14.5px/1.75 var(--cm-font-body);color:var(--cm-ink)}
+.cm-card p b{background:var(--cm-fin);padding:0 4px;border-radius:2px}
+
+/* —— 原型 P4 · 数据/量级：六级阶梯 + 警告条 —— */
+.cm-ladder{position:absolute;display:flex;align-items:flex-end;gap:14px}
+.cm-ladder i{display:block;width:96px;background:var(--cm-mid);border:3px solid var(--cm-ink);
+  box-shadow:6px 6px 0 var(--cm-ink);position:relative}
+.cm-ladder i.hot{background:var(--cm-gold)}
+.cm-ladder i em{position:absolute;top:-30px;left:0;right:0;text-align:center;font:700 14px/1 var(--cm-font-body);font-style:normal;color:var(--cm-ink)}
+.cm-warn{position:absolute;z-index:2;display:flex;align-items:center;gap:14px;background:var(--cm-paper);border:3px solid var(--cm-ink);
+  box-shadow:6px 6px 0 var(--cm-ink);padding:12px 22px;
+  font:800 17px/1.4 var(--cm-font-body);color:var(--cm-ink)}
+.cm-warn::before{content:"⚠";font-size:24px}
+
+/* —— 原型 P5 · 坑/警告：双卡对峙 —— */
+.cm-vs{position:absolute;display:flex;gap:36px}
+.cm-vs .cm-card{width:380px;padding:26px 28px}
+.cm-vs .cm-card--dark{background:var(--cm-sea);border-color:var(--cm-ink);box-shadow:6px 6px 0 var(--cm-ink)}
+.cm-vs .cm-card--dark h4,.cm-vs .cm-card--dark p{color:var(--cm-paper)}
+.cm-vs h4{font:800 21px/1.3 var(--cm-font-body)}
+.cm-vs p{font:400 14.5px/1.75 var(--cm-font-body);margin-top:8px}
+
+/* —— 原型 P6 · 收尾：深底满版反白（底色深→背景克制）+ 三条命令 —— */
+.cm-endpage{position:absolute;inset:0;background:var(--cm-ink)}
+.cm-cmd{display:flex;gap:22px;align-items:flex-start;margin-top:26px}
+.cm-cmd b{flex:none;width:112px;text-align:center;background:var(--cm-gold);border:3px solid var(--cm-paper);
+  padding:8px 0;font:800 17px/1 var(--cm-font-body);color:var(--cm-ink);box-shadow:4px 4px 0 rgba(255,255,255,.25)}
+.cm-cmd code{font:400 24px/1.5 "SFMono-Regular",Consolas,monospace;color:var(--cm-paper)}
+.cm-cmd span{display:block;font:400 16px/1.5 var(--cm-font-body);color:var(--cm-fin);margin-top:6px}
+.cm-hero{position:absolute;z-index:3}
+.cm-hero img{height:100%;object-fit:contain;filter:drop-shadow(0 0 26px rgba(255,242,224,.55))}
+/* —— 底部结句条（.cm-strip 的实心版，无渐变） —— */
+.cm-strip-final{position:absolute;z-index:2;background:var(--cm-sea);border:3px solid var(--cm-ink);
+  box-shadow:6px 6px 0 var(--cm-ink);padding:14px 24px;
+  font:800 17px/1.5 var(--cm-font-body);color:var(--cm-paper)}
+.cm-kickline{font:800 16px/1 var(--cm-font-body);letter-spacing:4px;color:var(--cm-gold)}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- P1 封面：浅底满版画格墙 + 左深色块 + 主角相框 -->
+  <section class="slide" id="s1">
+    <div class="cm-wall">
+      <i><img src="cartoon-mascot/assets/cm-char-point.png" alt=""></i><i><img src="cartoon-mascot/assets/cm-char-think.png" alt=""></i><i><img src="cartoon-mascot/assets/cm-char-panic.png" alt=""></i>
+      <i><img src="cartoon-mascot/assets/cm-char-think.png" alt=""></i><i><img src="cartoon-mascot/assets/cm-char-panic.png" alt=""></i><i><img src="cartoon-mascot/assets/cm-char-point.png" alt=""></i>
+      <i><img src="cartoon-mascot/assets/cm-char-panic.png" alt=""></i><i><img src="cartoon-mascot/assets/cm-char-point.png" alt=""></i><i><img src="cartoon-mascot/assets/cm-char-think.png" alt=""></i>
+    </div>
+    <div class="cm-cover-block">
+      <span class="cm-tag">给零基础的你</span>
+      <h1 class="cm-cover-title">声音的魔法课</h1>
+      <p class="cm-cover-sub">从听个响，到听得清、听得宽——<br>三步把耳朵叫醒</p>
+    </div>
+    <div class="cm-star">★</div>
+    <div class="cm-hero-frame"><img src="cartoon-mascot/assets/cm-char-point.png" alt="主角"></div>
+    <aside data-notes="封面：底色浅（奶油）→ 画格墙可满版；左 46% 深色块保文字可读；主角白卡相框压右下，灰阶墙衬原色主角。"></aside>
+  </section>
+
+  <!-- P2 目录：横条分格 -->
+  <section class="slide" id="s2">
+    <div style="position:absolute;inset:0;background:var(--cm-sea)"></div>
+    <div class="cm-strip-row cm-card" style="top:96px;background:var(--cm-mid);transform:rotate(-.8deg)">
+      <span class="cm-num">01</span><h3>基准：先有参照物</h3><p>Reference Transparency</p>
+    </div>
+    <div class="cm-strip-row cm-card" style="top:214px;background:var(--cm-sea);transform:rotate(1.1deg)">
+      <span class="cm-num">02</span><h3>出耳朵：声音变宽了</h3><p>Crossfeed</p>
+    </div>
+    <div class="cm-strip-row cm-card" style="top:332px;background:var(--cm-mid);transform:rotate(-1.2deg)">
+      <span class="cm-num">03</span><h3>更宽：六级阶梯</h3><p>低切 00256 → 高切 22000</p>
+    </div>
+    <div class="cm-strip-row cm-card" style="top:450px;background:var(--cm-sea);transform:rotate(.9deg)">
+      <span class="cm-num">04</span><h3>场景与坑</h3><p>什么场合用哪个 · 两个坑</p>
+    </div>
+    <div class="cm-hero" style="right:24px;bottom:0;height:330px"><img src="cartoon-mascot/assets/cm-char-point.png" alt="指向清单"></div>
+    <aside data-notes="目录：横条分格中装置，色带错位 + 微旋转；指向角色指向条目方向——方向判定过审后才能上页。"></aside>
+  </section>
+
+  <!-- P3 要点：网格纸 + 双白卡 + 陪伴角色 -->
+  <section class="slide" id="s3">
+    <div class="cm-gridpaper">
+      <div class="hd"><span class="cm-kickline" style="position:absolute;top:40px;left:72px">— 基准 —</span></div>
+      <h2 class="r" style="position:absolute;top:64px;left:72px;font:900 36px/1.2 var(--cm-font-display);color:var(--cm-ink)">一把尺子</h2>
+      <div class="r" style="position:absolute;top:118px;left:74px;font:800 16px/1 var(--cm-font-body);letter-spacing:2px;color:var(--cm-sea)">Reference Transparency</div>
+      <div class="cm-card cm-card--tilt r" style="position:absolute;left:72px;top:186px;width:440px;min-height:230px;padding:26px 28px">
+        <h4>它是什么</h4>
+        <p>一条<b>不过任何处理</b>的参考链。切到它，你听到的就是原始录音本来的样子。</p>
+        <p style="margin-top:14px;opacity:.8">它不修饰、不补齐、不增宽——所以能当尺子。</p>
+      </div>
+      <div class="cm-card cm-card--tilt2 rf" style="position:absolute;left:552px;top:226px;width:430px;min-height:230px;padding:26px 28px">
+        <h4>怎么用（三步）</h4>
+        <p>① 切到 Reference 听一分钟<br>② 切回处理链对比<br>③ 差别越明显，越该回头调</p>
+        <p style="margin-top:14px;opacity:.8">三步都不用记参数。</p>
+      </div>
+      <div class="cm-hero" style="right:20px;bottom:64px;height:250px"><img src="cartoon-mascot/assets/cm-char-think.png" alt="探头思考"></div>
+      <div class="cm-strip-final r" style="left:72px;right:300px;bottom:60px">它不是「最好听」，它是「最真」——尺子不负责好听。</div>
+    </div>
+    <aside data-notes="要点页：轻装置（网格纸）零生图成本；定义句配坐姿/思考；白卡微旋转 + 实心影，禁模糊阴影。"></aside>
+  </section>
+
+  <!-- P4 数据/量级：六级阶梯 + 警告条 -->
+  <section class="slide" id="s4">
+    <div style="position:absolute;inset:0;background:var(--cm-cream)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:10px;background:var(--cm-sea)"></div>
+    <div class="hd"><span class="cm-kickline" style="position:absolute;top:40px;left:72px">— 更宽 —</span></div>
+    <h2 class="r" style="position:absolute;top:64px;left:72px;font:900 36px/1.2 var(--cm-font-display);color:var(--cm-ink)">六级阶梯：从 00256 爬到 22000</h2>
+    <div class="cm-warn r" style="left:72px;top:150px;width:520px">一次只挪一档：耳朵要的是对比，不是跳跃。</div>
+    <div class="cm-ladder rf" style="left:72px;bottom:150px;height:236px">
+      <i style="height:60px" class="hot"><em>00256</em></i>
+      <i style="height:100px" class="hot"><em>01500</em></i>
+      <i style="height:145px"><em>04000</em></i>
+      <i style="height:190px"><em>09000</em></i>
+      <i style="height:235px"><em>15000</em></i>
+      <i style="height:280px"><em>22000</em></i>
+    </div>
+    <div class="cm-hero" style="right:110px;bottom:0;height:200px"><img src="cartoon-mascot/assets/cm-char-panic.png" alt="慌张"></div>
+    <aside data-notes="数据页：轻装置（纯色+色带）；量级用阶梯条，前两档高亮；警告句配慌张角色；角色不压字，判定线是卡内边距。"></aside>
+  </section>
+
+  <!-- P5 坑/警告：双卡对峙 -->
+  <section class="slide" id="s5">
+    <div style="position:absolute;inset:0;background:var(--cm-cream)"></div>
+    <div class="hd"><span class="cm-kickline" style="position:absolute;top:40px;left:72px">— 两个坑 —</span></div>
+    <h2 class="r" style="position:absolute;top:64px;left:72px;font:900 36px/1.2 var(--cm-font-display);color:var(--cm-ink)">这两个坑，踩过的人都沉默了</h2>
+    <div class="cm-vs rf" style="left:72px;top:190px">
+      <div class="cm-card cm-card--tilt">
+        <span class="cm-tag">坑 01</span>
+        <h4 style="margin-top:14px">开太宽，声音变「隔墙」</h4>
+        <p>阶梯直接拉满 → 人声跑到隔壁房间。正确姿势：一次一档，每档听一分钟。</p>
+      </div>
+      <div class="cm-card cm-card--tilt2 cm-card--dark">
+        <span class="cm-tag cm-tag--fin">坑 02</span>
+        <h4 style="margin-top:14px">拿它修「耳机坏了」</h4>
+        <p>单边没声音是硬件问题。效果器管「怎么听」，不管「听不听得到」。</p>
+      </div>
+    </div>
+    <div class="cm-hero" style="right:60px;bottom:0;height:200px"><img src="cartoon-mascot/assets/cm-char-panic.png" alt="慌张"></div>
+    <div class="note" style="color:var(--cm-ink);opacity:.7;font:400 13px/1 var(--cm-font-body)">诚实话：某第三方预设的兼容性未经确认，装前先备份配置。</div>
+    <aside data-notes="坑页：轻装置+双卡对峙（白卡 vs 深蓝卡）；警告句配慌张；底部保留诚实话，未经确认的信息必须声明。"></aside>
+  </section>
+
+  <!-- P6 收尾：深底满版反白（底色深→背景克制，角色加光斑） -->
+  <section class="slide" id="s6">
+    <div class="cm-endpage"></div>
+    <div class="hd"><span class="cm-kickline" style="position:absolute;top:40px;left:72px">— 今晚作业 —</span></div>
+    <h2 class="r" style="position:absolute;top:64px;left:72px;font:900 36px/1.2 var(--cm-font-display);color:var(--cm-paper)">三步，把耳朵叫醒</h2>
+    <div style="position:absolute;left:72px;top:170px;width:700px">
+      <div class="cm-cmd r"><b>01 基准</b><div><code>Reference Transparency</code><span>先听一遍「最真」</span></div></div>
+      <div class="cm-cmd r"><b>02 出耳</b><div><code>Crossfeed</code><span>开一档，感受声音变宽</span></div></div>
+      <div class="cm-cmd r"><b>03 更宽</b><div><code>00256 → 01500</code><span>一次一档，别贪</span></div></div>
+    </div>
+    <div class="cm-hero" style="right:40px;bottom:0;height:400px"><img src="cartoon-mascot/assets/cm-char-point.png" alt="指向命令"></div>
+    <div class="note" style="color:var(--cm-fin);opacity:.85;font:400 14px/1 var(--cm-font-body)">明晚同一时间，带着你的耳朵来复盘。</div>
+    <aside data-notes="收尾：重装置⑫满版反白——底色深，背景克制不加花；深底角色必须加奶油光斑否则沉底；结束语配指向/背影。"></aside>
+  </section>
+
+</div>
+
+<!-- HUD -->
+<div class="hud">
+  <span class="hud__count">01 / 06</span>
+  <span class="hud__hint">←→ 翻页 · N 讲稿</span>
+  <span class="hud__nav"><button data-nav="-1">PREV</button><button data-nav="1">NEXT</button></span>
+</div>
+
+<!-- 讲稿抽屉 -->
+<div class="notes"><b>SPEAKER NOTES</b><p></p><span class="notes__x">CLOSE ✕</span></div>
+
+<script>
+/* 引擎（复制自 pop-collage 标准实现，只读 E 层） */
+var slides=[].slice.call(document.querySelectorAll('.slide')),cur=0;
+function fit(){
+  var s=Math.min(innerWidth/1280,innerHeight/720);
+  document.documentElement.style.setProperty('--e-scale',s);
+}
+function go(n,opts){
+  var i=Math.max(0,Math.min(slides.length-1,n));
+  if(i===cur&&!opts)return;
+  slides[cur].classList.remove('is-active');
+  cur=i;slides[cur].classList.add('is-active');
+  document.querySelector('.hud__count').textContent=('0'+(cur+1)).slice(-2)+' / 0'+slides.length;
+  var nt=slides[cur].querySelector('[data-notes]');
+  document.querySelector('.notes p').textContent=nt?nt.getAttribute('data-notes'):'';
+  if(!opts)history.replaceState(null,'','#'+(cur+1));
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(cur+1)}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(cur-1)}
+  else if(e.key==='Home'){go(0)}else if(e.key==='End'){go(slides.length-1)}
+  else if(e.key==='n'||e.key==='N'){document.body.classList.toggle('show-notes')}
+});
+document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchend',function(e){
+  var dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)){dx<0?go(cur+1):go(cur-1)}
+},{passive:true});
+document.addEventListener('wheel',function(e){
+  if(document.body.classList.contains('show-notes'))return;
+  if(Math.abs(e.deltaY)>40){e.deltaY>0?go(cur+1):go(cur-1)}
+},{passive:true});
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-nav]');
+  if(b){go(cur+ +b.getAttribute('data-nav'));return}
+});
+document.querySelector('.notes__x').addEventListener('click',function(){document.body.classList.remove('show-notes')});
+window.addEventListener('resize',fit);
+window.addEventListener('load',fit);
+fit();
+var start=parseInt((location.hash||'').replace('#',''),10);
+go(isNaN(start)?0:start-1,{silent:true});
+</script>
+</body>
+</html>

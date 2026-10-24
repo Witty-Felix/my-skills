@@ -26,7 +26,7 @@
 | `creative-pitch` | 创意提案 | 创意方案、品牌 campaign | 把一个真实洞察落地，并展示它如何活在每个出现的地方 |
 | `duty-manual` | 制度手册 | 规则汇编、作业手册 | 把散落的规则收拢到一条判断轴上，机制先于规则，每条可追溯到机制页 |
 
-> **视觉皮不在这里。** 共 19 种视觉风格（18 种 catalog + 本包自带的 `pop-collage`），见 `../visual-library/README.md`。
+> **视觉皮不在这里。** 共 22 种视觉风格（18 种 catalog + 本包自带 4 种），见 `../visual-library/README.md`。
 
 ---
 
