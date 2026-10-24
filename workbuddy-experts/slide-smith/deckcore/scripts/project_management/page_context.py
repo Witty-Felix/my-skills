@@ -39,13 +39,24 @@ from svg_to_pptx.pptx_package.template_structure import (
     TemplateStructureError,
     load_pptx_structure_lock,
 )
-from visualization_catalog import (
-    LEGACY_STRUCTURE_INTENT_KIND,
-    VISUALIZATION_SVG_KIND,
-    VisualizationCatalogError,
-    VisualizationEntry,
-    resolve_visualization_reference,
-)
+# The visualization catalog lived under deckcore/templates/, which is not part of
+# this distribution. Keep the symbols importable so page-context still loads, and
+# let the resolver guard below report a precise error when a chart/table
+# reference is actually requested.
+try:
+    from visualization_catalog import (
+        LEGACY_STRUCTURE_INTENT_KIND,
+        VISUALIZATION_SVG_KIND,
+        VisualizationCatalogError,
+        VisualizationEntry,
+        resolve_visualization_reference,
+    )
+except ImportError:  # pragma: no cover - stripped distribution
+    VISUALIZATION_SVG_KIND = "visualization-svg"
+    LEGACY_STRUCTURE_INTENT_KIND = "legacy-structure-intent"
+    VisualizationCatalogError = None  # type: ignore[assignment]
+    VisualizationEntry = None  # type: ignore[assignment]
+    resolve_visualization_reference = None  # type: ignore[assignment]
 
 
 PAGE_CONTEXT_SCHEMA = "ppt-master.page-context.v2"
@@ -423,6 +434,12 @@ def _visualization_reference(
 ) -> tuple[dict[str, str] | None, Path | None, VisualizationEntry]:
     """Resolve one live asset or one legacy intent-only Structure key."""
     source_section = "page_charts" if allow_legacy_bare else "page_visualizations"
+    if resolve_visualization_reference is None:
+        raise PageContextError(
+            f"{source_section} value {value!r} cannot be resolved: the visualization "
+            "catalog is not bundled with this package; author the chart or table "
+            "directly per executor-chart.md / executor-table.md"
+        )
     try:
         entry = resolve_visualization_reference(
             value,

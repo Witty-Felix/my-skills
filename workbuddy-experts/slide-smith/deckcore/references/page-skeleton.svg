@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" lang="zh-CN" font-family="Microsoft YaHei" font-size="24" font-weight="normal" data-pptx-page-role="content">
+  <!-- ============================================================
+       幻灯匠 · 合规页骨架（2026-10-24 实测 status=passed / 0 告警）
+       用法：整文件复制到 <project>/svg_output/NN.svg，改内容。
+       四条硬项（缺任何一条都会吃告警或直接失败）：
+       1. 根 <svg> 只给排版默认值（font-family/size/weight），绝不给 fill；
+          共享涂色下沉到各 <g>。
+       2. 每个可见根 <g> 必须带 data-pptx-bounds="x y width height"。
+       3. 带 data-pptx-role 的元素必须有稳定 id（背景/装饰同样要）。
+       4. 色值一律大写 #RRGGBB。
+       整页声明 data-pptx-page-role="content"（扁平页）。
+       ============================================================ -->
+
+  <!-- 静态画框：根原语，id + role 不可省 -->
+  <rect id="page-bg" data-pptx-role="background" x="0" y="0" width="1280" height="720" fill="#FFFFFF"/>
+
+  <!-- 页标题：一个逻辑单元 = 一个带 id 与 bounds 的根 <g> -->
+  <g id="unit-page-title" data-pptx-bounds="88 80 1104 96" fill="#111111">
+    <text id="title-main" x="88" y="150" font-size="44" font-weight="bold">页面主标题（一句结论，不是名词短语）</text>
+  </g>
+
+  <!-- 内容单元示例一：卡片（rect + 文字同组） -->
+  <g id="unit-card-1" data-pptx-bounds="88 220 540 300" fill="#333333">
+    <rect x="88" y="220" width="540" height="300" rx="16" fill="#F2ECE2" stroke="#111111" stroke-width="3"/>
+    <text x="120" y="280" font-size="28" font-weight="bold" fill="#111111">小节标题</text>
+    <text x="120" y="330" font-size="20" fill="#444444">正文：能上屏的字就是最终的字。</text>
+  </g>
+
+  <!-- 内容单元示例二：图形（内联 path，导出为原生形状） -->
+  <g id="unit-shape-1" data-pptx-bounds="680 220 512 340" fill="#111111">
+    <path d="M680 480 L936 260 L936 480 Z" fill="#C8452B"/>
+    <text x="680" y="540" font-size="18" fill="#666666">图注（如有）</text>
+  </g>
+
+  <!-- 页脚可选：id + role，bounds 不与其他单元重叠 -->
+  <g id="unit-footer" data-pptx-bounds="88 640 1104 32" fill="#888888">
+    <text x="88" y="662" font-size="14">页脚小字（可选，不当必填用）</text>
+  </g>
+</svg>

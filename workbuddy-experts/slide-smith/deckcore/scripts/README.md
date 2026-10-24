@@ -60,7 +60,7 @@ python3 scripts/update_repo.py
 | PPTX transitions | `pptx_transitions.py` | — |
 | PPTX animations | `pptx_animations.py`, `animation_config.py` | — |
 | Animation resources | `sound_sync.py` | [sound vocabulary and sync](../sounds/README.md) |
-| Spec maintenance | `update_spec.py`, `visualization_recall.py`; legacy `chart_recall.py` | — |
+| Spec maintenance | `update_spec.py` | — |
 | Spec review | `spec_review/server.py`, `check_spec_annotations.py` | — |
 | Image tools | `image_search.py`, `image_treat.py`, `slice_images.py`, `analyze_images.py` | — |
 | Maintenance smokes | Inline temporary-project commands | — |
@@ -107,13 +107,6 @@ path/SHA fingerprints and are read once per execution context. `--bundle` is a
 deprecated compatibility no-op. `--record-usage` writes one derived snapshot
 under `analysis/page-context/`; exact `o200k_base` token counts are optional and
 degrade to `tokens: null` when `tiktoken` is absent. Telemetry may be partial.
-
-Optional visualization-recall diagnostics and canonical validation:
-
-```bash
-python3 scripts/visualization_recall.py recall --page P03 --tag "time series" --tag "three metrics" --tag "direction over time"
-python3 scripts/visualization_recall.py validate chart/line_chart
-```
 
 Template source import:
 

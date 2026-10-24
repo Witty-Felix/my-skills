@@ -21,7 +21,6 @@
     "skills/ppt-master/references/executor-base.md": 12000,
     "skills/ppt-master/references/executor-structured.md": 5500,
     "skills/ppt-master/references/executor-chart.md": 2000,
-    "skills/ppt-master/references/executor-visualization.md": 1000,
     "skills/ppt-master/references/executor-structure.md": 1750,
     "skills/ppt-master/references/topology-assembly.md": 3750,
     "skills/ppt-master/references/executor-table.md": 1000,
@@ -1082,14 +1081,6 @@
       ],
       "max_tokens": 3500
     },
-    "stage.generate.executor.visualization": {
-      "description": "Conditional selected visualization-reference resolution and flexible page-local adaptation rules.",
-      "scope": "incremental",
-      "files": [
-        "skills/ppt-master/references/executor-visualization.md"
-      ],
-      "max_tokens": 1250
-    },
     "stage.generate.executor.table": {
       "description": "Conditional semantic cell-grid construction rules. Ceiling raised after the native projection step was added (BUDGET_FILE/BUDGET_LOAD_SET reported 1022 tokens).",
       "scope": "incremental",
@@ -1260,16 +1251,6 @@
           "skills/ppt-master/templates/brands/中汽研/templates/design_spec.md"
         ],
         "reason": "Brand preset scaffolds share fixed section boilerplate by design."
-      },
-      {
-        "kind": "exact",
-        "fingerprint": "0d0f56615a1f",
-        "paths": [
-          "skills/ppt-master/references/ai-image-comparison/palette/_manifest.md",
-          "skills/ppt-master/references/ai-image-comparison/rendering/_manifest.md",
-          "skills/ppt-master/references/ai-image-comparison/type/_manifest.md"
-        ],
-        "reason": "Generated comparison-asset manifests share an identical header by construction."
       },
       {
         "kind": "exact",
@@ -1611,11 +1592,6 @@
       "to": "skills/ppt-master/references/shared-standards-core.md"
     },
     {
-      "concern": "visualization-reference-routing",
-      "from": "skills/ppt-master/references/executor-base.md",
-      "to": "skills/ppt-master/references/executor-visualization.md"
-    },
-    {
       "concern": "structured-executor-routing",
       "from": "skills/ppt-master/references/executor-base.md",
       "to": "skills/ppt-master/references/executor-structured.md"
@@ -1639,21 +1615,6 @@
       "concern": "native-data-routing",
       "from": "skills/ppt-master/references/executor-base.md",
       "to": "skills/ppt-master/references/native-data-interface.md"
-    },
-    {
-      "concern": "visualization-chart-routing",
-      "from": "skills/ppt-master/references/executor-visualization.md",
-      "to": "skills/ppt-master/references/executor-chart.md"
-    },
-    {
-      "concern": "visualization-structure-routing",
-      "from": "skills/ppt-master/references/executor-visualization.md",
-      "to": "skills/ppt-master/references/executor-structure.md"
-    },
-    {
-      "concern": "visualization-table-routing",
-      "from": "skills/ppt-master/references/executor-visualization.md",
-      "to": "skills/ppt-master/references/executor-table.md"
     },
     {
       "concern": "structured-execution-contract",
@@ -2071,12 +2032,6 @@
           "owner_fingerprint": "0edfe64300c1",
           "projections": [
             {
-              "path": "skills/ppt-master/references/executor-visualization.md",
-              "role": "compatibility",
-              "fingerprint": "84c1c8a6bec5",
-              "reason": "This site documents a legacy or omission compatibility boundary."
-            },
-            {
               "path": "skills/ppt-master/references/strategist-template.md",
               "role": "compatibility",
               "fingerprint": "8f83a50b3f54",
@@ -2178,12 +2133,6 @@
           "field": "page_visualizations",
           "owner_fingerprint": "b3cdf822635a",
           "projections": [
-            {
-              "path": "skills/ppt-master/references/executor-visualization.md",
-              "role": "consumer",
-              "fingerprint": "35b3aa28bcad",
-              "reason": "This consumer needs the field contract for deterministic execution."
-            },
             {
               "path": "skills/ppt-master/references/strategist.md",
               "role": "producer",
@@ -2324,18 +2273,6 @@
       {
         "glob": "skills/ppt-master/workflows/index.md",
         "reason": "Maintainer-only workflow inventory; never loaded during task execution."
-      },
-      {
-        "glob": "skills/ppt-master/references/ai-image-comparison/README.md",
-        "reason": "Maintenance-only comparison-gallery overview; never loaded by generation roles."
-      },
-      {
-        "glob": "skills/ppt-master/references/ai-image-comparison/*/_manifest.md",
-        "reason": "Generated comparison-gallery manifests; never loaded by generation roles."
-      },
-      {
-        "glob": "skills/ppt-master/references/ai-image-comparison/*/_subject.md",
-        "reason": "Generated comparison-gallery subjects; never loaded by generation roles."
       },
       {
         "glob": "skills/ppt-master/references/image-palettes/*.md",

@@ -49,6 +49,9 @@ except ImportError:
         validate_communication_trace,
     )
 
+# The visualization catalog lived under deckcore/templates/, which is not part of
+# this distribution. A missing catalog disables chart/table reference validation
+# instead of breaking every project_manager subcommand.
 try:
     from visualization_catalog import (
         LEGACY_STRUCTURE_INTENT_KIND,
@@ -56,17 +59,11 @@ try:
         VisualizationCatalogError,
         resolve_visualization_reference,
     )
-except ImportError:
-    import sys
-
-    if str(SCRIPTS_DIR) not in sys.path:
-        sys.path.insert(0, str(SCRIPTS_DIR))
-    from visualization_catalog import (  # type: ignore
-        LEGACY_STRUCTURE_INTENT_KIND,
-        VISUALIZATION_SVG_KIND,
-        VisualizationCatalogError,
-        resolve_visualization_reference,
-    )
+except ImportError:  # pragma: no cover - stripped distribution
+    VISUALIZATION_SVG_KIND = "visualization-svg"
+    LEGACY_STRUCTURE_INTENT_KIND = "legacy-structure-intent"
+    VisualizationCatalogError = None  # type: ignore[assignment]
+    resolve_visualization_reference = None  # type: ignore[assignment]
 
 
 TOOLS_DIR = SCRIPTS_DIR
@@ -1185,6 +1182,14 @@ def _validate_spec_lock_relations(
                 f"{markdown_name} schema: {section_id} has unknown pages "
                 f"{', '.join(unknown_pages)}"
             )
+        if mapping and resolve_visualization_reference is None:
+            errors.append(
+                f"{markdown_name} schema: {section_id} declares chart/table "
+                "references but the visualization catalog is not bundled with "
+                "this package; remove the section and author those visuals "
+                "directly per executor-chart.md / executor-table.md"
+            )
+            continue
         for page_key, raw_reference in mapping.items():
             reference = _normalize_schema_value(raw_reference)
             try:

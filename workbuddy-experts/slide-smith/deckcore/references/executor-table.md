@@ -1,4 +1,4 @@
-> See [`executor-base.md`](./executor-base.md) for page authoring and [`executor-visualization.md`](./executor-visualization.md) when a table-family SVG is selected.
+> See [`executor-base.md`](./executor-base.md) for page authoring. Every table is authored from scratch — no table catalog ships with this package.
 
 # Executor Table Branch
 
@@ -18,7 +18,7 @@ Conditional Executor authority for semantic cell grids whose row/column intersec
 
 **Hard rule — physical grid is insufficient**: a PowerPoint table object or rectangular drawing grid does not establish Table semantics. Dates or durations driving task-bar position and length route to `executor-chart.md`; qualitative stage/lane placement routes to `executor-structure.md`. Graphical indicators may sit inside cells while the grid still carries their meaning; a row of metric cards or two prose columns is a qualitative structure, not a table.
 
-With a `table/<key>` primary reference, [`executor-visualization.md`](./executor-visualization.md) owns resolution and adaptation; a custom grid follows this branch without a catalog SVG. Catalog keys (`record_table` record × field, `metric_table` entity × KPI, `comparison_matrix` criterion × alternative, `feature_matrix` capability states, `rating_matrix` one repeated ordinal scale, `hierarchical_table` grouped rows with detail and totals) separate recurring cell grammars without changing this boundary.
+No `table/<key>` catalog ships with this package, so a legacy reference is treated as intent only and this branch owns the full grid. The recurring grammars remain useful as naming intent (`record_table` record × field, `metric_table` entity × KPI, `comparison_matrix` criterion × alternative, `feature_matrix` capability states, `rating_matrix` one repeated ordinal scale, `hierarchical_table` grouped rows with detail and totals) and separate cell grammars without changing this boundary.
 
 ---
 

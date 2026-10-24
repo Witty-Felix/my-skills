@@ -1,122 +1,169 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>逐页内容 · 项目名</title>
 <style>
-:root{--ink:#1c1a17;--muted:#6b665e;--line:#e6e2da;--bg:#faf8f4;--card:#fff;--accent:#b4462a;--soft:#f2ece2}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.75}
-.wrap{max-width:940px;margin:0 auto;padding:56px 32px 96px}
-header{border-bottom:2px solid var(--ink);padding-bottom:24px;margin-bottom:36px}
-.kicker{display:inline-block;font-size:12px;letter-spacing:.18em;color:var(--accent);border:1px solid var(--accent);border-radius:3px;padding:2px 8px;margin-bottom:14px}
-h1{font-size:30px;line-height:1.3;margin:0 0 14px;font-weight:600}
-.thesis{margin:0;font-size:16px;background:var(--soft);border-left:3px solid var(--accent);padding:13px 18px}
-.meta{margin:16px 0 0;font-size:13px;color:var(--muted)}
-.meta span{margin-right:20px;white-space:nowrap}
-.page{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:0;margin-bottom:18px;overflow:hidden;break-inside:avoid}
-.phead{display:flex;gap:16px;align-items:flex-start;padding:18px 22px;background:var(--soft);border-bottom:1px solid var(--line)}
-.pno{flex:0 0 auto;font-size:26px;line-height:1;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;letter-spacing:-.02em;padding-top:3px}
-.ptype{display:block;font-size:12px;letter-spacing:.1em;color:var(--muted);margin-bottom:4px}
-.at{margin:0;font-size:17px;line-height:1.45;font-weight:600}
-dl.rows{margin:0;padding:6px 22px 18px}
-dt{font-size:12px;letter-spacing:.1em;color:var(--accent);font-weight:600;margin-top:14px}
-dd{margin:4px 0 0;font-size:15px}
-dd ul{margin:0;padding-left:20px}
-dd li{margin-bottom:4px}
-dd p{margin:0 0 6px}
-dd.note{color:var(--muted);background:var(--soft);border-radius:6px;padding:8px 12px}
-.toc{position:sticky;top:0}
-.check{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:20px 22px;margin-top:32px}
-.check h2{font-size:17px;margin:0 0 12px;font-weight:600}
-.check ul{margin:0;padding-left:0;list-style:none;font-size:14px}
-.check li{padding:5px 0;border-bottom:1px dashed var(--line)}
-.check li:last-child{border-bottom:none}
-.check li::before{content:"□";margin-right:10px;color:var(--accent)}
-footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
-@media print{body{background:#fff}.wrap{padding:0}.page{border:none;border-bottom:1px solid var(--line);border-radius:0}}
+  /*
+  ============================================================
+  逐页内容 = 主页内容。这个文件就是「主页内容」本身，
+  不是文字清单、不是字段表。审阅时看到的，就是这门课的样子。
+
+  结构约定（Step 4 靠它取内容，别改）：
+    <section class="slide" data-page="NN" data-role="封面|目录|章节|内容|结尾"
+             data-note="讲稿原文">
+      <h2 class="at">Action Title —— 一句结论</h2>
+      ... 内部随便排 ...
+    </section>
+
+  唯一固定的：每页 = 白底 + 圆角 + 细边框的卡片，竖向堆叠，等比缩放。
+  内部怎么排由你自己判断：编号写不写、小字放不放、页码要不要、几栏几格。
+  ============================================================
+  */
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB","Segoe UI",system-ui,sans-serif;
+    background:#fafafa; color:#111;
+    padding:40px 0 80px; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+  }
+
+  .slide-wrap { width:1280px; margin:0 auto 28px; zoom:var(--s,1); }
+
+  /* ====== 唯一的硬规定 ====== */
+  .slide {
+    width:1280px; height:720px;
+    background:#fff;
+    border:1px solid #e6e6e6;
+    border-radius:28px;
+    padding:88px;
+    position:relative; overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+  /* ========================== */
+
+  /* 以下都是参考写法，不是规矩，可以整套换掉 */
+  .kicker { font-size:17px; letter-spacing:.22em; color:#888; margin-bottom:18px; }
+  .at { font-size:44px; line-height:1.32; font-weight:700; letter-spacing:-.01em; max-width:1000px; }
+  .at.sm { font-size:38px; }
+
+  .card { border:1px solid #e6e6e6; border-radius:24px; padding:30px 32px; }
+  .num { font-size:92px; font-weight:700; line-height:1; letter-spacing:-.03em; }
+  .num-label { font-size:22px; color:#333; margin-top:18px; line-height:1.5; }
+  .num-sub { font-size:17px; color:#888; margin-top:8px; line-height:1.5; }
+
+  .body { font-size:22px; line-height:1.7; color:#333; }
+  .small { font-size:17px; line-height:1.6; color:#888; }
+  .term { font-family:"Cascadia Code","JetBrains Mono",Consolas,monospace; font-size:.92em; }
+
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+
+  .row { display:grid; grid-template-columns:200px 1fr; gap:32px; align-items:baseline; padding:22px 4px; border-bottom:1px solid #efefef; }
+  .row:last-child { border-bottom:none; }
+  .row .rk { font-size:21px; font-weight:700; }
+  .row .rv { font-size:21px; color:#333; line-height:1.55; }
+
+  .flow { display:flex; align-items:stretch; }
+  .flow .step { flex:1; border:1px solid #e6e6e6; border-radius:22px; padding:26px 24px; text-align:center; }
+  .flow .step .st { font-size:24px; font-weight:700; line-height:1.4; }
+  .flow .step .sd { font-size:16px; color:#888; margin-top:10px; line-height:1.5; }
+  .flow .arrow { flex:0 0 52px; display:flex; align-items:center; justify-content:center; color:#bbb; font-size:22px; }
+
+  .callout { border:1px solid #dedede; border-radius:22px; background:#f7f7f7; padding:26px 32px; }
+
+  .center-stage { flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .cover-title { font-size:64px; font-weight:700; letter-spacing:-.02em; line-height:1.24; }
+  .cover-sub { font-size:32px; color:#666; margin-top:26px; }
+
+  .pageno { position:absolute; font-size:15px; color:#bbb; letter-spacing:.08em; right:40px; bottom:32px; }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-<header>
-  <div class="kicker">逐页内容</div>
-  <h1>【项目名】</h1>
-  <p class="thesis">主线：【一句话】</p>
-  <p class="meta">
-    <span>表达方法：【mbb-consulting】</span>
-    <span>总页数：【N】页</span>
-    <span>生成于【2026-10-24】</span>
-  </p>
-</header>
+<!-- ===== 00 封面 ===== -->
+<div class="slide-wrap"><section class="slide" data-page="00" data-role="封面"
+  data-note="开场不要念标题。先说一句「今天只讲三个动作」，停两秒再翻页。">
+  <div class="center-stage">
+    <h2 class="at cover-title">【主标题：一句话说清这门课要干什么】</h2>
+    <p class="cover-sub">【副标题：讲多久 + 你会带走什么】</p>
+  </div>
+  <div class="small" style="position:absolute; left:88px; bottom:76px">【场合 · 日期 · 会后用途】</div>
+</section></div>
 
-<main>
-
-<!-- 每页复制一个 section。data-page 从 00 开始；data-role 用：封面 / 目录 / 章节 / 内容 / 结尾。 -->
-
-<section class="page" data-page="00" data-role="封面">
-  <div class="phead">
-    <span class="pno">00</span>
-    <div>
-      <span class="ptype">封面</span>
-      <h3 class="at">【主标题】 · 【副标题】</h3>
+<!-- ===== 01 内容页：三栏 ===== -->
+<div class="slide-wrap"><section class="slide" data-page="01" data-role="内容"
+  data-note="【口头补什么，一句话。不写逐字稿。】">
+  <h2 class="at" style="margin-bottom:26px">【Action Title：一句结论，不是名词短语】</h2>
+  <div class="grid3" style="flex:1; align-items:center">
+    <div class="card">
+      <div class="num">01</div>
+      <div class="num-label">【第一块】</div>
+      <div class="num-sub">【补充一句】</div>
+    </div>
+    <div class="card">
+      <div class="num">02</div>
+      <div class="num-label">【第二块】</div>
+      <div class="num-sub">【补充一句】</div>
+    </div>
+    <div class="card">
+      <div class="num">03</div>
+      <div class="num-label">【第三块】</div>
+      <div class="num-sub">【补充一句】</div>
     </div>
   </div>
-  <dl class="rows">
-    <dt>页面内容</dt>
-    <dd>
-      <ul>
-        <li>主标题 / 副标题 / 一句话 / 汇报人 + 日期</li>
-      </ul>
-    </dd>
-    <dt>版式</dt>
-    <dd>【结构、层级、元素关系。不写颜色，不写字体名】</dd>
-    <dt>讲稿</dt>
-    <dd class="note">【一句话】</dd>
-  </dl>
-</section>
+  <span class="pageno">02 / NN</span>
+</section></div>
 
-<section class="page" data-page="01" data-role="内容">
-  <div class="phead">
-    <span class="pno">01</span>
-    <div>
-      <span class="ptype">内容页</span>
-      <h3 class="at">【一句结论，不是名词短语】</h3>
-    </div>
+<!-- ===== 02 内容页：行表 ===== -->
+<div class="slide-wrap"><section class="slide" data-page="02" data-role="内容"
+  data-note="【这页如果要逐条念，就说明该拆页了。】">
+  <div class="kicker">【可选：这一页属于哪个小节】</div>
+  <h2 class="at" style="margin-bottom:14px">【Action Title】</h2>
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center">
+    <div class="row"><div class="rk">【标签】</div><div class="rv">【一行说完】</div></div>
+    <div class="row"><div class="rk">【标签】</div><div class="rv">【一行说完】</div></div>
+    <div class="row"><div class="rk">【标签】</div><div class="rv">【一行说完】</div></div>
   </div>
-  <dl class="rows">
-    <dt>页面内容</dt>
-    <dd>
-      <ul>
-        <li>【真正贴到屏幕上的字】</li>
-        <li>【数字：只有确认过口径的才写】</li>
-      </ul>
-    </dd>
-    <dt>版式</dt>
-    <dd>【结构 / 层级 / 元素关系】</dd>
-    <dt>讲稿</dt>
-    <dd class="note">【口头补什么，一句话】</dd>
-  </dl>
-</section>
+</section></div>
 
-<section class="check">
-  <h2>收尾自检</h2>
-  <ul>
-    <li>每页 Action Title 都是结论，不是「XX 情况介绍」</li>
-    <li>每页只有一个观点</li>
-    <li>没有任何一页超过 5 行正文</li>
-    <li>所有数字都能在《需求简报》的口径表里找到出处</li>
-    <li>清单类页面已标注「不逐条念」</li>
-    <li>没有出现颜色词 / 字体名</li>
-  </ul>
-</section>
+<!-- ===== 03 内容页：流程 ===== -->
+<div class="slide-wrap"><section class="slide" data-page="03" data-role="内容"
+  data-note="【停一下，让人看清顺序。】">
+  <h2 class="at" style="margin-bottom:60px">【Action Title】</h2>
+  <div class="flow">
+    <div class="step"><div class="st">【第一步】</div><div class="sd">【说明】</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="st">【第二步】</div><div class="sd">【说明】</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="st">【第三步】</div><div class="sd">【说明】</div></div>
+  </div>
+  <div class="callout" style="margin-top:44px">
+    <div style="font-size:24px; font-weight:700">【这一页的落点：一句能被记住的话】</div>
+  </div>
+</section></div>
 
-</main>
+<!-- ===== 04 结尾 ===== -->
+<div class="slide-wrap"><section class="slide" data-page="04" data-role="结尾"
+  data-note="【不要问「还有问题吗」。给一个动作收尾。】">
+  <div class="center-stage">
+    <div class="small" style="letter-spacing:.16em">【收口小字】</div>
+    <div style="font-size:46px; font-weight:700; line-height:1.5; margin-top:12px">【最后一句：听完要做什么】</div>
+    <div class="body" style="font-size:24px; color:#666; line-height:2; margin-top:44px">【后续安排 / 去哪查】</div>
+  </div>
+  <span class="pageno">NN / NN</span>
+</section></div>
 
-<footer>这是逐页内容的唯一形态。成品阶段（放映页 / PPTX）只从这里取内容，不重写。改动请指页码，例如「03 页的 Action Title 换掉」。</footer>
+<script>
+  (function () {
+    function fit() {
+      var s = Math.min(1, (window.innerWidth - 64) / 1280);
+      document.documentElement.style.setProperty('--s', s);
+    }
+    fit();
+    window.addEventListener('resize', fit);
+  })();
+</script>
 
-</div>
 </body>
 </html>

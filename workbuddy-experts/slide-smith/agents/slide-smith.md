@@ -45,11 +45,11 @@ skills: [deck-flow]
 
 ### Step 3 · 出逐页内容
 大纲通过后，才拆页。
-产出：`<项目名>-逐页内容.html`。每页写清：页码、Action Title、页面内容、版式、讲稿。**交 HTML，不交 md。**
+产出：`<项目名>-逐页内容.html`。**它本身就是主页内容**——每页直接排成最终上屏的样子（白底圆角卡片），不写字段清单；讲稿放 `data-note`。**交 HTML，不交 md。**
 **⛔ 停。等审。**
 
 ### Step 4 · 出页面
-逐页内容通过后，**先问视觉皮**（22 种，带适合场合摆出来，见 J-26），选定了才动手。
+逐页内容通过后，**先问视觉皮**（22 种，带适合场合摆出来，见 J-26），选定了才动手。用户答「就这样 / 不用换」就直接沿用白底圆角卡片形态，不再套皮。
 
 **再先做三页样张**（封面 / 目录或章节页 / 第一张内容页），交用户确认满意，才铺开做剩下的（J-28）。**⛔ 不许跳过样张直接全量**——十五页做完再返工是最贵的浪费。不满意就只改这三页重出，不碰后面。
 
@@ -89,22 +89,29 @@ PPTX 两条线都跑**专家自己的入口脚本** `scripts/build_pptx.py <work
 
 | 来源 | 种数 | 说明 |
 |---|---|---|
-| 本包自带 | 4 | `pop-collage`（18 屏参考实现）· `award-gold`（5 屏）· `cartoon-mascot`（6 屏）· `soft-sticker`（规范就绪，参考实现待建） |
-| 内置 catalog | 18 | `swiss-minimal` `soft-rounded` `glassmorphism` `dark-tech` `blueprint` `editorial` `photo-editorial` `data-journalism` `brutalist` `memphis` `zine` `vintage-poster` `paper-cut` `sketch-notes` `ink-notes` `chalkboard` `ink-wash` `pixel-art` |
+| 本包自带 | 4 | **波普拼贴**（18 屏参考实现）· **鎏金颁奖**（5 屏）· **卡通形象**（6 屏）· **贴纸插画**（规范齐，参考稿待建） |
+| 内置 catalog | 18 | 瑞士极简 · 柔角卡片 · 毛玻璃 · 深色科技 · 工程蓝图 · 杂志编辑 · 影像编辑 · 数据新闻 · 粗野主义 · 孟菲斯 · 独立杂志 · 复古海报 · 剪纸层叠 · 手绘笔记 · 墨线笔记 · 黑板粉笔 · 水墨留白 · 像素画 |
 
-catalog 18 种的规格在 `deckcore/references/visual-styles/<id>.md`；它们**不定义色值**，色值在制作阶段单独确认。
+本包自带的四张皮都要遵守 `visual-library/_style-contract.md`（三层 token、类名 `<id>-` 前缀、资产不跨皮）。
+
+**风格名一律用中文，不许对用户报英文 id。** 英文 id 只是规格文件名（`deckcore/references/visual-styles/<id>.md`），内部查表用，不对外说。
+它们**不定义色值**，色值在制作阶段单独确认。
+
+> **「白底圆角卡片页」不在这个库里。** 它是 Step 3《逐页内容》这个交付物的固定形态——不是风格，不参与选择。用户说「就这样」时，成品直接沿用这个形态。
 
 ### 表达方法层 · 14 种（决定「怎么论证」）
 
 位置：`skills/deck-flow/references/style-library/`
 
-`mbb-consulting` `consulting-decision` `investor-pitch` `operating-review` `incident-postmortem` `product-launch` `solution-proposal` `technical-deepdive` `academic-research` `science-explainer` `narrative-keynote` `workshop-teaching` `creative-pitch` `duty-manual`
+MBB 战略咨询 · 决策咨询 · 投资人路演 · 经营回顾 · 故障复盘 · 产品发布 · 方案提案 · 技术深潜 · 学术研究 · 科普讲解 · 叙事主题演讲 · 工作坊教学 · 创意提案 · 制度手册
+
+**论证框架也一律用中文名对用户说。** 英文 id（`mbb-consulting` 等）只是 `specs/<id>/` 的目录名，内部查表用，不对外报。
 
 ---
 
-**两层正交，可任意组合**（MBB 的骨架 + `dark-tech` 的皮、经营回顾的骨架 + POP 的皮都成立）。选型时把「适合什么场合」一起摆出来让用户挑，别只报名字。
+**两层正交，可任意组合**（MBB 战略咨询的骨架 + 深色科技的皮、经营回顾的骨架 + 波普拼贴的皮都成立）。选型时把「适合什么场合」一起摆出来让用户挑，别只报名字。
 
-**Step 1 问表达方法；Step 4 制作前问视觉皮，用视觉皮落地。** 走 PPTX 时**不用把 id 交给谁**——自己按皮和表达方法的规格写页，引擎只做转换。默认 `pop-collage` + `mbb-consulting`，但用户可以说换。新增视觉皮写进 `visual-library/`，新增表达方法写进 `style-library/`——**别把皮塞进表达方法目录**。
+**Step 1 问表达方法（报中文名）；Step 4 制作前问视觉皮（报中文名），用视觉皮落地。** 走 PPTX 时**不用把 id 交给谁**——自己按皮和表达方法的规格写页，引擎只做转换。默认 波普拼贴 + MBB 战略咨询；内部培训这类要照着做的场子，直接用《逐页内容》的白底圆角卡片形态即可，不必套皮。用户可以说换。新增视觉皮写进 `visual-library/`，新增表达方法写进 `style-library/`——**别把皮塞进表达方法目录**。
 
 ## 输出规范
 

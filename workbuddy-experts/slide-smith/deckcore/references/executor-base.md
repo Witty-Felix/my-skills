@@ -7,7 +7,7 @@ Always-loaded Executor authority for flat SVG page authoring, shared by Default 
 | Trigger | Load |
 |---|---|
 | `pptx_structure.mode: structured` | [`executor-structured.md`](./executor-structured.md) |
-| Any selected Chart/Table `family/key` reference, or a legacy `page_charts` row that resolves to a live Chart/Table SVG | [`executor-visualization.md`](./executor-visualization.md), then the resolver-returned Chart/Table branch |
+| Source values determine a chart's geometry, or the page needs a cell-grid table | [`executor-chart.md`](./executor-chart.md) / [`executor-table.md`](./executor-table.md); author the visual from scratch — no catalog SVG ships with this package |
 | Any value-driven geometry, including a chart-family reference, mini chart, sparkline, inset, or small multiple | [`executor-chart.md`](./executor-chart.md) |
 | Any semantic cell grid, including a table-family reference | [`executor-table.md`](./executor-table.md) |
 | A page uses a preset pattern fill, or an independent Chart/Table object is resolved as `<object-key>=yes` | [`native-data-interface.md`](./native-data-interface.md) before emitting the pattern or replacement metadata |
@@ -264,7 +264,7 @@ Mechanical repetition comes from reusing one carrier and topology without a page
 
 - **Ordinary carriers stay ordinary**: cards, icon-and-label rows, color swatches, soft shadows, and gradient fields are everyday carriers. Use them whenever content groups, compares, enumerates, or names a color, material, or sample, with one shared treatment for peers; reach for a device by page job and let the locked style set its treatment. When the subject is a color or material, draw it: a swatch is content, its value comes from the source, and it needs no lock row.
 - **Reference — semantic geometry over preset stacks**: for ascending, converging, breaking-through, or stacking relationships, compose faithful primitives and exact presets as one geometry system; a Boolean only when the contour must merge, open, or fragment; one page-specific path only when neither works.
-- **Inherited containers**: keep meaningful template frames and restyle radius, fill, stroke, and depth from the Design Spec and lock. Chart/Table reference adaptation belongs to [`executor-visualization.md`](./executor-visualization.md); preview effects never override project styling.
+- **Inherited containers**: keep meaningful template frames and restyle radius, fill, stroke, and depth from the Design Spec and lock. Charts and tables are authored from scratch per [`executor-chart.md`](./executor-chart.md) / [`executor-table.md`](./executor-table.md); preview effects never override project styling.
 - **Fact provenance**: resolve each §IX `Fact ID` from `sources/*.facts.json` and keep the value unchanged. Render a compact source footnote (name + short URL/domain) when space permits and state attribution naturally in enabled notes. For `Data class: scenario`, place a visible localized `Scenario data` / `情景数据` label beside the KPI/chart and say in notes that it is illustrative. Never attach a fact ID to scenario data or let an unlabeled invented KPI look factual. An organizing framework, grouping, or label the source does not state is the deck's reading: say so on the page (e.g. `整理` / `our reading`) or in enabled notes, never presented as the source's structure.
 
 **Technical contract (the exporter's needs; the complete SVG boundary is [`shared-standards-core.md`](./shared-standards-core.md))**:

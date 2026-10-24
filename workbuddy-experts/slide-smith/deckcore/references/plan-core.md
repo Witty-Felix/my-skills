@@ -132,12 +132,7 @@ Every communication job maps to a prepared resource or an information model; thi
 
 ### 5.2 Chart and Table references
 
-**Reference — Chart/Table vocabularies**: the loaded vocabularies list what can be selected; they rank nothing, and custom objects and qualitative composition stay outside them. Choose at most one flexible `family/key` per page (children and qualitative relationships stay in §IX), keep `no-template-match` in §IX when none fits (never serialized), and validate every selected reference before the lock, correcting a failed selection by re-reading the complete vocabulary/registry:
-
-```bash
-python3 skills/ppt-master/scripts/visualization_recall.py validate \
-  <family>/<key> [<family>/<key> ...]
-```
+**Reference — no chart/table catalog**: this package ships no `chart/<key>` or `table/<key>` catalog and no recall CLI, so a page never carries a resolvable family/key reference. Author a value-driven chart per [`executor-chart.md`](./executor-chart.md) and a cell-grid table per [`executor-table.md`](./executor-table.md); custom objects and qualitative composition stay outside both, and qualitative relationship topology stays in §IX.
 
 **Native-ready boundary**: give every independent data chart and pure text-grid table a unique page-local `kebab-case` key and a `<key>=yes|no` native-ready decision — `yes` by default, `no` when [`native-data-interface.md`](./native-data-interface.md) §2 cannot express the object — `yes` presumes the family has a native `type` there (dumbbell, bullet, gantt, heatmap, sankey, and word clouds have none and stay `no`); qualitative compositions and incidental microvisuals stay unlisted. Default writes §VII and the `Native-ready` map; Quick keeps the key and decision in context.
 

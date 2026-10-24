@@ -1,4 +1,4 @@
-> Default Generate also loads [`executor-base.md`](./executor-base.md); a selected chart-family SVG is adapted through [`executor-visualization.md`](./executor-visualization.md), while native readiness and metadata remain exclusively in [`native-data-interface.md`](./native-data-interface.md).
+> Default Generate also loads [`executor-base.md`](./executor-base.md); every chart is authored from scratch — no chart catalog ships with this package — while native readiness and metadata remain exclusively in [`native-data-interface.md`](./native-data-interface.md).
 
 # Executor Chart Branch
 
@@ -26,7 +26,7 @@ Construct in this order: (1) resolve data domain, categories, units, baseline, s
 
 **Per-object completeness**: preserve every authoritative series, category, point, label, unit, qualifier, source, and scale cue. For a `<object-key>=yes` chart, the JSON mirrors the drawn fallback item by item in the same edit — legend labels verbatim, point-level exception colors as `point_colors`, the axis scale, `plot_area` from the plot-area marker, visible data labels or summary figures as `data_labels` or companion text, actual label/axis/grid colors (omit `text_color` and siblings rather than guess). When the source cannot determine a required scale or derived value, return the ambiguity upstream in Default or resolve it from explicit source facts in Quick; never fabricate at draw time.
 
-**Selected reference**: with a `chart/<key>` primary reference, [`executor-visualization.md`](./executor-visualization.md) owns resolution and adaptation; this branch still owns the value-to-geometry calculation. A chart authored from scratch follows the same contract. An incidental microvisual (small trend or indicator) is drawn accurately but enters §2 and verification only when Default §IX or the Quick active-context decision promotes it to a coordinate-verified object.
+**Selected reference**: no `chart/<key>` catalog ships with this package, so a legacy reference is treated as intent only — this branch owns the full value-to-geometry calculation and the drawing. An incidental microvisual (small trend or indicator) is drawn accurately but enters §2 and verification only when Default §IX or the Quick active-context decision promotes it to a coordinate-verified object.
 
 ---
 
@@ -59,7 +59,7 @@ Construct in this order: (1) resolve data domain, categories, units, baseline, s
 | `cx, cy` | Absolute center after containing translate transforms |
 | `r`, `r1`, `r2` | Visible outer/inner radii of the authored radial geometry |
 
-Calculator-supported SVGs in `templates/charts/` carry the same comment. A qualitative structure or cell-grid table gains no marker merely because it contains numbers. A missing marker invokes the verify stage's declared fallback and adds avoidable derivation work.
+Every authored chart carries the same comment. A qualitative structure or cell-grid table gains no marker merely because it contains numbers. A missing marker invokes the verify stage's declared fallback and adds avoidable derivation work.
 
 ### 2.2 Authoring-time Check
 

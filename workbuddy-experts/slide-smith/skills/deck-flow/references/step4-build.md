@@ -17,7 +17,9 @@ cp "<SKILL_DIR>/references/visual-library/<style>.reference.html" \
 
 > 目录名、文件名全用中文（J-27）。上例里的 `<style>` 是视觉皮 id，那是库内标识，保持英文。
 
-> `pop-collage` / `award-gold` / `cartoon-mascot` 自带 `.reference.html`（在 `visual-library/`），`soft-sticker` 规范齐全但参考实现待建。选其余 18 种 catalog 皮时没有可复制的参考稿：按该皮在 `ppt-master/references/visual-styles/<id>.md` 的形状语言与留白纪律，自己搭一份 1280×720 固定舞台的骨架（键盘翻页 + `data-note` + `fit()` 缩放照本节规范），之后仍可复用。
+> 本包自带四张皮里，**波普拼贴 / 鎏金颁奖 / 卡通形象**都带 `.reference.html`（在 `visual-library/`），**贴纸插画**规范齐全但参考实现待建。选其余 18 种 catalog 皮时没有可复制的参考稿：按该皮在 `deckcore/references/visual-styles/<id>.md` 的形状语言与留白纪律，自己搭一份 1280×720 固定舞台的骨架（键盘翻页 + `data-note` + `fit()` 缩放照本节规范），之后仍可复用。
+>
+> **不换皮时根本不走这一节**：直接拿 Step 3 的 `<项目名>-逐页内容.html` 当成品，只补讲稿交互与排版精修，不必从头搭骨架。
 
 ## 2. 清空内容，保留骨架
 
@@ -28,7 +30,7 @@ cp "<SKILL_DIR>/references/visual-library/<style>.reference.html" \
 - `<div class="hud">` 与 `<div class="notes">`
 - `<script>` 全部
 
-然后按 `<项目名>-逐页内容.html` 一页一页加 `<section>`（从里面 `section.page` 逐个取 `h3.at` 与三个 `<dt>` 的内容，不自己重写）。
+然后按 `<项目名>-逐页内容.html` 一页一页搬 `<section>`——**整页搬，不要重新排版**。取 `data-page` / `data-role` / `data-note` / `h2.at` 与整段内部结构，只换成目标皮的样式类。内容与版式的判断在 Step 3 已经做过了，这里不重做。
 
 ## 3. 每个 section 的结构
 
@@ -55,7 +57,9 @@ cp "<SKILL_DIR>/references/visual-library/<style>.reference.html" \
 
 ## 4. 原型选择
 
-先看《逐页内容》里该页的「版式」一行，对照 `visual-library/pop-collage.md` 的「页面原型」表选最接近的那个（其余 18 种 catalog 皮没有原型表，按该皮的构图几何自行组织）。
+《逐页内容》里每页已经是排好的版面，**不换皮时直接沿用**，只在换皮时按新皮规范重新组织同一批内容。
+
+**原型只是参考，不是模具。** 编号要不要显、放哪；小字留在角上还是贴标题；页码换不换位置；这一页用两栏、下一页用行表，都合法。**没有必须前后一致的内部规律**——只有外壳要一致。
 没有完全匹配的：
 
 - 优先**换成最接近的原型**，别发明新组件。
@@ -85,10 +89,10 @@ grep -Eoi '<img[^>]+>' "<中文项目名>-放映页.html" | grep -Eoi '(https?:)
 
 三项数字对不上就回去改。
 
-选了 visual-library 里带 Style Contract 的皮（如 `award-gold`）时，额外加两条（契约见 `visual-library/_style-contract.md`）：
+选了自带皮（波普拼贴 / 鎏金颁奖 / 卡通形象 / 贴纸插画）时，再加两条——契约见 `visual-library/_style-contract.md`：
 
 ```bash
-# 裸 HEX 检查：组件规则里不应出现裸色值（@font-face/图片路径行除外）
+# 裸 HEX 检查：组件规则里不应出现裸色值（@font-face / 图片路径行除外）
 grep -nE '#[0-9A-Fa-f]{3,8}' "<中文项目名>-放映页.html" | grep -v 'fonts/' | grep -v 'assets/'
 # 前缀检查：除引擎结构类（.slide/.hd/.kick/.ttl/.note/.r/.rf/.hud*/.notes*）外，
 # 自定义类必须带 <id>- 前缀（如 .ag-*），肉眼扫一遍 <style> 段
@@ -96,7 +100,7 @@ grep -nE '#[0-9A-Fa-f]{3,8}' "<中文项目名>-放映页.html" | grep -v 'fonts
 
 ### 6.1b 单调自检（截图之前先过，七条挂二即重排）
 
-见 `../../../docs/升级草案-视觉皮完全隔离-v3.3.md` 附则 A。
+见 `../../../../docs/升级草案-视觉皮完全隔离-v3.3.md` 附则 A（判据见 J-35）。
 
 ```
 □ 每页三秒内说得出主体？
@@ -112,7 +116,7 @@ grep -nE '#[0-9A-Fa-f]{3,8}' "<中文项目名>-放映页.html" | grep -v 'fonts
 
 ### 6.1c 位置自检（截图之前先过，挂一问即重排）
 
-见 `../../../docs/升级草案-视觉皮完全隔离-v3.3.md` 附则 B。逐张贴纸（角色 / 道具 / 头肩图）过一遍：
+见 `../../../../docs/升级草案-视觉皮完全隔离-v3.3.md` 附则 B（判据见 J-36）。逐张贴纸（角色 / 道具 / 头肩图）过一遍：
 
 ```
 □ 遮住它，页面有变化吗？（没有 = 没落点）
@@ -143,7 +147,7 @@ grep -nE '#[0-9A-Fa-f]{3,8}' "<中文项目名>-放映页.html" | grep -v 'fonts
 | 溢出 | 文字出框、卡片被切、底部压到 HUD |
 | 错位 | 该居中的偏左、该对齐的参差、层级颠倒 |
 | 呼吸 | 字挤成一团、块贴边、留白被占满 |
-| 忠实 | 对照所选皮 md 的色板表核对主色——色不对即退回，不许"看着差不多" |
+| 忠实 | 对照所选皮 md 的色板表核对主色——色不对即退回，不许「看着差不多」 |
 
 **没看过截图不算做完。** 至少看：首屏、末屏、每个章节页、最密的那一页。
 
