@@ -5,7 +5,7 @@ description: >
   brief → outline → page-by-page slide spec → HTML deck, editable PPTX, or a
   PPTX with page-by-page generated visuals. Ships a preference library (what the
   user has decided to include or exclude), a **visual style library**
-  (6 skins: 4 package-owned + 2 catalog styles, all addressed by Chinese names), and an **expression method
+  (5 skins: 3 package-owned + 2 catalog styles, all addressed by Chinese names), and an **expression method
   library** (14 argument skeletons). Use whenever the user wants a 汇报 PPT,
   演示页, 汇报页, 放映页, a PPTX deck, or asks to restructure / revise an
   existing deck.
@@ -88,7 +88,7 @@ Step 4 才问（J-26）。**三步，顺序不可倒：**
 
 **第 1 步 · 打开选型页交给用户**（不是列文字）。打开包内 `视觉皮选型页.html`——**原地 `file://` 打开，不复制到项目目录**（J-49）；宿主有预览能力就直接把页面交给用户。正文只写两样：
 
-1. **一句怎么用**：页面上 6 张卡，点缩略图在新标签打开整份示例稿，凑近看再回来挑。
+1. **一句怎么用**：页面上 5 张卡，点缩略图在新标签打开整份示例稿，凑近看再回来挑。
 2. **一句推荐 + 理由**：按「场合 + 听众 + 表达方法」挑第 1 条，说清为什么是它。
 
 要标推荐位就带查询串：
@@ -333,7 +333,7 @@ Step 4 才问（J-26）。**三步，顺序不可倒：**
 
 ### 4.1 先问视觉皮（制作前唯一要问的问题）
 
-**这一步必须问用户，不许自己定。** **打开包内 `视觉皮选型页.html` 并把页面交给用户**——原地 `file://` 打开，不复制到项目目录（J-49）；宿主有预览能力就直接交页面。正文只写两样：**一句怎么用**（6 张卡，点缩略图在新标签看整份示例稿）+ **一句推荐与理由**（按场合 / 听众 / 表达方法挑第 1 条）。
+**这一步必须问用户，不许自己定。** **打开包内 `视觉皮选型页.html` 并把页面交给用户**——原地 `file://` 打开，不复制到项目目录（J-49）；宿主有预览能力就直接交页面。正文只写两样：**一句怎么用**（5 张卡，点缩略图在新标签看整份示例稿）+ **一句推荐与理由**（按场合 / 听众 / 表达方法挑第 1 条）。
 
 > **⛔ 不许只列 5 行文字。** 用户明确否过：「你只给这个 HTML，给这个链接，不要只给文字」（**J-56**）。文字清单只在页面打不开时兜底，那时才退回 5 条 `名称（适合：场合）— 内核`，末尾挂 `已给 5/5 · 全库就这 5 种`。
 
