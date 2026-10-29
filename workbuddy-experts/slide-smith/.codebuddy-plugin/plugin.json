@@ -1,7 +1,7 @@
 {
   "name": "slide-smith",
   "version": "3.6.1",
-  "description": "Turns raw material into a reviewed outline, a page-by-page slide spec rendered as a runnable HTML deck, then a finished deck — as HTML or editable PPTX. Four gated steps, a stored preference library, 6 visual styles (all with clickable HTML samples) and 14 argument methods (both addressed by Chinese names), chosen independently.",
+  "description": "Turns raw material into a reviewed outline, a page-by-page slide spec rendered as a runnable HTML deck, then a finished deck — as HTML or editable PPTX. Four gated steps, a stored preference library, 5 visual styles (all with clickable HTML samples) and 14 argument methods (both addressed by Chinese names), chosen independently.",
   "author": {
     "name": "榛佑"
   },

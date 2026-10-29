@@ -36,7 +36,7 @@
 规则：
 1. **E 层**：名字固定、跨皮同名，引擎脚本与 HUD 只读 E 层。每份皮必须提供全部 E 层变量，一个不能少。
    当前清单共 **7 个**：`--e-stage-w` / `--e-stage-h` / `--e-font-ui` / `--e-hud-fg` / `--e-hud-accent` / `--e-stage-bg` / `--e-notes-bg`。
-   `award-gold` / `cartoon-mascot` 已齐全；`pop-collage` 为存量皮，未定义 E 层，属迁移待办（见文末），**不算合规**。
+   `award-gold` / `soft-sticker` 已齐全；`pop-collage` 为存量皮，未定义 E 层，属迁移待办（见文末），**不算合规**。
 2. **S/F 层**：必须带 `<id>-` 前缀。通用词（`--ink`、`--paper`、`--accent`）**禁止裸用**——撞名即跨皮污染。
 3. 风格 CSS 里的颜色一律引用 S 层变量，**组件规则里不写裸 HEX**。HEX 的唯一合法出现位置：① E/S 层变量定义处；② @font-face 的 src；③ 图片路径。
 4. **引擎结构类（.hud*、.notes*、html/body 等）只读 E 层（`--e-*`）**，禁止引用 S 层变量——引用了就是引擎→皮的逆向耦合（2026-10-24 复查发现的漏网项，award-gold 的 `.notes b` 曾用 `--ag-gold`，已修）。
@@ -68,7 +68,7 @@ visual-library/
 3. reference.html 内引用一律**相对路径**，禁止第三方图床。
 4. 存量迁移待办：pop-collage 的 `assets/` 平铺区应迁为 `pop-collage/assets/`，迁移前 README 必须标注"共享区已冻结，仅供 pop-collage"。
 5. **资产不跨皮复用，哪怕内容同源。** 角色图 / 道具图 / 背景图只属于定义它的那张皮。另一张皮需要同一个角色时，只有两条路：①自建一份自己的 `<id>/assets/`；②规范里写清"按动作提取文档改造构图"，不引用别人的文件。**不许在 reference.html 里写 `../<other-id>/assets/x.png`**——跨皮引用会让两张皮一起坏，也让"这套图归谁"说不清。
-   - 实例：`soft-sticker` 与 `cartoon-mascot` 角色同源，但前者的三张旧图已在 `soft-sticker.md` §12.3 退役，`soft-sticker/assets/` 不建目录，**不从卡通皮借图**。
+   - 实例：`soft-sticker` 的三张旧角色图已在 `soft-sticker.md` §12.3 退役，`soft-sticker/assets/` 不建目录——**缺图就用几何形承担主体，不去别处借**。
 6. **字体同样不进包、不跨皮。** 需授权或体积大的字体一律只写获取方式（`<id>/fonts/README.md`），reference 里用字体栈回落保证不缺字。
 7. **`_picker/` 与 `<id>/pages/` 都不是皮的资产。** `_picker/thumb-<id>.png|jpg` 是选型页专用的索引资产，reference.html **不得引用**它；`<id>/pages/*.svg` 是选型样张的源页，仅供 `<img>` 看图，**缺 `data-pptx-bounds` 与带 id 的根 `<g>`，不能直接进 `svg_output/` 出片**。
 

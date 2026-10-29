@@ -17,7 +17,7 @@ cp "<SKILL_DIR>/references/visual-library/<style>.reference.html" \
 
 > 目录名、文件名全用中文（J-27）。上例里的 `<style>` 是视觉皮 id，那是库内标识，保持英文。
 
-> **6 张皮全部带 `.reference.html`**（在 `visual-library/`）：波普拼贴 18 屏 / 鎏金颁奖 5 屏 / 卡通形象 6 屏 / 贴纸插画 3 屏 / 剪纸层叠 3 屏 / 手绘笔记 3 屏。**从对应那份改，不从零写。**
+> **5 张皮全部带 `.reference.html`**（在 `visual-library/`）：波普拼贴 18 屏 / 鎏金颁奖 5 屏 / 贴纸插画 3 屏 / 剪纸层叠 3 屏 / 手绘笔记 3 屏。**从对应那份改，不从零写。**
 >
 > 剪纸层叠、手绘笔记这 2 种 catalog 皮的 3 屏样张是 `<img>` 拼的（源页在 `<id>/pages/`），要出真实页时按该皮在 `deckcore/references/visual-styles/<id>.md` 的形状语言与留白纪律自己写页；**它们的色板是示例实例，规范不定义 HEX，色值仍要单独确认**。
 >
@@ -93,7 +93,7 @@ grep -Eoi '<img[^>]+>' "<中文项目名>-放映页.html" | grep -Eoi '(https?:)
 
 三项数字对不上就回去改。
 
-选了自带皮（波普拼贴 / 鎏金颁奖 / 卡通形象 / 贴纸插画）时，再加两条——契约见 `visual-library/_style-contract.md`：
+选了自带皮（波普拼贴 / 鎏金颁奖 / 贴纸插画）时，再加两条——契约见 `visual-library/_style-contract.md`：
 
 ```bash
 # 裸 HEX 检查：组件规则里不应出现裸色值（@font-face / 图片路径行除外）
