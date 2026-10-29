@@ -19,7 +19,7 @@ forms belong to one visual system.
 
 Each style keeps its own authoritative file with: shape & decoration, typography character, color-usage discipline (no HEX), texture / elevation, and the paired image-rendering. Read this index alone while choosing a direction. Only after a preset or custom bases are fixed may the active role read the selected sibling files: one file for a preset, every exact `visual_style_references` file for a catalog-based custom, and none for a novel custom. Never glob the directory or read an unselected sibling. The catalog mirrors [`image-renderings`](../image-renderings/_index.md): each style's "Paired rendering" names the illustration family that shares its aesthetic.
 
-> The **`visual_style` value is only ever a first-column `id`** (`swiss-minimal`, `editorial`, …). The "Paired rendering" column lists **image-rendering** names (`flat`, `minimalist-swiss`, `digital-dashboard`, …) — never treat one of those as the `visual_style`. Default records rendering under confirmation h; Quick keeps the selected rendering only in active context and any required image manifest.
+> The **`visual_style` value is only ever a first-column `id`** (`paper-cut`, `sketch-notes`, …). The "Paired rendering" column lists **image-rendering** names (`paper-cut`, `sketch-notes`, `flat`, …) — never treat one of those as the `visual_style`. Default records rendering under confirmation h; Quick keeps the selected rendering only in active context and any required image manifest.
 >
 > The **`Illus.`** column describes illustration's role only after the resource-need review selects illustration — `core` (illustration may lead the look), `supportive` (illustration may share the composition), or `sparse` (illustration stays selective so the style's lead visual remains clear). It tunes selected illustration's centrality and recurrence; it never recommends adding illustration, selects an AI source or image row, or narrows eligible page types, element scale, or carrier combinations. An explicit user request to use / skip illustrations overrides it either way, and `image_usage: none` always writes no illustration rows. Full per-style rule in each file's §6.
 >
@@ -27,48 +27,18 @@ Each style keeps its own authoritative file with: shape & decoration, typography
 > lettering is a separate carrier decision; a selected style informs its
 > treatment, never its eligibility.
 
-### 1.1 Corporate / product
+> **Catalog scope (this distribution)**: only **2** catalog styles ship here —
+> `paper-cut` and `sketch-notes`. The other 16 catalog bases were removed from
+> this package on 2026-10-26; do not offer, reference, or link them. The four
+> package-owned styles (pop collage, award gold, cartoon mascot, sticker
+> illustration) live in `skills/deck-flow/references/visual-library/`, not here.
+
+### 1.1 Retained catalog
 
 | Visual style | Character | Paired rendering | Illus. |
 |---|---|---|---|
-| [`swiss-minimal`](./swiss-minimal.md) | Grid-locked, sharp, aggressive whitespace, near-zero ornament | `minimalist-swiss` | sparse |
-| [`soft-rounded`](./soft-rounded.md) | Rounded cards, gentle elevation, approachable | `flat` | supportive |
-| [`glassmorphism`](./glassmorphism.md) | Translucent glass panels, gradient light, floating depth | `glassmorphism` | sparse |
-| [`dark-tech`](./dark-tech.md) | Dark canvas, glow accents, geometric precision | `digital-dashboard` | sparse |
-| [`blueprint`](./blueprint.md) | Schematic line work on dark paper, isometric, annotated | `blueprint` | supportive |
-
-### 1.2 Editorial / publication
-
-| Visual style | Character | Paired rendering | Illus. |
-|---|---|---|---|
-| [`editorial`](./editorial.md) | Magazine hierarchy, rules & columns, serif/sans interplay | `editorial` | supportive |
-| [`photo-editorial`](./photo-editorial.md) | Full-bleed photography dominates, text points & captions | `corporate-photo` | sparse |
-| [`data-journalism`](./data-journalism.md) | Multi-column micro-charts, sidebars, source lines, dense | `editorial` | sparse |
-| [`brutalist`](./brutalist.md) | Newsprint density, ruled boxes, raw structure, flat | `screen-print` / `editorial` | supportive |
-
-### 1.3 Expressive / print
-
-| Visual style | Character | Paired rendering | Illus. |
-|---|---|---|---|
-| [`memphis`](./memphis.md) | Clashing color blocks, geometric confetti, bold outlines | `flat` | core |
-| [`zine`](./zine.md) | Riso misregistration, halftone, limited palette, print grit | `screen-print` | core |
-| [`vintage-poster`](./vintage-poster.md) | Mid-century flat blocks, halftone, retro-geometric warmth | `vintage-poster` | core |
 | [`paper-cut`](./paper-cut.md) | Layered cut-paper sheets, soft inter-layer shadow, tactile | `paper-cut` | core |
-
-### 1.4 Hand-drawn / brush
-
-| Visual style | Character | Paired rendering | Illus. |
-|---|---|---|---|
 | [`sketch-notes`](./sketch-notes.md) | Warm paper, doodle line work, soft pastel blocks | `sketch-notes` | core |
-| [`ink-notes`](./ink-notes.md) | Pale field, black hand-ink, sparse semantic accent | `ink-notes` | supportive |
-| [`chalkboard`](./chalkboard.md) | Dark slate, chalk strokes, powdery pastel accents | `chalkboard` | core |
-| [`ink-wash`](./ink-wash.md) | Rice-paper whitespace, brush marks, seal accent, still | `ink-notes` / `watercolor` | supportive |
-
-### 1.5 Specialty
-
-| Visual style | Character | Paired rendering | Illus. |
-|---|---|---|---|
-| [`pixel-art`](./pixel-art.md) | Strict pixel grid, blocky forms, limited palette, flat | `pixel-art` | core |
 
 ---
 
@@ -101,7 +71,7 @@ an exact authoring preset here.
 > aesthetically related option. It does not select the rendering or create an
 > AI image job; compare it with the actual image roles before using it.
 >
-> Not every image-rendering becomes its own visual style. A rendering earns a layout twin only when it defines a whole-page layout language (shape, whitespace, composition, texture) — not merely how an inserted image looks. Purely atmospheric renderings (`nature`, `warm-scene`, `fantasy-animation`) stay imagery-only: they pair with whichever layout style fits rather than being one. (Note the distinction `photo-editorial` draws: photography as a *rendering* is image-look, but photo-*led composition* is a real layout language — so the style exists, paired with `corporate-photo`.)
+> Not every image-rendering becomes its own visual style. A rendering earns a layout twin only when it defines a whole-page layout language (shape, whitespace, composition, texture) — not merely how an inserted image looks. Purely atmospheric renderings (`nature`, `warm-scene`, `fantasy-animation`) stay imagery-only: they pair with whichever layout style fits rather than being one.
 
 ---
 

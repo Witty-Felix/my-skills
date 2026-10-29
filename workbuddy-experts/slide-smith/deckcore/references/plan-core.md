@@ -150,8 +150,8 @@ Every communication job maps to a prepared resource or an information model; thi
 
 | Style trait | Extra neutral tiers to anchor |
 |---|---|
-| Layers panels / charts (e.g. `data-journalism`, `swiss-minimal`) | `surface` (panel lift), `grid` (hairline, lighter than dividers) |
-| Text over imagery / dark field (e.g. `photo-editorial`, `glassmorphism`, `dark-tech`) | `scrim` / `overlay` for legibility |
+| Layers panels / charts (e.g. `paper-cut`, `sketch-notes`) | `surface` (panel lift), `grid` (hairline, lighter than dividers) |
+| Text over imagery / tinted sheet (e.g. `paper-cut`, `sketch-notes`) | `scrim` / `overlay` for legibility |
 | Print / hand-drawn fills (e.g. `chalkboard`, `zine`) | `block-shade`, one step off the field |
 
 ### 6.2 Typography

@@ -53,7 +53,7 @@ keywords: [fundraising, pitch, startup, traction, investor]
 
 ## V. Visual System Defaults
 
-- **Preferred Visual Style**: dark-tech
+- **Preferred Visual Style**: custom
 - **Composition**: One claim per page with one dominant element carrying it. Fix a consistent position for the claim line so a reader scanning the forwarded deck moves quickly. Reserve full-frame treatment for product and traction pages, and keep the ask and team pages simple enough to be absorbed in seconds.
 - **Density**: Sparse in the main arc, dense only in the appendix. A pitch page should be readable in the time an investor gives it — a few seconds on a screen, not a study session. Move every supporting detail behind the appendix boundary rather than compressing it into the narrative.
 - **Decoration**: Restrained. Let product imagery, one strong number per page, and typography carry the deck. Avoid gradient meshes, glow, floating three-dimensional devices, stock-photo collages, and the ornamental infographic vocabulary that signals effort rather than substance. The default field is dark and modern; open it to a lighter, warmer register when the venture is consumer or lifestyle rather than technical.

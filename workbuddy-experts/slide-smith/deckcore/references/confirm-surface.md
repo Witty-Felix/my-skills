@@ -71,11 +71,11 @@ Create only after Stage 1 and verified installation (or `free_design`); bind top
       {
         "id": "executive-clarity",
         "name": "稳妥专业",
-        "note": "以瑞士极简为主，融合柔和圆角与编辑出版风格。",
+        "note": "以剪纸层叠为主，融合手绘笔触与纸感层次。",
         "mode": "custom",
         "mode_behavior": "以 pyramid 作为唯一目录基底，为当前风险决策材料定制两次结论闸门；标题保持判断句，每章先给判断，再用证据展开并以可执行结论收束。",
         "visual_style": "custom",
-        "visual_style_behavior": "由 swiss-minimal 负责精确栅格和大留白，soft-rounded 负责少量关键容器的轮廓与轻微抬升，editorial 负责细规则、边注与证据层级；标题锐利，正文中性。",
+        "visual_style_behavior": "由 paper-cut 负责层叠纸片与柔和层间投影，sketch-notes 负责墨线涂鸦与淡彩块；标题温和，正文中性。",
         "icons": "tabler-outline",
         "color": { "name": "冷静专业", "palette": {
           "background": "#FFFFFF", "secondary_bg": "#F4F6F8",

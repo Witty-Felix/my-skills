@@ -52,7 +52,7 @@ keywords: [business-review, metrics, variance, operations, accountability]
 
 ## V. Visual System Defaults
 
-- **Preferred Visual Style**: data-journalism
+- **Preferred Visual Style**: custom
 - **Composition**: Build every page around the metric-to-variance-to-action relationship, and keep that arrangement identical across periods. Fix a stable position for the status region, the number region, and the commentary region so a returning audience reads by position. Give the scorecard one dominant field and let detail pages inherit its ordering.
 - **Density**: Support genuinely dense operating data through disciplined alignment, consistent number formatting, and whitespace that separates result from explanation. Let the scorecard and the exception page breathe; let supporting detail tighten under one grid without dropping below readable scale or hiding rows.
 - **Decoration**: Use flat planes, hairline rules, and restrained status marks. Every visual device earns its place by encoding status, grouping, or comparison. Avoid gauge ornaments, gradient KPI cards, glow, oversized arrows, and decorative dashboard chrome that mimics a product interface without carrying data.

@@ -52,7 +52,7 @@ keywords: [creative, advertising, branding, campaign, concept]
 
 ## V. Visual System Defaults
 
-- **Preferred Visual Style**: photo-editorial
+- **Preferred Visual Style**: custom
 - **Composition**: Compose each page for one piece of work with generous, deliberate space around it, and let the deck's own rhythm move between quiet setup pages and full-frame work. Keep framing consistent enough that the work reads as one body while the pace still varies. This style deliberately holds its own visual voice loosely: once the idea has a visual language, the deck should defer to it rather than impose a competing container.
 - **Density**: Extremely sparse in the creative arc — one piece, one line, one moment per page. Density belongs only to production, timing, and territory reference pages, which are plainly styled and clearly separated from the proposal.
 - **Decoration**: None around the work. No frames, drop shadows, decorative dividers, or agency ornament competing with what is being shown. Where a device recurs — a rule, a caption position, a corner treatment — it stays identical throughout. Persistent chrome, footers, and page numbers stay off the creative pages.

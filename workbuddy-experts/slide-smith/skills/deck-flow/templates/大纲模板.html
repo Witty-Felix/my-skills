@@ -1,130 +1,422 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>大纲 · 项目名</title>
+<title>大纲 · 【项目名】</title>
+<!--
+  ============================================================
+  大纲模板 v2（2026-10-25 改版）
+
+  【这一份是评审件，不是汇报页】
+  读者是要按编号批注的人，所以依据必须看得见——
+  不要套用汇报页的「每节正文 ≤ 2 行」。
+
+  【三条硬规定】
+  1. 全篇一条对齐轴：内容一律从 .wrap 左边缘起，卡片内统一 20px，不许各自缩进。
+  2. 对比跨档：h1 38 / 结论 19 / 证据 13 / 徽标 11.5。不许用 16 vs 15 这种差分。
+  3. 相邻两部分的载体必须不同型（下面 A / B / C 就是三种）。
+
+  【编号只有一层：部分 01 / 02 / 03】
+  小节不编号。锚点直接用结论本身——结论就是它的名字。
+  页面上不许出现 1(a) / 2(b) / Ⅰ.1 / 1.2.3 这类复合编号：
+  括号和字母挤在一个字宽里，看着像脚注，而结论大字就在旁边，编号反而抢戏。
+
+  【改稿方式】指部分号 + 结论里能认出它的几个字：
+    「02 里讲积分那条，结论反了」
+    「01 第三个前提不成立」
+  部分内部只有两三块时，直接说「最后一条」也能指清。
+  ============================================================
+-->
 <style>
-:root{--ink:#1c1a17;--muted:#6b665e;--line:#e6e2da;--bg:#faf8f4;--card:#fff;--accent:#b4462a;--soft:#f2ece2}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.75}
-.wrap{max-width:940px;margin:0 auto;padding:56px 32px 96px}
-header{border-bottom:2px solid var(--ink);padding-bottom:24px;margin-bottom:40px}
-.kicker{display:inline-block;font-size:12px;letter-spacing:.18em;color:var(--accent);border:1px solid var(--accent);border-radius:3px;padding:2px 8px;margin-bottom:14px}
-h1{font-size:30px;line-height:1.3;margin:0 0 14px;font-weight:600}
-.thesis{margin:0;font-size:17px;background:var(--soft);border-left:3px solid var(--accent);padding:14px 18px}
-.meta{margin:16px 0 0;font-size:13px;color:var(--muted)}
-.part{margin:0 0 44px}
-h2{font-size:20px;margin:0 0 20px;padding-bottom:10px;border-bottom:1px solid var(--line);font-weight:600;display:flex;align-items:baseline;gap:12px}
-.num{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;background:var(--ink);color:#fff;border-radius:50%;font-size:14px}
-.sub{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:20px 22px;margin-bottom:14px}
-h3{font-size:16px;margin:0 0 10px;font-weight:600;color:var(--accent)}
-.claim{margin:0 0 12px;font-size:15px}
-.claim b,.land b{color:var(--muted);font-weight:600;font-size:12px;letter-spacing:.08em;margin-right:8px}
-.ev{margin:0;padding-left:20px;color:var(--muted);font-size:14px}
-.ev li{margin-bottom:5px}
-.land{margin:0;font-size:14px;color:var(--muted);padding-left:4px}
-table{width:100%;border-collapse:collapse;background:var(--card);font-size:14px;margin-bottom:12px}
-th,td{border:1px solid var(--line);padding:9px 12px;text-align:left}
-th{background:var(--soft);font-weight:600;font-size:13px}
-td.num-cell{text-align:right;font-variant-numeric:tabular-nums}
-.todo{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:20px 22px}
-.todo ul{margin:0;padding-left:0;list-style:none}
-.todo li{padding:6px 0;border-bottom:1px dashed var(--line)}
-.todo li:last-child{border-bottom:none}
-.todo li::before{content:"□";margin-right:10px;color:var(--accent)}
-footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
-@media print{body{background:#fff}.wrap{padding:0}.sub,.todo{break-inside:avoid}}
+  :root{
+    --paper:#f4f1e9; --card:#fff; --ink:#14120f; --muted:#6d675d; --faint:#a8a29a;
+    --line:#e6e1d6;
+    --red:#c8452b; --blue:#2f5aa8; --yellow:#e0a52c; --green:#2b7a55; --violet:#6a4f9c;
+    --shadow:6px 6px 0 rgba(20,18,15,.10);
+    --mono:ui-monospace,"Cascadia Mono","SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,sans-serif;
+    font-size:15px; line-height:1.7; -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(circle at 1px 1px, rgba(20,18,15,.055) 1px, transparent 0);
+    background-size:22px 22px;
+  }
+  /* 两列：左侧目录（sticky）+ 右侧内容。窄屏自动折成一列。 */
+  .wrap{
+    max-width:1320px;margin:0 auto;padding:0 32px 120px;
+    display:grid;grid-template-columns:212px minmax(0,1fr);gap:48px;align-items:start;
+  }
+  main{min-width:0}
+
+  /* ---------- 顶部 ---------- */
+  .masthead{padding:64px 0 40px;border-bottom:3px solid var(--ink)}
+  .brandrow{display:flex;align-items:flex-start;gap:22px;flex-wrap:wrap}
+  .seal{
+    width:74px;height:74px;flex:0 0 74px;border:3px solid var(--ink);border-radius:14px;
+    background:var(--red);color:#fff;display:grid;place-items:center;
+    font-size:30px;font-weight:800;letter-spacing:-1px;box-shadow:4px 4px 0 var(--ink);
+    transform:rotate(-3deg);
+  }
+  .titles h1{margin:0;font-size:38px;line-height:1.2;letter-spacing:-.5px;font-weight:800}
+  .titles .sub{margin:8px 0 0;color:var(--muted);font-size:15px}
+  .titles .sub b{color:var(--ink)}
+  .ver{
+    margin-left:auto;align-self:center;font-family:var(--mono);font-size:12px;
+    border:2px solid var(--ink);border-radius:999px;padding:5px 12px;background:var(--card);
+    box-shadow:3px 3px 0 rgba(20,18,15,.12);white-space:nowrap;
+  }
+  /* 主线 = 全篇唯一的一句话结论，半句黄笔高亮 */
+  .lede{
+    margin:34px 0 0;font-size:19px;line-height:1.75;max-width:880px;
+    background:var(--card);border:2px solid var(--ink);border-radius:16px;
+    padding:22px 26px;box-shadow:var(--shadow);
+  }
+  .lede em{font-style:normal;background:linear-gradient(transparent 62%, #f7d774 62%);font-weight:700}
+
+  /* ---------- 数字带：替掉六句话 ---------- */
+  .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:26px}
+  .stat{
+    background:var(--card);border:2px solid var(--ink);border-radius:13px;
+    padding:14px 12px 12px;text-align:center;box-shadow:4px 4px 0 rgba(20,18,15,.09);
+  }
+  .stat .n{font-size:27px;font-weight:800;line-height:1.1;font-family:var(--mono);letter-spacing:-1px}
+  .stat .k{font-size:11.5px;color:var(--muted);margin-top:5px;letter-spacing:.04em}
+  .stat.r .n{color:var(--red)} .stat.b .n{color:var(--blue)}
+  .stat.y .n{color:#b5801a} .stat.g .n{color:var(--green)} .stat.v .n{color:var(--violet)}
+
+  /* ---------- 左侧目录（点哪跳哪） ----------
+     和正文同一套语言：2px 墨线 + 硬投影 + 实心编号徽标。
+     不要做成「无边框的灰色小字列表」——那和卡片正文完全是两种东西。 */
+  .side{
+    position:sticky;top:28px;align-self:start;
+    margin-top:64px;               /* 首屏与右侧印章同一条上缘；滚动后停在 top:28 */
+    background:var(--card);border:2px solid var(--ink);border-radius:14px;
+    box-shadow:5px 5px 0 rgba(20,18,15,.10);
+    padding:18px 12px 16px;
+  }
+  .side .st{
+    margin:0 0 10px;padding:0 8px 10px;
+    font-size:11px;letter-spacing:.18em;color:var(--ink);font-weight:800;
+    border-bottom:1px dashed var(--line);
+  }
+  .side a{
+    display:grid;grid-template-columns:26px minmax(0,1fr);align-items:start;gap:8px;
+    padding:7px 8px;border-radius:8px;text-decoration:none;
+    color:var(--ink);font-size:13.5px;font-weight:650;line-height:1.42;
+    transition:background .16s;
+  }
+  /* 编号徽标与正文 sechead .idx 同形：黑底白字圆角 */
+  .side a b{
+    display:grid;place-items:center;height:19px;
+    font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.02em;
+    background:var(--ink);color:#fff;border-radius:5px;
+    transition:background .16s;
+  }
+  .side a:hover{background:rgba(20,18,15,.055)}
+  .side a:hover b{background:var(--red)}
+
+  /* ---------- 部分头 ---------- */
+  section{margin:74px 0 0;scroll-margin-top:28px}
+  .sechead{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sechead .idx{
+    font-family:var(--mono);font-size:13px;font-weight:700;color:#fff;background:var(--ink);
+    padding:4px 10px;border-radius:6px;letter-spacing:.06em;flex:0 0 auto;
+  }
+  .sechead h2{margin:0;font-size:26px;font-weight:800;letter-spacing:-.4px}
+  /* 页数角标挂在这里，不再单开一张表 */
+  .sechead .hint{margin-left:auto;font-size:12.5px;color:var(--muted);font-family:var(--mono);white-space:nowrap}
+  .secdesc{margin:10px 0 26px;color:var(--muted);font-size:14.5px;max-width:820px}
+
+  /* ---------- 通用 ---------- */
+  .card{background:var(--card);border:2px solid var(--ink);border-radius:16px;box-shadow:var(--shadow)}
+  .card.pad{padding:22px 24px}
+
+  /* ===== 载体 A · 层级堆叠（适合：几块平行、无先后） ===== */
+  .layers{display:flex;flex-direction:column;gap:9px}
+  /* 不编号：用一条彩色左边代替原来的标签列。结论自己就是这一块的名字。 */
+  .layer{
+    background:var(--card);border:2px solid var(--ink);border-left-width:8px;border-radius:12px;
+    padding:16px 22px;box-shadow:4px 4px 0 rgba(20,18,15,.08);
+  }
+  .layer .claim{margin:0;font-size:19px;font-weight:700;line-height:1.5;letter-spacing:-.2px}
+  .layer .ev{margin:7px 0 0;font-size:13px;color:var(--muted);line-height:1.65}
+  .layer .ev b{color:var(--ink);font-weight:700}
+  .L1{border-left-color:var(--ink)}
+  .L2{border-left-color:var(--red)}
+  .L3{border-left-color:var(--violet)}
+  .L4{border-left-color:var(--blue)}
+
+  /* ===== 载体 B · 诊断卡（适合：逐项下判断） ===== */
+  .diag{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .dx{background:var(--card);border:2px solid var(--ink);border-radius:13px;padding:18px 20px;box-shadow:4px 4px 0 rgba(20,18,15,.08)}
+  .dx .tt{font-size:19px;font-weight:700;line-height:1.45;letter-spacing:-.2px;margin:0 0 8px}
+  .dx p{margin:0;font-size:13px;color:var(--muted);line-height:1.7}
+  .dx p b{color:var(--ink);font-weight:700}
+  .dx code{font-family:var(--mono);font-size:11px;background:#f4f1e9;padding:1px 5px;border-radius:4px;border:1px solid var(--line);color:var(--ink)}
+
+  /* ===== 载体 C · 时间轴（适合：有先后、有转折） ===== */
+  .tl{position:relative;padding-left:34px}
+  .tl:before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:var(--line)}
+  .tl .item{position:relative;margin-bottom:14px;background:var(--card);border:2px solid var(--ink);border-radius:13px;padding:16px 20px;box-shadow:4px 4px 0 rgba(20,18,15,.08)}
+  .tl .item:before{content:"";position:absolute;left:-32px;top:20px;width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--ink)}
+  .tl .item.key:before{background:var(--red);border-color:var(--red)}
+  .tl .item .hh{font-size:19px;font-weight:700;margin-bottom:5px;letter-spacing:-.2px}
+  .tl .item .dd{font-size:13px;color:var(--muted);line-height:1.7}
+  .tl .item .dd b{color:var(--ink);font-weight:700}
+
+  /* ---------- 深色账本：落点 + 这一部分用到的判断 ---------- */
+  .ledger{margin-top:14px;background:var(--ink);color:#fff;border-radius:12px;padding:13px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:12.5px}
+  .ledger .pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:3px 11px;font-family:var(--mono);font-size:11.5px}
+  .ledger .lbl{color:#b9b3a8;font-size:12px}
+
+  /* ---------- 收尾 ---------- */
+  .verdict{margin-top:20px;background:var(--card);border:3px solid var(--ink);border-radius:18px;padding:26px 28px;box-shadow:8px 8px 0 rgba(20,18,15,.13)}
+  .verdict h3{margin:0 0 16px;font-size:20px;font-weight:800}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .grid3 .g{border-left:3px solid;padding-left:15px}
+  .grid3 .g:nth-child(1){border-color:var(--red)}
+  .grid3 .g:nth-child(2){border-color:var(--blue)}
+  .grid3 .g:nth-child(3){border-color:var(--green)}
+  .grid3 .g .t{font-weight:800;font-size:15px;margin-bottom:5px}
+  .grid3 .g .d{font-size:13px;color:var(--muted);line-height:1.7}
+
+  footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;gap:16px;font-size:12px;color:var(--faint);flex-wrap:wrap}
+
+  @media(max-width:1080px){
+    .wrap{grid-template-columns:1fr;gap:0}
+    .side{
+      position:static;margin:26px 0 0;padding:12px;
+      display:flex;flex-wrap:wrap;gap:7px;border-radius:12px;
+    }
+    .side .st{display:none}
+    .side a{
+      grid-template-columns:auto auto;align-items:center;gap:6px;
+      padding:4px 11px 4px 6px;border:1.5px solid var(--line);
+      border-radius:999px;font-size:12.5px;font-weight:600;
+    }
+    .side a b{height:17px;padding:0 5px;font-size:10px}
+  }
+  @media(max-width:960px){
+    .stats{grid-template-columns:repeat(3,1fr)}
+    .diag,.grid3{grid-template-columns:1fr}
+    .layer{grid-template-columns:1fr}
+    .sechead{flex-wrap:wrap}
+    .sechead .hint{margin-left:0;flex-basis:100%}
+  }
+  @media print{
+    body{background:#fff;background-image:none}
+    .wrap{display:block;padding:0}
+    .side{display:none}
+    section{break-inside:avoid}
+    .layer,.dx,.tl .item,.verdict{break-inside:avoid;box-shadow:none}
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<header>
-  <div class="kicker">大纲</div>
-  <h1>【项目名】</h1>
-  <p class="thesis">主线：【一句话，贯穿全篇，必须能被反驳】</p>
-  <p class="meta">判断库已过：【J-01 J-05 J-08】　·　生成于 【2026-10-24】</p>
-</header>
+  <!-- ================= 左侧目录：点哪跳哪 =================
+       条目只写「部分号 + 部分名」，跟右侧 sechead 一一对应。
+       附录写「附」，排在末尾。不要在这里加重号、不要嵌套小节。 -->
+  <nav class="side">
+    <p class="st">大纲 · 目录</p>
+    <a href="#s1"><b>01</b><span>【部分名】</span></a>
+    <a href="#s2"><b>02</b><span>【部分名】</span></a>
+    <a href="#s3"><b>03</b><span>【部分名】</span></a>
+    <a href="#fix"><b>附</b><span>【附录名】</span></a>
+    <a href="#confirm"><b>04</b><span>待你确认</span></a>
+  </nav>
 
-<main>
+  <main>
 
-<!-- 每个一级部分复制这一段。一级结构不超过 3 块。 -->
+  <!-- ================= 顶部 ================= -->
+  <header class="masthead">
+    <div class="brandrow">
+      <div class="seal">纲</div>
+      <div class="titles">
+        <h1>【项目名】</h1>
+        <p class="sub"><b>【听众 / 场合】</b> / 大纲 · 【N】页 · 【日期】</p>
+      </div>
+      <div class="ver">判断库已过 J-01 J-05 J-08</div>
+    </div>
 
-<section class="part">
-  <h2><span class="num">1</span>【第一部分标题】</h2>
+    <!-- 主线：全篇唯一一句。必须能被反驳，不能被反驳的就不是主张 -->
+    <p class="lede">
+      【主线，一句话贯穿全篇。】<em>【这半句是全文最值钱的判断，黄笔高亮】</em>。【代价或前提，一行内。】
+    </p>
 
-  <article class="sub">
-    <h3>1(a) 【小节名】</h3>
-    <p class="claim"><b>结论</b>【一句可以被反驳的话】</p>
-    <ul class="ev">
-      <li>【事实 / 数据 1】</li>
-      <li>【事实 / 数据 2】</li>
-    </ul>
-  </article>
+    <!-- 数字带：页数与规模在这里一次交代，正文不再重复 -->
+    <div class="stats">
+      <div class="stat r"><div class="n">【N】</div><div class="k">总页数</div></div>
+      <div class="stat v"><div class="n">【N】</div><div class="k">一级部分</div></div>
+      <div class="stat b"><div class="n">【N】</div><div class="k">小节数</div></div>
+      <div class="stat"><div class="n">2</div><div class="k">封面 + 结尾</div></div>
+      <div class="stat y"><div class="n">【N】</div><div class="k">其中节庆页</div></div>
+      <div class="stat g"><div class="n">【N】</div><div class="k">已砍掉的条数</div></div>
+    </div>
+  </header>
 
-  <article class="sub">
-    <h3>1(b) 【小节名】</h3>
-    <p class="claim"><b>结论</b>【一句可以被反驳的话】</p>
-    <ul class="ev">
-      <li>【事实 / 数据 1】</li>
-    </ul>
-  </article>
+  <!-- ========================================================
+       载体 A · 层级堆叠
+       适合：部分内部是几块平行的东西，没有先后。
+       每块 = 一条结论（19px，必须能被反驳）+ 一行支撑事实（13px）。
+       不编号。左边那道彩色线只是分隔，不是标号，别往里塞字。
+       ======================================================== -->
+  <section id="s1">
+    <div class="sechead">
+      <span class="idx">01</span>
+      <h2>【部分标题：写结论，不写名词】</h2>
+      <span class="hint">4 内容页 · 含节庆 5</span>
+    </div>
+    <p class="secdesc">【这一部分为什么单独成块，一句话。】</p>
 
-  <p class="land"><b>本部分落点</b>【一句话，解释为什么这些小节要放在一起】</p>
-</section>
+    <div class="layers">
+      <div class="layer L1">
+        <p class="claim">【结论：一句能被反驳的话】</p>
+        <p class="ev">【事实 / 数据 1】　·　【事实 / 数据 2】　·　<b>【最该被记住的那半句】</b></p>
+      </div>
+      <div class="layer L2">
+        <p class="claim">【结论】</p>
+        <p class="ev">【事实 / 数据 1】</p>
+      </div>
+      <div class="layer L3">
+        <p class="claim">【结论】</p>
+        <p class="ev">【事实 / 数据 1】</p>
+      </div>
+    </div>
 
-<section class="part">
-  <h2><span class="num">2</span>【第二部分标题】</h2>
+    <!-- 落点 + 用到的判断，压成一条深色账本 -->
+    <div class="ledger">
+      <span class="lbl">本部分落点</span>
+      <span style="font-weight:700">【一句话：为什么这几块要放在一起】</span>
+      <span class="pill" style="margin-left:auto">J-05</span>
+      <span class="pill">J-01</span>
+    </div>
+  </section>
 
-  <article class="sub">
-    <h3>2(a) 【小节名】</h3>
-    <p class="claim"><b>结论</b>【一句可以被反驳的话】</p>
-    <ul class="ev">
-      <li>【事实 / 数据 1】</li>
-    </ul>
-  </article>
+  <!-- ========================================================
+       载体 B · 诊断卡（两列）
+       适合：部分内部是逐项下判断，每项自带立场。
+       换型理由：与 01 的竖条堆叠走向不同，视线会横着扫。
+       ======================================================== -->
+  <section id="s2">
+    <div class="sechead">
+      <span class="idx">02</span>
+      <h2>【部分标题】</h2>
+      <span class="hint">3 内容页 · 含节庆 4</span>
+    </div>
+    <p class="secdesc">【这一部分为什么单独成块，一句话。】</p>
 
-  <p class="land"><b>本部分落点</b>【一句话】</p>
-</section>
+    <div class="diag">
+      <div class="dx">
+        <p class="tt">【结论当标题，不写小节名】</p>
+        <p>【支撑事实 1，带数字】　·　【支撑事实 2】</p>
+      </div>
+      <div class="dx">
+        <p class="tt">【结论】</p>
+        <p>【支撑事实 1】</p>
+      </div>
+      <div class="dx">
+        <p class="tt">【结论】</p>
+        <p>【支撑事实 1】</p>
+      </div>
+      <div class="dx">
+        <p class="tt">【结论】</p>
+        <p>【支撑事实 1】</p>
+      </div>
+    </div>
 
-<section class="part">
-  <h2>页数估算</h2>
-  <table>
-    <thead><tr><th>部分</th><th>内容页</th><th>含节庆页</th></tr></thead>
-    <tbody>
-      <tr><td>封面 / 目录</td><td class="num-cell">—</td><td class="num-cell">2</td></tr>
-      <tr><td>1</td><td class="num-cell">【 】</td><td class="num-cell">【 】</td></tr>
-      <tr><td>2</td><td class="num-cell">【 】</td><td class="num-cell">【 】</td></tr>
-      <tr><td>结尾</td><td class="num-cell">—</td><td class="num-cell">1</td></tr>
-      <tr><td><b>合计</b></td><td class="num-cell"><b>【 】</b></td><td class="num-cell"><b>【 】</b></td></tr>
-    </tbody>
-  </table>
-</section>
+    <div class="ledger">
+      <span class="lbl">本部分落点</span>
+      <span style="font-weight:700">【一句话】</span>
+      <span class="pill" style="margin-left:auto">J-08</span>
+    </div>
+  </section>
 
-<section class="part">
-  <h2>本次取舍（来自偏好库）</h2>
-  <table>
-    <thead><tr><th>编号</th><th>判断</th><th>本次处理</th></tr></thead>
-    <tbody>
-      <tr><td>【J-05】</td><td>【抓大放小】</td><td>【具体砍了什么 / 留了什么】</td></tr>
-    </tbody>
-  </table>
-</section>
+  <!-- ========================================================
+       载体 C · 时间轴
+       适合：部分内部有先后顺序，或有一个转折点。
+       .key 标转折那一条（红点），全篇最多两处。
+       ======================================================== -->
+  <section id="s3">
+    <div class="sechead">
+      <span class="idx">03</span>
+      <h2>【部分标题】</h2>
+      <span class="hint">2 内容页 · 含节庆 2</span>
+    </div>
+    <p class="secdesc">【这一部分为什么单独成块，一句话。】</p>
 
-<section class="todo">
-  <h2 style="border:none;padding:0;margin:0 0 14px">待你确认</h2>
-  <ul>
-    <li>主线是否成立</li>
-    <li>结构 1 / 2 的边界对不对</li>
-    <li>页数是否合适</li>
-  </ul>
-</section>
+    <div class="tl">
+      <div class="item">
+        <div class="hh">【结论】</div>
+        <div class="dd">【支撑事实】</div>
+      </div>
+      <div class="item key">
+        <div class="hh">【转折点的结论】</div>
+        <div class="dd">【支撑事实】　·　【为什么这里拐弯】</div>
+      </div>
+      <div class="item">
+        <div class="hh">【结论】</div>
+        <div class="dd">【支撑事实】</div>
+      </div>
+    </div>
 
-</main>
+    <div class="ledger">
+      <span class="lbl">本部分落点</span>
+      <span style="font-weight:700">【一句话】</span>
+    </div>
+  </section>
 
-<footer>这份文件是内部源的唯一形态，逐页内容与成品均以它为准。改动请直接指到 1(a) / 2(b) 这样的编号上。</footer>
+  <!-- ========================================================
+       附录（可选）· 口径订正 / 数据来源 / 未采用的说法
+       这类「必须留证据但不属于主线」的内容放这里：
+         idx 写「附」，不占一级部分，不进导航前三位。
+       没有就不写这一段，不要为了对称硬凑。
+       ======================================================== -->
+  <section id="fix">
+    <div class="sechead">
+      <span class="idx">附</span>
+      <h2>【附录标题：例如「口径订正：其中三处不能沿用原文说法」】</h2>
+      <span class="hint">【对什么而言】</span>
+    </div>
+    <p class="secdesc">【为什么这些内容进不了主线，但必须留着。】</p>
 
+    <div class="layers">
+      <div class="layer L2">
+        <p class="claim" style="font-size:16px">【原文说法，原样引】</p>
+        <p class="ev">【改成什么】　·　【为什么不能照搬】</p>
+      </div>
+      <div class="layer L3">
+        <p class="claim" style="font-size:16px">【原文说法】</p>
+        <p class="ev">【改成什么】　·　【原因】</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 收尾：待确认 = 判断题 =================
+       固定三条。手上多于三条就先合并——两条其实是同一件事的两面，
+       合成一条；合成不了说明其中一条不够重要，删掉。
+       不要加第四列，grid3 会挤成两行，层级就散了。
+       ======================================================== -->
+  <div class="verdict" id="confirm">
+    <h3>待你确认 · 三条，每条都可以直接否</h3>
+    <div class="grid3">
+      <div class="g"><div class="t">主线立不立得住</div><div class="d">【主线】若端不住，全篇结构要重排，不是改几页的事。</div></div>
+      <div class="g"><div class="t">01 和 02 的边界对不对</div><div class="d">【哪一块可能该挪】挪动只影响相邻两页。</div></div>
+      <div class="g"><div class="t">页数合不合适</div><div class="d">【N】页对【N】分钟，约 【N】页每分钟。</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <span>【项目名】 · 大纲 v1</span>
+    <span>这份文件是内部源的唯一形态。改动这样指：「02 里讲积分那条，结论反了」——指部分号 + 结论里能认出它的几个字。</span>
+  </footer>
+
+  </main>
 </div>
 </body>
 </html>

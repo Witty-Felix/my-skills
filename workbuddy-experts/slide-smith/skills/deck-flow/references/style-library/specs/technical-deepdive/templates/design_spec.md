@@ -50,7 +50,7 @@ keywords: [technical, architecture, engineering, mechanism, trade-off]
 
 ## V. Visual System Defaults
 
-- **Preferred Visual Style**: blueprint
+- **Preferred Visual Style**: custom
 - **Composition**: Build the page around the structure being explained. Give the diagram the dominant region and keep its explanation adjacent rather than stacked below the fold. Preserve one spatial convention across the deck — flow direction, layer order, and component position — so a returning diagram is recognized instead of re-read.
 - **Density**: Technical audiences tolerate density when it is organized. Allow detailed diagrams and dense reference tables under a consistent grid, but keep one idea per page and let boundary pages — problem statement, decision, conclusion — carry more whitespace.
 - **Decoration**: Use precise lines, measured spacing, and functional annotation. Line weight, dash pattern, and arrowhead carry meaning and stay consistent once assigned. Avoid gradient-filled server icons, drop-shadowed boxes, glow, and decorative isometric scenery that adds no structural information.

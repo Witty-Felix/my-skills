@@ -121,7 +121,7 @@ The visual aesthetic — shape language, decoration density, whitespace rhythm, 
 | **User named a style** (chat, template, beautify) | It is truth: the required basis or inherited anchor in every behavior. Derive each direction through the open dimensions; when all variation is forbidden let the other components carry the difference and say so in the note. |
 | **No description** | Project one complete custom aesthetic per solution, written as the carriers and techniques it *uses* — containers, icons, swatches, shadows, gradients, image treatments, native shapes — never as a list of avoidances. A locked prohibition removes that tool from every page; write one only when the user or material requires it. Behaviors differ when the designs genuinely differ, never to meet a quota; no forced bases, safe-to-bold ladder, or deliberate extreme. |
 
-**Direction name and note**: give each direction a `name` and one- or two-sentence `note` in the confirmed UI language (plain keys). Confirm UI's localized labels such as `瑞士极简`, `柔和圆角`, `编辑出版` are optional vocabulary, never a required mapping, and the note exposes no catalog ids.
+**Direction name and note**: give each direction a `name` and one- or two-sentence `note` in the confirmed UI language (plain keys). Confirm UI's localized labels such as `剪纸层叠`, `手绘笔记`, `波普拼贴` are optional vocabulary, never a required mapping, and the note exposes no catalog ids.
 
 **Forbidden — a non-catalog name as `visual_style`**: the field is literal `custom`; prose lives in `visual_style_behavior` and `visual_style_references` holds only first-column catalog ids (a "Paired rendering" id such as `flat` or `digital-dashboard` is a rendering, not a style). Generic words — flat / modern / clean / simple / minimal — are not behavior: state the executable shape language, composition, density, whitespace, typography, and texture, which may match one preset exactly.
 
@@ -129,7 +129,7 @@ Record the style and rationale in `design_spec.md`, then project `- visual_style
 
 **Conditional template workspace**: when the Stage-1 choice is installed under `<project_path>/templates/`, read [`strategist-template.md`](./strategist-template.md) before completing Stage 2 — installed spec and prototypes only, never the library root. It covers the editable application plan, confirmed-value consumption, prototype selection, reuse/adherence derivation, inherited precedence, and structured-lock planning; it decides how to use the template, never which one.
 
-**Downstream effect**: e / f / g / h realize mode + style — e.g. `showcase` + `dark-tech` → one luminous accent on a dark field, a clean sans paired with mono, minimal glow icons, the `digital-dashboard` rendering.
+**Downstream effect**: e / f / g / h realize mode + style — e.g. `showcase` + `paper-cut` → one cut-paper focal shape on a warm field, a warm sans, tactile layered sheets, the `digital-dashboard` rendering.
 
 ### e. Color Scheme Recommendation
 

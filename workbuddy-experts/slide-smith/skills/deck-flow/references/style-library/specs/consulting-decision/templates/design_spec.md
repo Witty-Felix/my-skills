@@ -50,7 +50,7 @@ keywords: [consulting, decision-support, answer-first, evidence, analytical]
 
 ## V. Visual System Defaults
 
-- **Preferred Visual Style**: swiss-minimal
+- **Preferred Visual Style**: custom
 - **Composition**: Build the page around the message-to-proof relationship. Favor a few primary content regions—normally one to three—while allowing more when the argument genuinely needs them. Maintain one clear scan path, keep evidence dominant, and never detach a recommendation or implication into a decorative conclusion box that competes with its proof.
 - **Density**: Support dense business material through concise assertions, disciplined alignment, compact but legible labels, and whitespace that separates reasoning layers. Let synthesis and recommendation pages breathe; let evidence and appendix pages tighten under a consistent grid without compressing below readable scale.
 - **Decoration**: Use flat planes, hairline rules, restrained emphasis, and minimal elevation. Avoid ornamental cards, gradients, glows, decorative badges, and filled callout boxes that do not encode hierarchy, grouping, or evidence.

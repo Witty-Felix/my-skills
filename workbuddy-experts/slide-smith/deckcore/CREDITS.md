@@ -22,7 +22,7 @@
 1. **去掉上游的 skill 打包形态**：删除了上游 `SKILL.md`、`SPONSORS.md`、`SPONSORS_CN.md`，以及强制「必须保持完整官方发行包」的 `attribution_guard.py`。
 2. **清除了 10 个入口文件里的完整性自检调用**（`require_skill_integrity`），使脚本可以脱离上游目录结构单独运行。
 3. **只需转换能力**：路由、Strategist、`design_spec.md`、`spec_lock.md`、确认页等整套工作流**全部移除**，只保留 `svg_to_pptx` / `svg_quality` / `project_management` 及其依赖。
-4. **视觉皮规格**（`references/visual-styles/` 下 18 份）与**表达方法规格**（`templates/styles/` 下 14 份）原样保留，供风格库引用。
+4. **视觉皮规格**（`references/visual-styles/` 下 2 份）与**表达方法规格**（`templates/styles/` 下 14 份）原样保留，供风格库引用。
 5. `references/shared-standards-core.md` 等 SVG 书写契约原样保留，是写页的硬性依据。
 
 ### 为什么可以这么做

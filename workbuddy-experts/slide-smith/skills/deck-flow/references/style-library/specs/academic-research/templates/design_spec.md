@@ -53,7 +53,7 @@ keywords: [academic, research, thesis-defense, methodology, peer-review]
 
 ## V. Visual System Defaults
 
-- **Preferred Visual Style**: swiss-minimal
+- **Preferred Visual Style**: custom
 - **Composition**: Build each page around one figure or one claim, with the reading of that figure placed immediately beside or beneath it. Keep a stable position for the claim line so the audience learns where to look. Reserve multi-panel composition for genuine comparisons and keep panel order, scale, and labeling consistent across them.
 - **Density**: Research audiences accept detail but not clutter. Keep result pages to what supports one claim and move exhaustive conditions to supplementary pages. Let question, contribution, and limitation pages breathe; allow supplementary pages to tighten under one grid while staying legible at the rendered slide size.
 - **Decoration**: Effectively none. Hairline rules, restrained emphasis, and clear panel separation only. Avoid gradient backgrounds, three-dimensional chart effects, drop-shadowed boxes, institutional ornament repeated on every page, and any device that adds visual weight without adding information.

@@ -52,7 +52,7 @@ keywords: [proposal, presales, bid, client, engagement]
 
 ## V. Visual System Defaults
 
-- **Preferred Visual Style**: soft-rounded
+- **Preferred Visual Style**: custom
 - **Composition**: Build each page around the client's outcome, with a stable position for the commitment line and a stable position for supporting evidence. Give the recommendation, commercial, and next-step pages room; let architecture and traceability pages carry structured density. Keep composition consistent enough that a document read offline navigates by position.
 - **Density**: Proposals are read alone as often as presented, so pages must survive without narration. Keep the argument pages readable at a glance and let scope, pricing, and traceability pages carry real detail under one grid without dropping below legible scale or hiding a condition.
 - **Decoration**: Professional and calm. Use gentle containers to group related commitments, hairline separation for structure, and restrained emphasis. Avoid heavy corporate ornament, stock imagery of handshakes and skylines, gradient banners, and decorative devices that inflate a thin proposal. Nothing should look more expensive than the work being proposed.

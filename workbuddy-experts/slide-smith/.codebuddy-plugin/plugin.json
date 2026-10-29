@@ -1,7 +1,7 @@
 {
   "name": "slide-smith",
-  "version": "3.3.1",
-  "description": "Turns raw material into a reviewed outline, a page-by-page slide spec rendered as a runnable HTML deck, then a finished deck — as HTML or editable PPTX. Four gated steps, a stored preference library, 22 visual styles and 14 argument methods (both addressed by Chinese names), chosen independently.",
+  "version": "3.6.1",
+  "description": "Turns raw material into a reviewed outline, a page-by-page slide spec rendered as a runnable HTML deck, then a finished deck — as HTML or editable PPTX. Four gated steps, a stored preference library, 6 visual styles (all with clickable HTML samples) and 14 argument methods (both addressed by Chinese names), chosen independently.",
   "author": {
     "name": "榛佑"
   },
@@ -14,15 +14,15 @@
   "expertType": "agent",
   "agentName": "slide-smith",
   "displayName": {
-    "en": "Slide Smith",
-    "zh": "幻灯匠"
+    "en": "Xinghe Xingsui PPT Expert",
+    "zh": "星禾星穗PPT专家"
   },
   "profession": {
-    "en": "Presentation Deck Specialist",
-    "zh": "汇报演示制作专家"
+    "en": "Xinghe Xingsui PPT Expert",
+    "zh": "星禾星穗PPT专家"
   },
   "displayDescription": {
-    "en": "Turns your material into an outline, a page-by-page slide deck and a finished presentation — HTML, editable PPTX or per-page generated-visual PPTX. Four gated reviews, 22 visual styles and 14 argument methods, picked separately.",
+    "en": "Turns your material into an outline, a page-by-page slide deck and a finished presentation — HTML, editable PPTX or per-page generated-visual PPTX. Four gated reviews, 6 visual styles (with an HTML style picker: 6 clickable sample decks) and 14 argument methods (pick 3 from a card), chosen separately.",
     "zh": "资料拆成大纲、逐页分镜与成片演示，HTML、PPTX、生图 PPTX 三选一，四步审核，风格可换。"
   },
   "avatar": "avatars/expert.png",

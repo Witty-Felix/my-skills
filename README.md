@@ -16,7 +16,7 @@
 
 | 专家 | 说明 |
 | --- | --- |
-| [`slide-smith`](./workbuddy-experts/slide-smith) | 幻灯匠 · 汇报演示制作专家。把资料拆成大纲、逐页分镜与成片演示，HTML 放映页 / 可编辑 PPTX / 逐页生图 PPTX 三选一，四步审核、判断有据、风格可换。 |
+| [`slide-smith`](./workbuddy-experts/slide-smith) | 星禾星穗PPT专家（v3.6.1）· 汇报演示制作专家。把资料拆成大纲、逐页分镜与成片演示，HTML 放映页 / 可编辑 PPTX / 逐页生图 PPTX 三选一，四步审核、判断有据、风格可换。 |
 
 本地安装（复制整个专家目录到插件目录）：
 

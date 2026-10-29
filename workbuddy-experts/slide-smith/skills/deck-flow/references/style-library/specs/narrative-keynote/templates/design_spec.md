@@ -50,7 +50,7 @@ keywords: [keynote, storytelling, narrative, persuasion, talk]
 
 ## V. Visual System Defaults
 
-- **Preferred Visual Style**: editorial
+- **Preferred Visual Style**: custom
 - **Composition**: Give each page one dominant element and let the rest of the frame stay empty. Use asymmetry and generous margins deliberately; a keynote page is composed, not filled. Vary composition across beats so rhythm carries the arc, and reserve the most extreme restraint for the turn.
 - **Density**: Radically sparse. A page carries a few words, one image, or one number — readable in the two seconds before the audience returns to the speaker. Density belongs only in the reference beat after the talk ends.
 - **Decoration**: Almost none. Let scale, space, image, and typography do the work. Any recurring device — a rule, a mark, a corner treatment — appears consistently or not at all. Avoid template chrome, persistent footers, page numbers, progress bars, and transitional ornament that reminds the audience they are watching slides.

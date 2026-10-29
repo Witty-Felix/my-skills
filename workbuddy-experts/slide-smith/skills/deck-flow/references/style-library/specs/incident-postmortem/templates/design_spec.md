@@ -51,7 +51,7 @@ keywords: [postmortem, incident, reliability, root-cause, blameless]
 
 ## V. Visual System Defaults
 
-- **Preferred Visual Style**: swiss-minimal
+- **Preferred Visual Style**: custom
 - **Composition**: Build each page around one fact and keep the timeline's spatial direction consistent wherever it recurs. Fix a stable position for timestamp, event, and source so entries are compared by eye. Give the summary, systemic condition, and action pages room; let evidence pages carry density under one grid.
 - **Density**: The document is read after the meeting by people who were not there, so pages must stand alone. Keep the summary and factor pages readable at a glance and let timeline and evidence pages hold real detail without hiding entries or truncating identifiers.
 - **Decoration**: Effectively none. This is a factual record; visual restraint is part of its credibility. Use hairline rules, clear separation, and consistent marks only. Avoid alarm graphics, dramatic red gradients, warning ornament, and any device that adds emotional weight to a page that should carry evidence.

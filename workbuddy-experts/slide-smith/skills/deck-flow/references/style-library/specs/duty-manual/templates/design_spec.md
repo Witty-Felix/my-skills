@@ -16,7 +16,7 @@ keywords: [technical-manual, dark-field-grid, mechanism-first, judgment-axis, li
 | Style Name | Duty Manual (勤务手册) |
 | Best Fit | Technical material, training courseware, operating-standard walkthroughs, and internal technical sharing that must gather rules, standards, and procedure items scattered across many documents onto one derivable axis; the audience must be able to judge on site from it rather than recite clauses |
 | Reusable Intent | Titles written as judgeable sentences; mechanism before rule; every rule traceable to the mechanism page it rests on; the reader always knows where on the axis they stand |
-| Sources | Method and visual defaults distilled from one finished technical-sharing deck; base references instructional / pyramid (method), swiss-minimal / blueprint / dark-tech (visual), blueprint / vector-illustration / digital-dashboard (image) |
+| Sources | Method and visual defaults distilled from one finished technical-sharing deck; base references instructional / pyramid (method), paper-cut / sketch-notes (visual), blueprint / vector-illustration / digital-dashboard (image) |
 
 ## II. Communication Method
 
@@ -54,8 +54,8 @@ keywords: [technical-manual, dark-field-grid, mechanism-first, judgment-axis, li
 ## V. Visual System Defaults
 
 - **Preferred Visual Style**: custom
-- **Visual Style References**: swiss-minimal, blueprint, dark-tech
-- **Visual Style Behavior**: A strict-grid manual on a dark field. swiss-minimal owns the baseline columns, hard left-aligned edges, and generous space; blueprint owns the hairline grid, leader-line callouts, and cross-section-style diagram layout; dark-tech owns the fluorescent emphasis and geometric precision on the dark ground. Containers are hairline-stroked square boxes with zero corner radius and no drop shadow or glow. A section progress indicator bar sits fixed on the page's left edge, the current section lit in the emphasis color; on off-axis content the whole bar turns to the warning color.
+- **Visual Style References**: paper-cut, sketch-notes
+- **Visual Style Behavior**: A layered-paper manual. paper-cut owns the stacked sheets, soft inter-layer shadow, and generous space; sketch-notes owns the doodle line work, wobbly containers, and hand-drawn callouts. Containers are cut-paper sheets with crisp edges and a soft low-opacity shadow. A section progress indicator bar sits fixed on the page's left edge, the current section lit in the emphasis color; on off-axis content the whole bar turns to the warning color.
 - **Composition**: The content zone starts at the top left: the left-edge indicator answers "where are we" first, the title runs across the top with the judgment sentence, evidence and diagrams unfold toward the bottom right, and the page closes with one actionable conclusion at the bottom. Image and text swap sides between adjacent pages to give the reading a rhythm.
 - **Density**: Mechanism and table pages are dense; section dividers and counterexample pages breathe; every section holds at least one visibly low-density page as a rest. Density follows information weight; never add items to fill a page.
 - **Decoration**: Decoration is annotation — the hairline grid, leader lines, tick marks, and the indicator bar are themselves information carriers. No ornament unrelated to the information, no gradient blocks, no soft glow.

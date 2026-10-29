@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>示例汇报 · 手绘笔记风格参考稿</title>
+<!--
+  ============================================================
+  手绘笔记 · 参考实现（3 屏样张）
+  ============================================================
+  【这份是什么】
+  选型用样张：只演示这张皮的调性 / 层级 / 密度三件事，
+  不是全量参考稿（全量按 pages/ 的同一套语法现场搭）。
+
+  【页面在哪】
+  sketch-notes/pages/{01_cover,02_numbers,03_list}.svg —— 1280×720，
+  与 E:\WorkBuddy_Data\我的专家\ppt\xinghe-sketch_20261025\svg_output\ 字节一致。
+
+  【⛔ 不能直接出片】
+  pages/ 下这三张 SVG 没有 data-pptx-bounds、根 <g> 没有 id、
+  没有 data-pptx-page-role，直接 copy 进 <project>/svg_output/ 会被质检拦。
+  要出 PPTX 按 SKILL.md 4.5 重写。
+
+  【色值说明】
+  sketch-notes.md 明确不定义 HEX（"HEX values come from confirmation e"）。
+  下面 --sn-* 是这张样张的实例取值，不是规范值；换稿时按确认色重取。
+
+  【HUD 为什么要用深色】
+  本皮舞台是暖纸底（#FBF6EC），HUD 若沿用浅色前景会整条看不见——
+  这是这张皮唯一容易踩的坑，--e-hud-fg 必须是深色。
+
+  【示例内容】
+  星禾AI · 10 月进展，数字与人名均为虚构，只演示版式。
+  ============================================================
+-->
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#17150f}
+img{max-width:100%;height:auto;border:0}
+:root{
+  /* ---- E 层：引擎变量（7 个，一个不能少） ---- */
+  --e-stage-w:1280px; --e-stage-h:720px;
+  --e-font-ui:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --e-hud-fg:#2B2B2B;            /* 浅纸底 → 深色前景 */
+  --e-hud-accent:#A05A2C;
+  --e-stage-bg:#FBF6EC;
+  --e-notes-bg:#2B2B2B;
+
+  /* ---- S 层：本皮色板（示例实例，非规范值） ---- */
+  --sn-paper:#FBF6EC; --sn-ink:#2B2B2B; --sn-body:#4A4742; --sn-grey:#8A8378;
+  --sn-yellow:#FBE3A2; --sn-blue:#CFE4F2; --sn-pink:#F6D3CE; --sn-green:#D5E8CE;
+
+  /* ---- F 层：字体 ---- */
+  --sn-font-display:"Noto Sans SC","Microsoft YaHei",sans-serif;
+  --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+#stage{position:absolute;left:50%;top:50%;width:var(--e-stage-w);height:var(--e-stage-h);
+  transform-origin:center center;transform:translate(-50%,-50%)}
+.slide{position:absolute;inset:0;overflow:hidden;opacity:0;visibility:hidden;
+  transition:opacity .42s ease;background:var(--e-stage-bg)}
+.slide.is-active{opacity:1;visibility:visible;z-index:2}
+.slide img{display:block;width:100%;height:100%}
+.rf{opacity:0;transition:opacity .5s ease}
+.slide.is-active .rf{opacity:1}
+
+/* ============ HUD（与 pop-collage 同构，只换配色） ============ */
+.hud{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;align-items:center;gap:14px;padding:10px 18px 12px;
+  font:500 11px/1 var(--mono);letter-spacing:.12em;color:var(--e-hud-fg);pointer-events:none;user-select:none}
+.hud__bar{flex:1;height:2px;background:rgba(128,128,128,.22);overflow:hidden}
+.hud__bar>i{display:block;width:0;height:100%;background:var(--e-hud-accent);transition:width .35s ease}
+.hud__count{min-width:62px;text-align:right}
+.hud__hint{opacity:.55}
+.hud__nav{pointer-events:auto;display:flex;gap:6px}
+.hud__nav button{all:unset;cursor:pointer;padding:4px 8px;border:1px solid rgba(128,128,128,.3);border-radius:3px;font:inherit;color:inherit}
+.hud__nav button:hover{border-color:var(--e-hud-accent);color:var(--e-hud-accent)}
+
+/* ============ 讲稿抽屉 ============ */
+.notes{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--e-notes-bg);color:#FBF6EC;padding:16px 22px 18px;
+  transform:translateY(120%);transition:transform .3s ease;max-height:46vh;overflow:auto}
+body.show-notes .notes{transform:none}
+.notes b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#FBE3A2;margin-bottom:8px}
+.notes p{margin:0;font:400 14.5px/1.7 var(--e-font-ui);padding-right:80px}
+.notes__x{position:absolute;right:18px;top:14px;font:700 10.5px/1 var(--mono);letter-spacing:.14em;
+  color:#FBE3A2;border:1px solid #FBE3A2;padding:5px 8px}
+
+@media print{
+  @page{size:1280px 720px;margin:0}
+  html,body{overflow:visible;background:#fff;height:auto}
+  #stage{position:static;transform:none!important;width:1280px;height:auto}
+  .slide{position:relative!important;width:1280px;height:720px;opacity:1!important;visibility:visible!important;display:block;
+    break-after:page;page-break-after:always}
+  .slide:last-child{break-after:auto}
+  .rf{opacity:1!important;transform:none!important}
+  .hud,.notes{display:none!important}
+}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 01 封面 —— 验调性：暖纸底 + 墨线 + 淡彩块，没有一处硬边 -->
+<section class="slide" data-note="同一份内容，换手绘就是另一种语气：暖纸底、墨线、淡彩块，全篇没有一处硬边。">
+  <img class="rf" src="sketch-notes/pages/01_cover.svg" width="1280" height="720"
+       alt="手绘笔记 · 封面：暖纸底，墨线标题「星禾AI 社区 / 10 月进展」，下方手绘曲线与淡彩块">
+</section>
+
+<!-- 02 数字页 —— 验层级：三个数靠墨线框和淡彩块，不靠重色压 -->
+<section class="slide" data-note="手绘的数字页不靠色块压，靠墨线框和淡彩填充；三个数还是一样读得出来。">
+  <img class="rf" src="sketch-notes/pages/02_numbers.svg" width="1280" height="720"
+       alt="手绘笔记 · 数字页：113 人打卡 / 63 人建库 / 14 人上台，三个手绘墨线框 + 淡彩填充">
+</section>
+
+<!-- 03 清单页 —— 验密度：六行字加涂鸦标记，留白够不够 -->
+<section class="slide" data-note="清单页最容易崩：六行项目名各带一句说明，留白够不够，看这一屏就知道。">
+  <img class="rf" src="sketch-notes/pages/03_list.svg" width="1280" height="720"
+       alt="手绘笔记 · 清单页：武汉、湖州、长沙、教学部、班级管理五个项目，各配手绘标记与说明">
+</section>
+
+</div>
+
+<div class="hud">
+  <div class="hud__bar"><i></i></div>
+  <div class="hud__count"></div>
+  <div class="hud__hint">← → 翻页 · N 讲稿 · F 全屏</div>
+  <div class="hud__nav"><button type="button" data-go="prev">PREV</button><button type="button" data-go="next">NEXT</button></div>
+</div>
+<div class="notes"><span class="notes__x">N 关闭</span><b>讲稿</b><p id="notesText"></p></div>
+
+<script>
+(function(){
+  'use strict';
+  var stage=document.getElementById('stage');
+  var slides=Array.prototype.slice.call(document.querySelectorAll('#stage > .slide'));
+  var bar=document.querySelector('.hud__bar > i');
+  var counter=document.querySelector('.hud__count');
+  var notesEl=document.getElementById('notesText');
+  var total=slides.length, index=0;
+  if(!stage||!total){return;}
+  function pad(n){return (n<10?'0':'')+n;}
+  function fit(){
+    var s=Math.min(window.innerWidth/1280,window.innerHeight/720);
+    stage.style.transform='translate(-50%,-50%) scale('+s+')';
+  }
+  function render(){
+    slides.forEach(function(el,i){
+      el.classList.toggle('is-active',i===index);
+      el.setAttribute('aria-hidden',i===index?'false':'true');
+    });
+    if(bar){bar.style.width=((index+1)/total*100)+'%';}
+    if(counter){counter.textContent=pad(index+1)+' / '+pad(total);}
+    if(notesEl){notesEl.textContent=slides[index].getAttribute('data-note')||'（本页无讲稿）';}
+    document.documentElement.setAttribute('data-slide',String(index+1));
+  }
+  function go(n,opts){
+    n=Math.max(0,Math.min(total-1,n));
+    if(n===index&&slides[index].classList.contains('is-active')){return;}
+    index=n;render();
+    if(!opts||!opts.silent){try{history.replaceState(null,'','#'+(index+1));}catch(e){}}
+  }
+  function next(){go(index+1);}
+  function prev(){go(index-1);}
+  document.addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey){return;}
+    switch(e.key){
+      case 'ArrowRight':case 'ArrowDown':case 'PageDown':case ' ':case 'Enter':
+        next();e.preventDefault();break;
+      case 'ArrowLeft':case 'ArrowUp':case 'PageUp':case 'Backspace':
+        prev();e.preventDefault();break;
+      case 'Home':go(0);e.preventDefault();break;
+      case 'End':go(total-1);e.preventDefault();break;
+      case 'f':case 'F':
+        if(document.fullscreenElement){document.exitFullscreen();}
+        else if(document.documentElement.requestFullscreen){document.documentElement.requestFullscreen();}
+        break;
+      case 'n':case 'N':
+        document.body.classList.toggle('show-notes');break;
+      default:break;
+    }
+  });
+  var tx=0,ty=0;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+  document.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){ if(dx<0){next();}else{prev();} }
+  },{passive:true});
+  var lock=false;
+  document.addEventListener('wheel',function(e){
+    if(lock){return;}
+    if(Math.abs(e.deltaY)<24){return;}
+    lock=true;
+    if(e.deltaY>0){next();}else{prev();}
+    setTimeout(function(){lock=false;},520);
+  },{passive:true});
+  document.addEventListener('click',function(e){
+    var t=e.target.closest?e.target.closest('[data-go]'):null;
+    if(!t){return;}
+    var v=t.getAttribute('data-go');
+    if(v==='next'){next();}else if(v==='prev'){prev();}else{go(parseInt(v,10)-1);}
+  });
+  window.addEventListener('resize',fit);
+  window.addEventListener('load',fit);
+  fit();
+  var start=parseInt((location.hash||'').replace('#',''),10);
+  index=(start>=1&&start<=total)?start-1:0;
+  render();
+})();
+</script>
+</body>
+</html>

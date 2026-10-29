@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>示例汇报 · 贴纸插画风格参考稿</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;overflow:hidden;background:var(--e-stage-bg)}
+img{max-width:100%;height:auto;border:0}
+:root{
+  /* E 层 · 引擎常量 */
+  --e-stage-w:1280px;--e-stage-h:720px;
+  --e-font-ui:"Noto Sans SC","Microsoft YaHei",sans-serif;
+  --e-hud-fg:#FFFFFF;--e-hud-accent:#F3D089;
+  --e-stage-bg:#C8D0EE;--e-notes-bg:#3F4671;
+  /* S 层 · 色板 */
+  --ss-bg:#C8D0EE;--ss-board:#5A5F9C;--ss-board2:#7B84B8;--ss-paper:#FFFFFF;
+  --ss-ink:#3F4671;--ss-ink-mute:#6E76A6;--ss-pink:#F7C6CE;--ss-yellow:#F3D089;
+  /* F 层 · 字体 */
+  --ss-font-display:"Noto Sans SC","Source Han Sans SC","Microsoft YaHei",sans-serif;
+  --ss-font-body:var(--e-font-ui);
+}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center;transform:translate(-50%,-50%)}
+.slide{position:absolute;inset:0;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .42s ease;
+  background:var(--ss-bg);color:var(--ss-ink);font-family:var(--ss-font-body);-webkit-font-smoothing:antialiased}
+.slide.is-active{opacity:1;visibility:visible;z-index:2}
+.r{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.3,1)}
+.slide.is-active .r{opacity:1;transform:none}
+.slide.is-active .r:nth-child(1){transition-delay:.04s}
+.slide.is-active .r:nth-child(2){transition-delay:.10s}
+.slide.is-active .r:nth-child(3){transition-delay:.16s}
+.slide.is-active .r:nth-child(4){transition-delay:.22s}
+.slide.is-active .r:nth-child(5){transition-delay:.28s}
+.slide.is-active .r:nth-child(6){transition-delay:.34s}
+.rf{opacity:0;transition:opacity .5s ease}
+.slide.is-active .rf{opacity:1}
+
+/* ============ 组件（§7 登记项，闭集） ============ */
+.ss-board{background:var(--ss-board);border-radius:16px}
+.ss-card{background:var(--ss-paper);border-radius:8px;box-shadow:0 6px 18px rgba(63,70,113,.14)}
+.ss-mega{font:900 96px/1 var(--ss-font-display);letter-spacing:-.02em;color:rgba(255,255,255,.20)}
+
+.ss-wall{position:absolute;left:0;top:0;width:62%;height:100%;z-index:1;display:grid;
+  grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:8px;background:var(--ss-paper)}
+.ss-wall__cell{display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--ss-board2)}
+
+.ss-frame{position:absolute;left:247px;top:210px;z-index:5;width:300px;height:300px;display:flex;align-items:center;justify-content:center}
+.ss-frame__svg{position:absolute;inset:0;width:100%;height:100%}
+.ss-frame__svg polygon{fill:var(--ss-paper);stroke:var(--ss-ink);stroke-width:2;stroke-linejoin:round}
+.ss-frame__t{position:relative;z-index:2;font:900 48px/1 var(--ss-font-display);letter-spacing:.02em;color:var(--ss-ink)}
+
+.ss-ring{position:absolute;right:-130px;bottom:-120px;z-index:1;width:500px;height:500px;
+  border:8px solid var(--ss-paper);border-radius:999px}
+
+/* 暖色配额：全文件仅这两处（书签 + 腮红位），合计 <1% 画面 */
+.ss-bookmark{position:absolute;top:-14px;right:24px;width:72px;height:28px;border-radius:8px;background:var(--ss-yellow);z-index:3} .ss-blush{position:absolute;right:-36px;bottom:-36px;width:24px;height:24px;border-radius:999px;background:var(--ss-pink)}
+
+/* ============ P1 画格墙封面 ============ */
+.ss-cv{position:absolute;right:72px;top:48px;width:34%;height:624px;z-index:4;
+  display:flex;flex-direction:column;justify-content:center;gap:30px;padding:44px}
+.ss-cv__kick{margin:0;font:400 17px/1.9 var(--ss-font-body);letter-spacing:.06em;color:var(--ss-ink-mute)}
+.ss-cv__ttl{position:relative;margin:0;padding:18px 22px}
+.ss-cv__ttl h1{margin:0;font:900 62px/1.15 var(--ss-font-display);letter-spacing:-.02em;color:var(--ss-paper)}
+.ss-cv__end{position:relative}
+.ss-cv__sub{margin:0;font:900 24px/1.4 var(--ss-font-display);letter-spacing:-.01em;color:var(--ss-ink)}
+.ss-cv__meta{margin:20px 0 0;font:400 17px/1.9 var(--ss-font-body);color:var(--ss-ink-mute)}
+
+/* ============ P4 顶条 + N 卡 ============ */
+.ss-p4bar{position:absolute;left:0;right:0;top:0;height:130px;z-index:2;background:var(--ss-board)}
+.ss-p4bar h2{position:absolute;left:72px;top:0;margin:0;font:900 34px/130px var(--ss-font-display);
+  letter-spacing:-.01em;color:var(--ss-paper)}
+.ss-p4grid{position:absolute;left:72px;right:72px;top:188px;z-index:3;display:grid;
+  grid-template-columns:repeat(3,1fr);gap:28px}
+.ss-p4card{display:flex;flex-direction:column;justify-content:space-between;height:360px;padding:36px}
+.ss-p4card__an{display:flex;align-items:center;justify-content:center;width:100px;height:100px;
+  border-radius:8px;background:var(--ss-bg)}
+.ss-p4card__an span{font:900 48px/1 var(--ss-font-display);letter-spacing:-.02em;color:var(--ss-ink)}
+.ss-p4card__h{margin:0;font:900 24px/1.4 var(--ss-font-display);letter-spacing:-.01em;color:var(--ss-ink)}
+.ss-p4card__p{margin:12px 0 0;font:400 20px/1.9 var(--ss-font-body);color:var(--ss-ink)}
+
+/* ============ P8 文字页 + 圆环出血 ============ */
+.ss-p8band{position:absolute;left:72px;top:48px;z-index:3;margin:0;padding:22px 32px;
+  font:900 34px/1.3 var(--ss-font-display);letter-spacing:-.01em;color:var(--ss-paper)}
+.ss-dots{position:absolute;left:72px;top:200px;z-index:3;width:760px;margin:0;padding:0;list-style:none;
+  display:grid;grid-template-columns:1fr;row-gap:30px}
+.ss-dots li{position:relative;padding-left:24px;font:400 20px/1.9 var(--ss-font-body);color:var(--ss-ink)}
+.ss-dots li::before{content:"";position:absolute;left:0;top:16px;width:6px;height:6px;
+  border-radius:999px;background:var(--ss-ink-mute)}
+.ss-dots li b{display:block;font:900 20px/1.5 var(--ss-font-display);letter-spacing:-.01em;color:var(--ss-ink)}
+.ss-dots li em{display:block;margin-top:6px;font:400 17px/1.8 var(--ss-font-body);color:var(--ss-ink-mute);font-style:normal}
+
+/* ============ 页脚 ============ */
+.ss-foot{position:absolute;left:72px;bottom:52px;z-index:3;margin:0;
+  font:400 12px/1 var(--ss-font-body);letter-spacing:.06em;color:var(--ss-ink-mute)}
+.ss-pg{position:absolute;right:72px;bottom:52px;z-index:3;
+  font:400 12px/1 var(--ss-font-body);letter-spacing:.1em;color:var(--ss-ink-mute)}
+
+/* ============ HUD ============ */
+.hud{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;align-items:center;gap:14px;padding:10px 18px 12px;
+  font:500 11px/1 var(--ss-font-body);letter-spacing:.12em;color:var(--e-hud-fg);pointer-events:none;user-select:none}
+.hud__bar{flex:1;height:2px;background:rgba(128,128,128,.22);overflow:hidden}
+.hud__bar>i{display:block;width:0;height:100%;background:var(--e-hud-accent);transition:width .35s ease}
+.hud__count{min-width:62px;text-align:right}
+.hud__hint{opacity:.5}
+.hud__nav{pointer-events:auto;display:flex;gap:6px}
+.hud__nav button{all:unset;cursor:pointer;padding:4px 8px;border:1px solid rgba(128,128,128,.3);border-radius:8px;font:inherit;color:inherit}
+.hud__nav button:hover{border-color:var(--e-hud-accent);color:var(--e-hud-accent)}
+
+/* ============ 讲稿抽屉 ============ */
+.notes{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--e-notes-bg);color:var(--e-hud-fg);padding:16px 22px 18px;
+  transform:translateY(120%);transition:transform .3s ease;max-height:46vh;overflow:auto;box-shadow:0 -16px 36px rgba(0,0,0,.20)}
+body.show-notes .notes{transform:none}
+.notes b{display:block;font:700 10.5px/1 var(--ss-font-body);letter-spacing:.2em;color:var(--e-hud-accent);margin-bottom:8px}
+.notes p{margin:0;font:400 14.5px/1.7 var(--ss-font-body);padding-right:80px}
+.notes__x{position:absolute;right:18px;top:14px;font:700 10.5px/1 var(--ss-font-body);letter-spacing:.14em;color:var(--e-hud-accent);border:1px solid var(--e-hud-accent);padding:5px 8px}
+
+@media print{
+  @page{size:1280px 720px;margin:0}
+  html,body{overflow:visible;background:#fff;height:auto}
+  #stage{position:static;transform:none!important;width:1280px;height:auto}
+  .slide{position:relative!important;width:1280px;height:720px;opacity:1!important;visibility:visible!important;display:block;
+    break-after:page;page-break-after:always}
+  .slide:last-child{break-after:auto}
+  .r{opacity:1!important;transform:none!important}
+  .hud,.notes{display:none!important}
+}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 示例稿：人名、数据、项目名均为虚构，仅演示版式与组件；参考实现用系统字体栈回落，字面略有差异，版式不受影响。 -->
+<!-- 角色图已退役（soft-sticker.md §12.3），本样张用几何贴纸（星形框/圆环/书签）承担主体；接入角色图时按 §12 六式补位。 -->
+
+<!-- 01 封面 · P1 画格墙 -->
+<section class="slide" data-note="开场先给框架：这个月不是听完课就完，是把工具用成了能打开的东西。">
+  <div class="ss-wall rf">
+    <div class="ss-wall__cell"><span class="ss-mega">113</span></div>
+    <div class="ss-wall__cell"><span class="ss-mega">63</span></div>
+    <div class="ss-wall__cell"><span class="ss-mega">14</span></div>
+    <div class="ss-wall__cell"><span class="ss-mega">37</span></div>
+    <div class="ss-wall__cell"><span class="ss-mega">93</span></div>
+    <div class="ss-wall__cell"><span class="ss-mega">12</span></div>
+  </div>
+  <div class="ss-frame rf">
+    <svg class="ss-frame__svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><polygon points="50,1.5 59.06,16.19 74.25,8 74.75,25.25 92,25.75 83.81,40.94 98.5,50 83.81,59.06 92,74.25 74.75,74.75 74.25,92 59.06,83.81 50,98.5 40.94,83.81 25.75,92 25.25,74.75 8,74.25 16.19,59.06 1.5,50 16.19,40.94 8,25.75 25.25,25.25 25.75,8 40.94,16.19"/></svg>
+    <span class="ss-frame__t">10 月</span>
+  </div>
+  <div class="ss-cv ss-card r">
+    <p class="ss-cv__kick">星禾AI 社区</p>
+    <div class="ss-cv__ttl ss-board"><span class="ss-bookmark"></span><h1>10 月进展</h1></div>
+    <div class="ss-cv__end">
+      <p class="ss-cv__sub">从「听 AI」到「做出东西」</p>
+      <p class="ss-cv__meta">2026 年 10 月 · 面向集团各部门</p>
+      <span class="ss-blush"></span>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · P4 顶条 + N 卡 -->
+<section class="slide" data-note="三张卡是三类人：打卡的、做知识库的、上台被验收的，一层比一层实。">
+  <div class="ss-p4bar rf"><h2>10 月做了什么</h2></div>
+  <div class="ss-p4grid r">
+    <article class="ss-card ss-p4card">
+      <div class="ss-p4card__an"><span>113</span></div>
+      <div>
+        <h3 class="ss-p4card__h">参与 Vibe Coding 打卡</h3>
+        <p class="ss-p4card__p">其中 37 人走完 28 天</p>
+      </div>
+    </article>
+    <article class="ss-card ss-p4card">
+      <div class="ss-p4card__an"><span>63</span></div>
+      <div>
+        <h3 class="ss-p4card__h">教学部老师做知识库</h3>
+        <p class="ss-p4card__p">59 人完成 · 93.7%</p>
+      </div>
+    </article>
+    <article class="ss-card ss-p4card">
+      <div class="ss-p4card__an"><span>14</span></div>
+      <div>
+        <h3 class="ss-p4card__h">参加 PK 赛</h3>
+        <p class="ss-p4card__p">上台被验收的人数</p>
+      </div>
+    </article>
+  </div>
+  <p class="ss-foot">口径：10-19 决赛复盘会</p>
+  <span class="ss-pg">02 / 03</span>
+</section>
+
+<!-- 03 · P8 文字页 + 圆环出血 -->
+<section class="slide" data-note="四个项目各留一句话，细节放后面几页；重点是一直都能打开、能用。">
+  <p class="ss-p8band ss-board r">老师做出来的，不是 PPT，是能用的东西</p>
+  <ul class="ss-dots r">
+    <li><b>星禾双语网站</b><em>武汉 · 词汇速记 + 闯关答题，老师自己做词表</em></li>
+    <li><b>听课哨兵</b><em>湖州 · 课堂记录 + AI 辅助回答，听完就能查</em></li>
+    <li><b>记账网站 · 求职匹配网站</b><em>长沙 · 两个小工具，各解决一件私事</em></li>
+    <li><b>Free Talk 日常训练监督平台</b><em>教学部 · 排班、记录、复盘压在一条线上</em></li>
+  </ul>
+  <div class="ss-ring rf"></div>
+  <span class="ss-pg">03 / 03</span>
+</section>
+</div>
+
+<div class="hud">
+  <div class="hud__bar"><i></i></div>
+  <div class="hud__count"></div>
+  <div class="hud__hint">← → 翻页 · N 讲稿 · F 全屏</div>
+  <div class="hud__nav"><button type="button" data-go="prev">PREV</button><button type="button" data-go="next">NEXT</button></div>
+</div>
+<div class="notes"><span class="notes__x">N 关闭</span><b>讲稿</b><p id="notesText"></p></div>
+
+<script>
+(function(){
+  'use strict';
+  var stage=document.getElementById('stage');
+  var slides=Array.prototype.slice.call(document.querySelectorAll('#stage > .slide'));
+  var bar=document.querySelector('.hud__bar > i');
+  var counter=document.querySelector('.hud__count');
+  var notesEl=document.getElementById('notesText');
+  var total=slides.length, index=0;
+  if(!stage||!total){return;}
+  function pad(n){return (n<10?'0':'')+n;}
+  function fit(){
+    var s=Math.min(window.innerWidth/1280,window.innerHeight/720);
+    stage.style.transform='translate(-50%,-50%) scale('+s+')';
+  }
+  function render(){
+    slides.forEach(function(el,i){
+      el.classList.toggle('is-active',i===index);
+      el.setAttribute('aria-hidden',i===index?'false':'true');
+    });
+    if(bar){bar.style.width=((index+1)/total*100)+'%';}
+    if(counter){counter.textContent=pad(index+1)+' / '+pad(total);}
+    if(notesEl){notesEl.textContent=slides[index].getAttribute('data-note')||'（本页无讲稿）';}
+    document.documentElement.setAttribute('data-slide',String(index+1));
+  }
+  function go(n,opts){
+    n=Math.max(0,Math.min(total-1,n));
+    if(n===index&&slides[index].classList.contains('is-active')){return;}
+    index=n;render();
+    if(!opts||!opts.silent){try{history.replaceState(null,'','#'+(index+1));}catch(e){}}
+  }
+  function next(){go(index+1);}
+  function prev(){go(index-1);}
+  document.addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey){return;}
+    switch(e.key){
+      case 'ArrowRight':case 'ArrowDown':case 'PageDown':case ' ':case 'Enter':
+        next();e.preventDefault();break;
+      case 'ArrowLeft':case 'ArrowUp':case 'PageUp':case 'Backspace':
+        prev();e.preventDefault();break;
+      case 'Home':go(0);e.preventDefault();break;
+      case 'End':go(total-1);e.preventDefault();break;
+      case 'f':case 'F':
+        if(document.fullscreenElement){document.exitFullscreen();}
+        else if(document.documentElement.requestFullscreen){document.documentElement.requestFullscreen();}
+        break;
+      case 'n':case 'N':
+        document.body.classList.toggle('show-notes');break;
+      default:break;
+    }
+  });
+  var tx=0,ty=0;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+  document.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){ if(dx<0){next();}else{prev();} }
+  },{passive:true});
+  var lock=false;
+  document.addEventListener('wheel',function(e){
+    if(lock){return;}
+    if(Math.abs(e.deltaY)<24){return;}
+    lock=true;
+    if(e.deltaY>0){next();}else{prev();}
+    setTimeout(function(){lock=false;},520);
+  },{passive:true});
+  document.addEventListener('click',function(e){
+    var t=e.target.closest?e.target.closest('[data-go]'):null;
+    if(!t){return;}
+    var v=t.getAttribute('data-go');
+    if(v==='next'){next();}else if(v==='prev'){prev();}else{go(parseInt(v,10)-1);}
+  });
+  window.addEventListener('resize',fit);
+  window.addEventListener('load',fit);
+  fit();
+  var start=parseInt((location.hash||'').replace('#',''),10);
+  index=(start>=1&&start<=total)?start-1:0;
+  render();
+})();
+</script>
+</body>
+</html>
