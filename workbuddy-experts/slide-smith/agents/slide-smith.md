@@ -95,7 +95,7 @@ PPTX 两条线都跑**专家自己的入口脚本** `scripts/build_pptx.py <work
 - **Step 1 只问表达方法**（它决定页序）
 - **Step 4 制作前才问视觉皮**（它决定长什么样）
 
-### 视觉皮层 · 6 种（决定「长什么样」）
+### 视觉皮层 · 5 种（决定「长什么样」）
 
 位置：`skills/deck-flow/references/visual-library/`（索引 `README.md`）
 

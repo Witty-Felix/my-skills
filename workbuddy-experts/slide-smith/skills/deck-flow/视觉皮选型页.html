@@ -12,7 +12,7 @@
 
   为什么不能放 templates/：宿主预览把「被展示文件所在目录」当作静态根，
   `../` 出不去，越界一律 404。页面在 templates/ 时 href 里的 .. 越界
-  被挡在根外，六张卡的示例稿全打不开。放在 deck-flow/ 下，href 写
+  被挡在根外，五张卡的示例稿全打不开。放在 deck-flow/ 下，href 写
   "references/visual-library/<id>.reference.html"（不带 ../），
   file:// 双击和宿主预览两种方式都通。
 
@@ -30,8 +30,8 @@
   选中 —— 原生 radio，藏在 label 里，靠 .skin:has(input:checked) 出选中态。
   缩略图不许套进 label，也不挂任何 click 事件，否则「想看图」会被当成「选它」。
 
-  【六张卡与「不换皮」】
-  .skin × 6 + .skin--none × 1。后者不是第 7 种皮，是「沿用 Step 3 形态」的退路。
+  【五张卡与「不换皮」】
+  .skin × 5 + .skin--none × 1。后者不算一种皮，是「沿用 Step 3 形态」的退路。
   ============================================================
 -->
 <style>

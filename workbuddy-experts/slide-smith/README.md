@@ -39,7 +39,7 @@ skills/
         paper-cut/pages/           样张源页 SVG（仅供看图，不能直接出片）
         sketch-notes.reference.html 手绘笔记示例稿（3 屏，同上）
         sketch-notes/pages/        样张源页 SVG（同上）
-        _picker/                   选型页缩略图（6 张，索引级资产）
+        _picker/                   选型页缩略图（5 张，索引级资产）
         assets/                    波普拼贴专用插图（共享区已冻结）
       style-library/               表达方法库（14 种：管怎么论证）
         README.md                  方法索引 + 选型速查
